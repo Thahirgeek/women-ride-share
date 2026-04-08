@@ -99,13 +99,13 @@ export default function DriverRidesPage() {
                     <span className="font-semibold text-foreground">
                       {ride.source}
                     </span>
-                    <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                    <span className="text-(--text-3)">-&gt;</span>
                     <span className="font-semibold text-foreground">
                       {ride.destination}
                     </span>
                   </div>
                   <p className="text-xs text-(--text-2)">
-                    {new Date(ride.scheduledAt).toLocaleString()} Ã¢â‚¬Â¢ Ã¢â€šÂ¹{ride.fare}
+                    {new Date(ride.scheduledAt).toLocaleString()} - Rs {ride.fare}
                     /seat
                   </p>
                 </div>

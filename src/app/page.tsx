@@ -38,9 +38,9 @@ export default function Home() {
 
             <div className="mt-7 flex flex-wrap items-center gap-5 text-sm text-(--text-3)">
               <span>Verified Drivers</span>
-              <span className="h-1 w-1 rounded-full bg-[var(--text-3)]" />
+              <span className="h-1 w-1 rounded-full bg-(--text-3)" />
               <span>Safety Filters</span>
-              <span className="h-1 w-1 rounded-full bg-[var(--text-3)]" />
+              <span className="h-1 w-1 rounded-full bg-(--text-3)" />
               <span>Live Booking Status</span>
             </div>
           </div>
@@ -86,9 +86,9 @@ export default function Home() {
       <section className="section-muted border-y border-(--border) px-6 py-8">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-6 text-sm font-medium text-(--text-2) sm:gap-12">
           <span>Trusted by verified commuters</span>
-          <span className="h-1 w-1 rounded-full bg-[var(--text-3)]" />
+          <span className="h-1 w-1 rounded-full bg-(--text-3)" />
           <span>Integrated safety onboarding</span>
-          <span className="h-1 w-1 rounded-full bg-[var(--text-3)]" />
+          <span className="h-1 w-1 rounded-full bg-(--text-3)" />
           <span>Built for women-first comfort</span>
         </div>
       </section>
@@ -107,21 +107,21 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-3">
             <Card>
               <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-(--primary-soft) text-(--primary)">
-                âœ“
+                OK
               </div>
               <h3 className="text-lg font-semibold text-foreground">Identity-Checked Drivers</h3>
               <p className="mt-2 text-sm text-(--text-2)">Strict onboarding and verification before rides go live.</p>
             </Card>
             <Card>
               <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-(--primary-soft) text-(--primary)">
-                âš¡
+                Fast
               </div>
               <h3 className="text-lg font-semibold text-foreground">Fast Decision UX</h3>
               <p className="mt-2 text-sm text-(--text-2)">Critical ride details are visible upfront for faster, safer booking.</p>
             </Card>
             <Card>
               <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-(--primary-soft) text-(--primary)">
-                ðŸ›¡
+                Safe
               </div>
               <h3 className="text-lg font-semibold text-foreground">Women-First Controls</h3>
               <p className="mt-2 text-sm text-(--text-2)">Use safety filters and composition signals before confirming.</p>

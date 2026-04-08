@@ -93,12 +93,12 @@ export default function DriverBookingsPage() {
                     {genderBadge(booking.passenger.user.gender)}
                   </div>
                   <p className="text-xs text-(--text-2)">
-                    {booking.ride.source} Ã¢â€ â€™ {booking.ride.destination} Ã¢â‚¬Â¢{" "}
+                    {booking.ride.source} -&gt; {booking.ride.destination} -{" "}
                     {booking.seatCount} seat(s)
                   </p>
                   <p className="text-xs text-(--text-2)">
-                    Pickup: {booking.pickupPoint || "Ã¢â‚¬â€"} Ã¢â‚¬Â¢ Drop:{" "}
-                    {booking.dropPoint || "Ã¢â‚¬â€"}
+                    Pickup: {booking.pickupPoint || "-"} - Drop:{" "}
+                    {booking.dropPoint || "-"}
                   </p>
                 </div>
                 <Badge

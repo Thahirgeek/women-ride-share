@@ -93,7 +93,7 @@ export default function OnboardingPage() {
             Step {step} of {totalSteps}
           </p>
           {/* Progress bar */}
-          <div className="mt-4 h-1.5 w-full rounded-full bg-[var(--border)]">
+          <div className="mt-4 h-1.5 w-full rounded-full bg-(--border)">
             <div
               className="h-1.5 rounded-full bg-(--primary) transition-all duration-300"
               style={{ width: `${(step / totalSteps) * 100}%` }}
@@ -121,7 +121,7 @@ export default function OnboardingPage() {
               />
               {isDriver ? (
                 <Button onClick={() => setStep(2)} fullWidth>
-                  Next â†’
+                  Next {"->"}
                 </Button>
               ) : (
                 <Button
@@ -197,7 +197,7 @@ export default function OnboardingPage() {
                   onClick={() => setStep(1)}
                   className="flex-1"
                 >
-                  â† Back
+                  {"<-"} Back
                 </Button>
                 <Button
                   onClick={handleComplete}

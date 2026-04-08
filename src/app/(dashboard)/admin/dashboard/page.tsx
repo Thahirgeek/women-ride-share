@@ -151,7 +151,7 @@ export default function AdminDashboard() {
                     {rides.map((r) => (
                       <tr key={r.id} className="border-b border-(--border)">
                         <td className="py-3 font-medium text-foreground">{r.driver.user.name}</td>
-                        <td className="py-3 text-(--text-2)">{r.source} Ã¢â€ â€™ {r.destination}</td>
+                        <td className="py-3 text-(--text-2)">{r.source} -&gt; {r.destination}</td>
                         <td className="py-3"><Badge>{r.status}</Badge></td>
                         <td className="py-3 text-(--text-2)">{new Date(r.createdAt).toLocaleDateString()}</td>
                       </tr>
@@ -180,9 +180,9 @@ export default function AdminDashboard() {
                     {drivers.map((d) => (
                       <tr key={d.id} className="border-b border-(--border)">
                         <td className="py-3 font-medium text-foreground">{d.user.name}</td>
-                        <td className="py-3 text-(--text-2)">{d.licenseNumber || "Ã¢â‚¬â€"}</td>
+                        <td className="py-3 text-(--text-2)">{d.licenseNumber || "-"}</td>
                         <td className="py-3 text-(--text-2)">
-                          {d.vehicle ? `${d.vehicle.vehicleType} - ${d.vehicle.model}` : "Ã¢â‚¬â€"}
+                          {d.vehicle ? `${d.vehicle.vehicleType} - ${d.vehicle.model}` : "-"}
                         </td>
                         <td className="py-3">
                           <Badge variant={d.isAvailable ? "success" : "default"}>

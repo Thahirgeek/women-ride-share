@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SafeRide â€” Ride Smarter. Ride Safer.",
+  title: "SafeRide - Ride Smarter. Ride Safer.",
   description:
     "SafeRide connects passengers with verified drivers, featuring women-safety filters like ladies-only matching and family-verified rides. Book shared rides with confidence.",
 };

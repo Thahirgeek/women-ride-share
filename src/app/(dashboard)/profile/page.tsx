@@ -185,7 +185,7 @@ export default function ProfilePage() {
         </Button>
         {saved && (
           <span className="text-sm text-emerald-600 font-medium">
-            Ã¢Å“â€œ Saved successfully
+            OK Saved successfully
           </span>
         )}
       </div>

@@ -50,7 +50,7 @@ export default async function PassengerDashboard() {
     <>
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground">
-          Welcome, {user.name?.split(" ")[0]} Ã°Å¸â€˜â€¹
+          Welcome, {user.name?.split(" ")[0]}
         </h1>
         <p className="mt-1 text-(--text-2)">Here&apos;s your ride overview.</p>
       </div>
@@ -74,7 +74,7 @@ export default async function PassengerDashboard() {
       {/* Quick action */}
       <div className="mb-8">
         <Link href="/passenger/search">
-          <Button variant="primary">Ã°Å¸â€Â Search for a Ride</Button>
+          <Button variant="primary">Search for a Ride</Button>
         </Link>
       </div>
 
@@ -98,7 +98,7 @@ export default async function PassengerDashboard() {
                     <span className="font-semibold text-foreground">
                       {booking.ride.source}
                     </span>
-                    <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                    <span className="text-(--text-3)">-&gt;</span>
                     <span className="font-semibold text-foreground">
                       {booking.ride.destination}
                     </span>
@@ -108,9 +108,9 @@ export default async function PassengerDashboard() {
                   </Badge>
                 </div>
                 <p className="text-xs text-(--text-2)">
-                  Driver: {booking.ride.driver.user.name} Ã¢â‚¬Â¢{" "}
-                  {new Date(booking.ride.scheduledAt).toLocaleDateString()} Ã¢â‚¬Â¢{" "}
-                  Ã¢â€šÂ¹{booking.ride.fare}
+                  Driver: {booking.ride.driver.user.name} -{" "}
+                  {new Date(booking.ride.scheduledAt).toLocaleDateString()} -{" "}
+                  Rs {booking.ride.fare}
                 </p>
               </Card>
             ))}

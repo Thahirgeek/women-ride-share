@@ -92,7 +92,7 @@ export default function DriverDashboard() {
             <div>
               <p className="text-sm font-medium text-(--text-2)">Status</p>
               <p className="mt-1 text-lg font-bold text-foreground">
-                {profile.isAvailable ? "Ã°Å¸Å¸Â¢ Available" : "Ã°Å¸â€Â´ Offline"}
+                {profile.isAvailable ? "Available" : "Offline"}
               </p>
             </div>
             <button
@@ -117,10 +117,10 @@ export default function DriverDashboard() {
             value={profile.currentPassengerComposition}
             onChange={(e) => updateComposition(e.target.value)}
             options={[
-              { value: "SOLO", label: "Ã°Å¸Å¡â€” Solo" },
-              { value: "LADIES", label: "Ã°Å¸â€˜Â© Ladies" },
-              { value: "FAMILY", label: "Ã°Å¸â€˜Â¨Ã¢â‚¬ÂÃ°Å¸â€˜Â©Ã¢â‚¬ÂÃ°Å¸â€˜Â§ Family" },
-              { value: "MIXED", label: "Ã°Å¸â€˜Â¥ Mixed" },
+              { value: "SOLO", label: "Solo" },
+              { value: "LADIES", label: "Ladies" },
+              { value: "FAMILY", label: "Family" },
+              { value: "MIXED", label: "Mixed" },
             ]}
           />
         </Card>
@@ -148,7 +148,7 @@ export default function DriverDashboard() {
       {!profile.isVerified && (
         <Card className="mb-8">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">Ã¢ÂÂ³</span>
+            <span className="text-2xl">...</span>
             <div>
               <p className="text-sm font-semibold text-amber-700">
                 Verification Pending
@@ -179,7 +179,7 @@ export default function DriverDashboard() {
                     <span className="font-semibold text-foreground">
                       {ride.source}
                     </span>
-                    <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                    <span className="text-(--text-3)">-&gt;</span>
                     <span className="font-semibold text-foreground">
                       {ride.destination}
                     </span>

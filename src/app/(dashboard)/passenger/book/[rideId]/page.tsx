@@ -99,7 +99,7 @@ export default function BookRidePage({
     return (
       <div className="flex flex-col items-center py-12">
         <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
-          Ã¢Å“â€œ
+          OK
         </div>
         <h1 className="text-2xl font-bold text-foreground mb-2">
           Booking Confirmed!
@@ -154,17 +154,17 @@ export default function BookRidePage({
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2 text-sm">
                 <span className="font-semibold text-foreground">{ride.source}</span>
-                <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                <span className="text-(--text-3)">-&gt;</span>
                 <span className="font-semibold text-foreground">{ride.destination}</span>
               </div>
               <p className="text-sm text-(--text-2)">
-                Ã°Å¸â€œâ€¦ {new Date(ride.scheduledAt).toLocaleString()}
+                Time: {new Date(ride.scheduledAt).toLocaleString()}
               </p>
               <p className="text-sm text-(--text-2)">
-                Ã°Å¸â€™Âº {ride.availableSeats} seats available
+                Seats: {ride.availableSeats} seats available
               </p>
               <p className="text-lg font-bold text-foreground">
-                Ã¢â€šÂ¹{ride.fare} per seat
+                Rs {ride.fare} per seat
               </p>
               {ride.notes && (
                 <p className="text-sm text-(--text-2) italic">
@@ -177,7 +177,7 @@ export default function BookRidePage({
           {/* Safety Snapshot */}
           <Card>
             <h2 className="text-lg font-bold text-foreground mb-4">
-              Ã°Å¸â€ºÂ¡Ã¯Â¸Â Safety Snapshot
+              Safety Snapshot
             </h2>
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
@@ -245,7 +245,7 @@ export default function BookRidePage({
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-(--text-2)">Total</span>
                   <span className="text-lg font-bold text-foreground">
-                    Ã¢â€šÂ¹{ride.fare * parseInt(seatCount || "1")}
+                    Rs {ride.fare * parseInt(seatCount || "1")}
                   </span>
                 </div>
               </div>

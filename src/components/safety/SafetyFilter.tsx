@@ -15,13 +15,13 @@ const options = [
     value: "LADIES_ONLY",
     label: "Ladies Only",
     description: "Driver has lady passengers onboard",
-    emoji: "ðŸ‘©",
+    emoji: "[W]",
   },
   {
     value: "FAMILY_PREFERRED",
     label: "Family Preferred",
     description: "Driver has family or kids onboard",
-    emoji: "ðŸ‘¨â€ðŸ‘©â€ðŸ‘§",
+    emoji: "[F]",
   },
 ];
 

@@ -113,8 +113,8 @@ export default function RegisterPage() {
             value={form.role}
             onChange={(e) => update("role", e.target.value)}
             options={[
-              { value: "PASSENGER", label: "ðŸ§³ Find rides (Passenger)" },
-              { value: "DRIVER", label: "ðŸš— Offer rides (Driver)" },
+              { value: "PASSENGER", label: "Find rides (Passenger)" },
+              { value: "DRIVER", label: "Offer rides (Driver)" },
             ]}
           />
           <Button type="submit" fullWidth isLoading={loading}>

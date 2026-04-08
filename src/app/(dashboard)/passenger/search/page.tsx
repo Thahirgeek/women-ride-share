@@ -92,7 +92,7 @@ export default function SearchRidesPage() {
           />
           <SafetyFilter value={safetyFilter} onChange={setSafetyFilter} />
           <Button type="submit" isLoading={loading}>
-            Ã°Å¸â€Â Search Rides
+            Search Rides
           </Button>
         </form>
       </Card>
@@ -121,7 +121,7 @@ export default function SearchRidesPage() {
                       </p>
                       {ride.driver.vehicle && (
                         <p className="text-xs text-(--text-2)">
-                          {ride.driver.vehicle.model} Ã¢â‚¬Â¢{" "}
+                          {ride.driver.vehicle.model} -{" "}
                           {ride.driver.vehicle.color}
                         </p>
                       )}
@@ -157,7 +157,7 @@ export default function SearchRidesPage() {
                     {new Date(ride.scheduledAt).toLocaleString()}
                   </span>
                   <span className="font-semibold text-foreground">
-                    Ã¢â€šÂ¹{ride.fare} / seat
+                    Rs {ride.fare} / seat
                   </span>
                 </div>
                 {ride.notes && (
@@ -171,7 +171,7 @@ export default function SearchRidesPage() {
                   </Badge>
                   <Link href={`/passenger/book/${ride.id}`}>
                     <Button variant="primary" className="text-xs px-4 py-2">
-                      Book Ride Ã¢â€ â€™
+                      Book Ride -&gt;
                     </Button>
                   </Link>
                 </div>

@@ -94,7 +94,7 @@ export default function PassengerBookingsPage() {
                     <span className="font-semibold text-foreground">
                       {booking.ride.source}
                     </span>
-                    <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                    <span className="text-(--text-3)">-&gt;</span>
                     <span className="font-semibold text-foreground">
                       {booking.ride.destination}
                     </span>
@@ -115,11 +115,11 @@ export default function PassengerBookingsPage() {
               <div className="flex items-center justify-between text-sm text-(--text-2)">
                 <div>
                   <p>
-                    Ã°Å¸â€œÂ {booking.pickupPoint || "Ã¢â‚¬â€"} Ã¢â€ â€™ {booking.dropPoint || "Ã¢â‚¬â€"}
+                    Route: {booking.pickupPoint || "-"} -&gt; {booking.dropPoint || "-"}
                   </p>
                   <p>
-                    Ã°Å¸â€œâ€¦ {new Date(booking.ride.scheduledAt).toLocaleString()} Ã¢â‚¬Â¢{" "}
-                    {booking.seatCount} seat(s) Ã¢â‚¬Â¢ Ã¢â€šÂ¹
+                    Time: {new Date(booking.ride.scheduledAt).toLocaleString()} -{" "}
+                    {booking.seatCount} seat(s) - Rs 
                     {booking.ride.fare * booking.seatCount}
                   </p>
                 </div>
