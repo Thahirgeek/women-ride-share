@@ -1,0 +1,214 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Select from "@/components/ui/Select";
+import Spinner from "@/components/ui/Spinner";
+
+export default function OnboardingPage() {
+  const router = useRouter();
+  const { data: session, isPending } = useSession();
+  const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [phone, setPhone] = useState("");
+  const [licenseNumber, setLicenseNumber] = useState("");
+  const [vehicleType, setVehicleType] = useState("CAR");
+  const [registration, setRegistration] = useState("");
+  const [vehicleModel, setVehicleModel] = useState("");
+  const [color, setColor] = useState("");
+  const [seats, setSeats] = useState("4");
+
+  const user = session?.user as any;
+  const isDriver = user?.role === "DRIVER";
+  const totalSteps = isDriver ? 2 : 1;
+
+  useEffect(() => {
+    if (!isPending && !session) {
+      router.push("/login");
+    }
+  }, [isPending, session, router]);
+
+  const handleComplete = async () => {
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/onboarding", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone,
+          ...(isDriver && {
+            licenseNumber,
+            vehicleType,
+            registrationNumber: registration,
+            model: vehicleModel,
+            color,
+            seatsAvailable: parseInt(seats),
+          }),
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error || "Failed to save profile");
+        return;
+      }
+
+      const role = user?.role;
+      if (role === "DRIVER") router.push("/driver/dashboard");
+      else if (role === "ADMIN") router.push("/admin/dashboard");
+      else router.push("/passenger/dashboard");
+    } catch {
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (isPending) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Spinner className="h-8 w-8" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5] px-4">
+      <div className="w-full max-w-md">
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl font-bold text-gray-900">
+            Complete your profile
+          </h1>
+          <p className="mt-2 text-sm text-gray-500">
+            Step {step} of {totalSteps}
+          </p>
+          {/* Progress bar */}
+          <div className="mt-4 h-1.5 w-full rounded-full bg-gray-200">
+            <div
+              className="h-1.5 rounded-full bg-gray-900 transition-all duration-300"
+              style={{ width: `${(step / totalSteps) * 100}%` }}
+            />
+          </div>
+        </div>
+
+        <Card>
+          {error && (
+            <div className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+              {error}
+            </div>
+          )}
+
+          {step === 1 && (
+            <div className="flex flex-col gap-4">
+              <Input
+                id="phone"
+                label="Phone Number"
+                type="tel"
+                placeholder="+91 98765 43210"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+              {isDriver ? (
+                <Button onClick={() => setStep(2)} fullWidth>
+                  Next →
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleComplete}
+                  isLoading={loading}
+                  fullWidth
+                >
+                  Complete Setup
+                </Button>
+              )}
+            </div>
+          )}
+
+          {step === 2 && isDriver && (
+            <div className="flex flex-col gap-4">
+              <Input
+                id="license"
+                label="License Number"
+                placeholder="DL-12345678"
+                value={licenseNumber}
+                onChange={(e) => setLicenseNumber(e.target.value)}
+                required
+              />
+              <Select
+                id="vehicleType"
+                label="Vehicle Type"
+                value={vehicleType}
+                onChange={(e) => setVehicleType(e.target.value)}
+                options={[
+                  { value: "CAR", label: "Car" },
+                  { value: "AUTO", label: "Auto" },
+                  { value: "VAN", label: "Van" },
+                  { value: "TAXI", label: "Taxi" },
+                ]}
+              />
+              <Input
+                id="registration"
+                label="Registration Number"
+                placeholder="KA-01-AB-1234"
+                value={registration}
+                onChange={(e) => setRegistration(e.target.value)}
+                required
+              />
+              <Input
+                id="model"
+                label="Vehicle Model"
+                placeholder="Toyota Camry"
+                value={vehicleModel}
+                onChange={(e) => setVehicleModel(e.target.value)}
+                required
+              />
+              <Input
+                id="color"
+                label="Vehicle Color"
+                placeholder="White"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                required
+              />
+              <Input
+                id="seats"
+                label="Total Seats"
+                type="number"
+                min="1"
+                max="12"
+                value={seats}
+                onChange={(e) => setSeats(e.target.value)}
+                required
+              />
+              <div className="flex gap-3">
+                <Button
+                  variant="secondary"
+                  onClick={() => setStep(1)}
+                  className="flex-1"
+                >
+                  ← Back
+                </Button>
+                <Button
+                  onClick={handleComplete}
+                  isLoading={loading}
+                  className="flex-1"
+                >
+                  Complete Setup
+                </Button>
+              </div>
+            </div>
+          )}
+        </Card>
+      </div>
+    </div>
+  );
+}

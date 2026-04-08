@@ -1,0 +1,211 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  PASSENGER
+  DRIVER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum PassengerComposition {
+  SOLO
+  LADIES
+  FAMILY
+  MIXED
+}
+
+enum SafetyPreference {
+  NONE
+  LADIES_ONLY
+  FAMILY_PREFERRED
+}
+
+enum VehicleType {
+  CAR
+  AUTO
+  VAN
+  TAXI
+}
+
+enum RideStatus {
+  CREATED
+  OPEN
+  BOOKED
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  emailVerified  Boolean   @default(false)
+  image          String?
+  role           Role      @default(PASSENGER)
+  gender         Gender    @default(OTHER)
+  phone          String?
+  profileImage   String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  driverProfile  Driver?
+  passengerProfile Passenger?
+  sessions       Session[]
+  accounts       Account[]
+  ratingsGiven   Rating[]  @relation("RaterRatings")
+  ratingsReceived Rating[] @relation("RateeRatings")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Driver {
+  id                          String               @id @default(cuid())
+  userId                      String               @unique
+  user                        User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  licenseNumber               String?
+  isAvailable                 Boolean              @default(false)
+  isVerified                  Boolean              @default(false)
+  currentPassengerComposition PassengerComposition @default(SOLO)
+  vehicle                     Vehicle?
+  rides                       Ride[]
+  ratings                     Rating[]
+  createdAt                   DateTime             @default(now())
+  updatedAt                   DateTime             @updatedAt
+}
+
+model Passenger {
+  id               String           @id @default(cuid())
+  userId           String           @unique
+  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  safetyPreference SafetyPreference @default(NONE)
+  bookings         Booking[]
+  ratings          Rating[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model Vehicle {
+  id                 String      @id @default(cuid())
+  driverId           String      @unique
+  driver             Driver      @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  vehicleType        VehicleType @default(CAR)
+  registrationNumber String?
+  model              String?
+  color              String?
+  seatsAvailable     Int         @default(4)
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+}
+
+model Ride {
+  id                          String               @id @default(cuid())
+  driverId                    String
+  driver                      Driver               @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  source                      String
+  destination                 String
+  scheduledAt                 DateTime
+  status                      RideStatus           @default(CREATED)
+  totalSeats                  Int                  @default(4)
+  availableSeats              Int                  @default(4)
+  fare                        Float
+  currentPassengerComposition PassengerComposition @default(SOLO)
+  notes                       String?
+  bookings                    Booking[]
+  locationUpdates             Location[]
+  createdAt                   DateTime             @default(now())
+  updatedAt                   DateTime             @updatedAt
+}
+
+model Booking {
+  id           String        @id @default(cuid())
+  rideId       String
+  ride         Ride          @relation(fields: [rideId], references: [id], onDelete: Cascade)
+  passengerId  String
+  passenger    Passenger     @relation(fields: [passengerId], references: [id], onDelete: Cascade)
+  seatCount    Int           @default(1)
+  pickupPoint  String?
+  dropPoint    String?
+  status       BookingStatus @default(PENDING)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  rideId    String
+  raterId   String
+  rater     User     @relation("RaterRatings", fields: [raterId], references: [id])
+  rateeId   String
+  ratee     User     @relation("RateeRatings", fields: [rateeId], references: [id])
+  driverId  String?
+  driver    Driver?  @relation(fields: [driverId], references: [id])
+  passengerId String?
+  passenger   Passenger? @relation(fields: [passengerId], references: [id])
+  score     Int
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+model Location {
+  id        String   @id @default(cuid())
+  rideId    String
+  ride      Ride     @relation(fields: [rideId], references: [id], onDelete: Cascade)
+  latitude  Float
+  longitude Float
+  timestamp DateTime @default(now())
+}
