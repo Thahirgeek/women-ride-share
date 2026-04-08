@@ -11,22 +11,22 @@ const compositionConfig: Record<
 > = {
   LADIES: {
     label: "Ladies Onboard",
-    emoji: "👩",
-    variant: "purple",
+    emoji: "ðŸ‘©",
+    variant: "default",
   },
   FAMILY: {
     label: "Family Ride",
-    emoji: "👨‍👩‍👧",
+    emoji: "ðŸ‘¨â€ðŸ‘©â€ðŸ‘§",
     variant: "blue",
   },
   MIXED: {
     label: "Mixed Group",
-    emoji: "👥",
+    emoji: "ðŸ‘¥",
     variant: "gray",
   },
   SOLO: {
     label: "Solo Driver",
-    emoji: "🚗",
+    emoji: "ðŸš—",
     variant: "default",
   },
 };

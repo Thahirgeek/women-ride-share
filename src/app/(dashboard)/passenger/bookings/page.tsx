@@ -74,13 +74,13 @@ export default function PassengerBookingsPage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">My Bookings</h1>
-        <p className="mt-1 text-gray-500">Track all your ride bookings.</p>
+        <h1 className="text-3xl font-bold text-foreground">My Bookings</h1>
+        <p className="mt-1 text-(--text-2)">Track all your ride bookings.</p>
       </div>
 
       {bookings.length === 0 ? (
         <Card>
-          <p className="text-center text-sm text-gray-500 py-6">
+          <p className="text-center text-sm text-(--text-2) py-6">
             No bookings yet.
           </p>
         </Card>
@@ -91,15 +91,15 @@ export default function PassengerBookingsPage() {
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <div className="flex items-center gap-2 text-sm mb-1">
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-foreground">
                       {booking.ride.source}
                     </span>
-                    <span className="text-gray-400">→</span>
-                    <span className="font-semibold text-gray-900">
+                    <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                    <span className="font-semibold text-foreground">
                       {booking.ride.destination}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-(--text-2)">
                     Driver: {booking.ride.driver.user.name}
                   </p>
                 </div>
@@ -112,14 +112,14 @@ export default function PassengerBookingsPage() {
                   </Badge>
                 </div>
               </div>
-              <div className="flex items-center justify-between text-sm text-gray-500">
+              <div className="flex items-center justify-between text-sm text-(--text-2)">
                 <div>
                   <p>
-                    📍 {booking.pickupPoint || "—"} → {booking.dropPoint || "—"}
+                    Ã°Å¸â€œÂ {booking.pickupPoint || "Ã¢â‚¬â€"} Ã¢â€ â€™ {booking.dropPoint || "Ã¢â‚¬â€"}
                   </p>
                   <p>
-                    📅 {new Date(booking.ride.scheduledAt).toLocaleString()} •{" "}
-                    {booking.seatCount} seat(s) • ₹
+                    Ã°Å¸â€œâ€¦ {new Date(booking.ride.scheduledAt).toLocaleString()} Ã¢â‚¬Â¢{" "}
+                    {booking.seatCount} seat(s) Ã¢â‚¬Â¢ Ã¢â€šÂ¹
                     {booking.ride.fare * booking.seatCount}
                   </p>
                 </div>

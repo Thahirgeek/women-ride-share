@@ -90,7 +90,7 @@ export default function BookRidePage({
   if (!ride) {
     return (
       <Card>
-        <p className="text-center text-gray-500 py-6">Ride not found.</p>
+        <p className="text-center text-(--text-2) py-6">Ride not found.</p>
       </Card>
     );
   }
@@ -99,18 +99,18 @@ export default function BookRidePage({
     return (
       <div className="flex flex-col items-center py-12">
         <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
-          ✓
+          Ã¢Å“â€œ
         </div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+        <h1 className="text-2xl font-bold text-foreground mb-2">
           Booking Confirmed!
         </h1>
-        <p className="text-gray-500 mb-8">
+        <p className="text-(--text-2) mb-8">
           Awaiting driver confirmation. You&apos;ll be notified when accepted.
         </p>
 
         {/* Payment placeholder */}
         <Card className="w-full max-w-md opacity-60">
-          <div className="flex items-center gap-3 text-gray-400">
+          <div className="flex items-center gap-3 text-(--text-3)">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
               <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -138,8 +138,8 @@ export default function BookRidePage({
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Book Ride</h1>
-        <p className="mt-1 text-gray-500">
+        <h1 className="text-3xl font-bold text-foreground">Book Ride</h1>
+        <p className="mt-1 text-(--text-2)">
           Review ride details and confirm your booking.
         </p>
       </div>
@@ -148,26 +148,26 @@ export default function BookRidePage({
         {/* Ride details */}
         <div className="flex flex-col gap-4">
           <Card>
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
+            <h2 className="text-lg font-bold text-foreground mb-4">
               Ride Details
             </h2>
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2 text-sm">
-                <span className="font-semibold text-gray-900">{ride.source}</span>
-                <span className="text-gray-400">→</span>
-                <span className="font-semibold text-gray-900">{ride.destination}</span>
+                <span className="font-semibold text-foreground">{ride.source}</span>
+                <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                <span className="font-semibold text-foreground">{ride.destination}</span>
               </div>
-              <p className="text-sm text-gray-500">
-                📅 {new Date(ride.scheduledAt).toLocaleString()}
+              <p className="text-sm text-(--text-2)">
+                Ã°Å¸â€œâ€¦ {new Date(ride.scheduledAt).toLocaleString()}
               </p>
-              <p className="text-sm text-gray-500">
-                💺 {ride.availableSeats} seats available
+              <p className="text-sm text-(--text-2)">
+                Ã°Å¸â€™Âº {ride.availableSeats} seats available
               </p>
-              <p className="text-lg font-bold text-gray-900">
-                ₹{ride.fare} per seat
+              <p className="text-lg font-bold text-foreground">
+                Ã¢â€šÂ¹{ride.fare} per seat
               </p>
               {ride.notes && (
-                <p className="text-sm text-gray-500 italic">
+                <p className="text-sm text-(--text-2) italic">
                   &quot;{ride.notes}&quot;
                 </p>
               )}
@@ -176,28 +176,28 @@ export default function BookRidePage({
 
           {/* Safety Snapshot */}
           <Card>
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
-              🛡️ Safety Snapshot
+            <h2 className="text-lg font-bold text-foreground mb-4">
+              Ã°Å¸â€ºÂ¡Ã¯Â¸Â Safety Snapshot
             </h2>
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Driver</span>
-                <span className="text-sm font-semibold text-gray-900">{ride.driver.user.name}</span>
+                <span className="text-sm text-(--text-2)">Driver</span>
+                <span className="text-sm font-semibold text-foreground">{ride.driver.user.name}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Gender</span>
-                <span className="text-sm font-semibold text-gray-900">{ride.driver.user.gender}</span>
+                <span className="text-sm text-(--text-2)">Gender</span>
+                <span className="text-sm font-semibold text-foreground">{ride.driver.user.gender}</span>
               </div>
               {ride.driver.vehicle && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Vehicle</span>
-                  <span className="text-sm font-semibold text-gray-900">
+                  <span className="text-sm text-(--text-2)">Vehicle</span>
+                  <span className="text-sm font-semibold text-foreground">
                     {ride.driver.vehicle.model} ({ride.driver.vehicle.color})
                   </span>
                 </div>
               )}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Current Composition</span>
+                <span className="text-sm text-(--text-2)">Current Composition</span>
                 <CompositionBadge composition={ride.currentPassengerComposition} />
               </div>
             </div>
@@ -207,7 +207,7 @@ export default function BookRidePage({
         {/* Booking form */}
         <div>
           <Card>
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
+            <h2 className="text-lg font-bold text-foreground mb-4">
               Your Booking
             </h2>
             {error && (
@@ -241,11 +241,11 @@ export default function BookRidePage({
                 value={seatCount}
                 onChange={(e) => setSeatCount(e.target.value)}
               />
-              <div className="mt-2 rounded-lg bg-gray-50 p-3">
+              <div className="mt-2 rounded-lg bg-(--bg-muted) p-3">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">Total</span>
-                  <span className="text-lg font-bold text-gray-900">
-                    ₹{ride.fare * parseInt(seatCount || "1")}
+                  <span className="text-(--text-2)">Total</span>
+                  <span className="text-lg font-bold text-foreground">
+                    Ã¢â€šÂ¹{ride.fare * parseInt(seatCount || "1")}
                   </span>
                 </div>
               </div>

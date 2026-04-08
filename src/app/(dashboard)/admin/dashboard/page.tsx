@@ -75,22 +75,22 @@ export default function AdminDashboard() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p className="mt-1 text-gray-500">
+        <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+        <p className="mt-1 text-(--text-2)">
           Manage users, rides, and drivers.
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="mb-6 flex gap-1 rounded-lg bg-gray-200 p-1 w-fit">
+      <div className="mb-6 flex gap-1 rounded-lg bg-(--bg-muted) p-1 w-fit">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`rounded-md px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
               tab === t.key
-                ? "bg-white text-gray-900 shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
+                ? "bg-white text-foreground shadow-sm"
+                : "text-(--text-2) hover:text-foreground"
             }`}
           >
             {t.label}
@@ -110,22 +110,22 @@ export default function AdminDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="pb-3 text-left font-semibold text-gray-600">Name</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Email</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Role</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Gender</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Joined</th>
+                    <tr className="border-b border-(--border)">
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Name</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Email</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Role</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Gender</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Joined</th>
                     </tr>
                   </thead>
                   <tbody>
                     {users.map((u) => (
-                      <tr key={u.id} className="border-b border-gray-100">
-                        <td className="py-3 font-medium text-gray-900">{u.name}</td>
-                        <td className="py-3 text-gray-600">{u.email}</td>
+                      <tr key={u.id} className="border-b border-(--border)">
+                        <td className="py-3 font-medium text-foreground">{u.name}</td>
+                        <td className="py-3 text-(--text-2)">{u.email}</td>
                         <td className="py-3"><Badge>{u.role}</Badge></td>
-                        <td className="py-3 text-gray-600">{u.gender}</td>
-                        <td className="py-3 text-gray-500">{new Date(u.createdAt).toLocaleDateString()}</td>
+                        <td className="py-3 text-(--text-2)">{u.gender}</td>
+                        <td className="py-3 text-(--text-2)">{new Date(u.createdAt).toLocaleDateString()}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -140,20 +140,20 @@ export default function AdminDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="pb-3 text-left font-semibold text-gray-600">Driver</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Route</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Status</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Created</th>
+                    <tr className="border-b border-(--border)">
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Driver</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Route</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Status</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Created</th>
                     </tr>
                   </thead>
                   <tbody>
                     {rides.map((r) => (
-                      <tr key={r.id} className="border-b border-gray-100">
-                        <td className="py-3 font-medium text-gray-900">{r.driver.user.name}</td>
-                        <td className="py-3 text-gray-600">{r.source} → {r.destination}</td>
+                      <tr key={r.id} className="border-b border-(--border)">
+                        <td className="py-3 font-medium text-foreground">{r.driver.user.name}</td>
+                        <td className="py-3 text-(--text-2)">{r.source} Ã¢â€ â€™ {r.destination}</td>
                         <td className="py-3"><Badge>{r.status}</Badge></td>
-                        <td className="py-3 text-gray-500">{new Date(r.createdAt).toLocaleDateString()}</td>
+                        <td className="py-3 text-(--text-2)">{new Date(r.createdAt).toLocaleDateString()}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -168,21 +168,21 @@ export default function AdminDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="pb-3 text-left font-semibold text-gray-600">Name</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">License</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Vehicle</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Available</th>
-                      <th className="pb-3 text-left font-semibold text-gray-600">Verified</th>
+                    <tr className="border-b border-(--border)">
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Name</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">License</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Vehicle</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Available</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Verified</th>
                     </tr>
                   </thead>
                   <tbody>
                     {drivers.map((d) => (
-                      <tr key={d.id} className="border-b border-gray-100">
-                        <td className="py-3 font-medium text-gray-900">{d.user.name}</td>
-                        <td className="py-3 text-gray-600">{d.licenseNumber || "—"}</td>
-                        <td className="py-3 text-gray-600">
-                          {d.vehicle ? `${d.vehicle.vehicleType} - ${d.vehicle.model}` : "—"}
+                      <tr key={d.id} className="border-b border-(--border)">
+                        <td className="py-3 font-medium text-foreground">{d.user.name}</td>
+                        <td className="py-3 text-(--text-2)">{d.licenseNumber || "Ã¢â‚¬â€"}</td>
+                        <td className="py-3 text-(--text-2)">
+                          {d.vehicle ? `${d.vehicle.vehicleType} - ${d.vehicle.model}` : "Ã¢â‚¬â€"}
                         </td>
                         <td className="py-3">
                           <Badge variant={d.isAvailable ? "success" : "default"}>

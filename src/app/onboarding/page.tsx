@@ -81,27 +81,29 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f5f5f5] px-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
+      <div className="pointer-events-none absolute -left-16 top-10 h-44 w-44 rounded-full bg-(--primary)/10 blur-2xl" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 h-52 w-52 rounded-full bg-sky-100 blur-3xl" />
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-foreground">
             Complete your profile
           </h1>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-(--text-2)">
             Step {step} of {totalSteps}
           </p>
           {/* Progress bar */}
-          <div className="mt-4 h-1.5 w-full rounded-full bg-gray-200">
+          <div className="mt-4 h-1.5 w-full rounded-full bg-[var(--border)]">
             <div
-              className="h-1.5 rounded-full bg-gray-900 transition-all duration-300"
+              className="h-1.5 rounded-full bg-(--primary) transition-all duration-300"
               style={{ width: `${(step / totalSteps) * 100}%` }}
             />
           </div>
         </div>
 
-        <Card>
+        <Card className="bg-white/95">
           {error && (
-            <div className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+            <div className="mb-4 rounded-lg border border-(--danger)/20 bg-(--danger-soft) px-4 py-3 text-sm text-(--danger)">
               {error}
             </div>
           )}
@@ -119,7 +121,7 @@ export default function OnboardingPage() {
               />
               {isDriver ? (
                 <Button onClick={() => setStep(2)} fullWidth>
-                  Next →
+                  Next â†’
                 </Button>
               ) : (
                 <Button
@@ -195,7 +197,7 @@ export default function OnboardingPage() {
                   onClick={() => setStep(1)}
                   className="flex-1"
                 >
-                  ← Back
+                  â† Back
                 </Button>
                 <Button
                   onClick={handleComplete}

@@ -15,30 +15,30 @@ const options = [
     value: "LADIES_ONLY",
     label: "Ladies Only",
     description: "Driver has lady passengers onboard",
-    emoji: "👩",
+    emoji: "ðŸ‘©",
   },
   {
     value: "FAMILY_PREFERRED",
     label: "Family Preferred",
     description: "Driver has family or kids onboard",
-    emoji: "👨‍👩‍👧",
+    emoji: "ðŸ‘¨â€ðŸ‘©â€ðŸ‘§",
   },
 ];
 
 export default function SafetyFilter({ value, onChange }: SafetyFilterProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-semibold text-gray-700">
+      <label className="text-sm font-semibold text-(--text-2)">
         Safety Filter
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
         {options.map((opt) => (
           <label
             key={opt.value}
-            className={`flex cursor-pointer items-center gap-3 rounded-lg border-2 px-4 py-3 transition-all duration-200 ${
+            className={`flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-all duration-200 ${
               value === opt.value
-                ? "border-gray-900 bg-gray-50"
-                : "border-gray-200 bg-white hover:border-gray-300"
+                ? "border-(--primary)/35 bg-(--primary-soft)/65"
+                : "border-(--border) bg-white hover:border-(--primary)/25"
             }`}
           >
             <input
@@ -50,11 +50,11 @@ export default function SafetyFilter({ value, onChange }: SafetyFilterProps) {
               className="sr-only"
             />
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-gray-900">
+              <span className="text-sm font-medium text-foreground">
                 {opt.emoji && `${opt.emoji} `}
                 {opt.label}
               </span>
-              <span className="text-xs text-gray-500">{opt.description}</span>
+              <span className="text-xs text-(--text-3)">{opt.description}</span>
             </div>
           </label>
         ))}

@@ -56,8 +56,8 @@ export default function CreateRidePage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Create a Ride</h1>
-        <p className="mt-1 text-gray-500">
+        <h1 className="text-3xl font-bold text-foreground">Create a Ride</h1>
+        <p className="mt-1 text-(--text-2)">
           Publish a new ride for passengers to book.
         </p>
       </div>
@@ -108,7 +108,7 @@ export default function CreateRidePage() {
             />
             <Input
               id="fare"
-              label="Fare per Seat (₹)"
+              label="Fare per Seat (Ã¢â€šÂ¹)"
               type="number"
               min="1"
               step="0.5"
@@ -123,10 +123,10 @@ export default function CreateRidePage() {
             value={form.currentPassengerComposition}
             onChange={(e) => update("currentPassengerComposition", e.target.value)}
             options={[
-              { value: "SOLO", label: "🚗 Solo" },
-              { value: "LADIES", label: "👩 Ladies" },
-              { value: "FAMILY", label: "👨‍👩‍👧 Family" },
-              { value: "MIXED", label: "👥 Mixed" },
+              { value: "SOLO", label: "Ã°Å¸Å¡â€” Solo" },
+              { value: "LADIES", label: "Ã°Å¸â€˜Â© Ladies" },
+              { value: "FAMILY", label: "Ã°Å¸â€˜Â¨Ã¢â‚¬ÂÃ°Å¸â€˜Â©Ã¢â‚¬ÂÃ°Å¸â€˜Â§ Family" },
+              { value: "MIXED", label: "Ã°Å¸â€˜Â¥ Mixed" },
             ]}
           />
           <Input

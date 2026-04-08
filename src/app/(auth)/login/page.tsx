@@ -38,34 +38,19 @@ export default function LoginPage() {
     <>
       <div className="mb-8 text-center">
         <Link href="/" className="inline-flex items-center gap-2 mb-8">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
-            </svg>
-          </div>
-          <span className="text-lg font-bold text-gray-900">SafeRide</span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-(--primary) text-sm font-bold text-white">S</div>
+          <span className="text-lg font-bold text-foreground">SafeRide</span>
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back</h1>
-        <p className="mt-2 text-sm text-gray-500">
+        <h1 className="text-3xl font-bold text-foreground">Welcome back</h1>
+        <p className="mt-2 text-sm text-(--text-2)">
           Sign in to your account to continue
         </p>
       </div>
 
-      <Card>
+      <Card className="bg-white/95">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {error && (
-            <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+            <div className="rounded-lg border border-(--danger)/20 bg-(--danger-soft) px-4 py-3 text-sm text-(--danger)">
               {error}
             </div>
           )}
@@ -82,7 +67,7 @@ export default function LoginPage() {
             id="password"
             label="Password"
             type="password"
-            placeholder="••••••••"
+            placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -93,11 +78,11 @@ export default function LoginPage() {
         </form>
       </Card>
 
-      <p className="mt-6 text-center text-sm text-gray-500">
+      <p className="mt-6 text-center text-sm text-(--text-2)">
         Don&apos;t have an account?{" "}
         <Link
           href="/register"
-          className="font-medium text-gray-900 hover:underline"
+          className="font-semibold text-(--primary) hover:underline"
         >
           Sign up
         </Link>

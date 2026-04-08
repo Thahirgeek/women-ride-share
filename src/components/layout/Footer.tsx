@@ -1,28 +1,23 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white">
-      <div className="mx-auto max-w-6xl px-6 py-12">
-        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gray-900">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M2 17l10 5 10-5" />
-                <path d="M2 12l10 5 10-5" />
-              </svg>
+    <footer id="footer" className="border-t border-(--border) bg-white">
+      <div className="mx-auto max-w-6xl px-6 py-14">
+        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-(--primary) text-sm font-bold text-white">
+              S
             </div>
-            <span className="text-sm font-bold text-gray-900">SafeRide</span>
+            <span className="text-base font-bold text-foreground">SafeRide</span>
           </div>
-          <p className="text-sm text-gray-500">
+
+          <div className="flex flex-wrap items-center gap-4 text-sm text-(--text-2)">
+            <a href="#why" className="hover:text-(--primary)">Why</a>
+            <a href="#features" className="hover:text-(--primary)">Features</a>
+            <a href="#safety" className="hover:text-(--primary)">Safety</a>
+            <a href="#app-preview" className="hover:text-(--primary)">Mobile App</a>
+          </div>
+
+          <p className="text-sm text-(--text-2)">
             Safer rides for everyone. &copy; {new Date().getFullYear()} SafeRide
           </p>
         </div>

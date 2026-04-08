@@ -16,10 +16,10 @@ export default async function AdminLayout({
   if (user.role !== "ADMIN") redirect("/dashboard");
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-(--bg-muted)/70">
       <DashboardNav role="ADMIN" userName={user.name} />
       <main className="flex-1 pb-20 lg:pb-0">
-        <div className="mx-auto max-w-6xl px-6 py-8">{children}</div>
+        <div className="mx-auto max-w-6xl px-6 py-10">{children}</div>
       </main>
     </div>
   );

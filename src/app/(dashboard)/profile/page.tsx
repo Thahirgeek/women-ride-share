@@ -80,8 +80,8 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto max-w-2xl px-6 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
-        <p className="mt-1 text-gray-500">Manage your account details.</p>
+        <h1 className="text-3xl font-bold text-foreground">Profile</h1>
+        <p className="mt-1 text-(--text-2)">Manage your account details.</p>
       </div>
 
       <Card className="mb-6">
@@ -121,7 +121,7 @@ export default function ProfilePage() {
 
       {isDriver && (
         <Card className="mb-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
+          <h2 className="text-lg font-bold text-foreground mb-4">
             Vehicle Details
           </h2>
           <div className="flex flex-col gap-4">
@@ -185,7 +185,7 @@ export default function ProfilePage() {
         </Button>
         {saved && (
           <span className="text-sm text-emerald-600 font-medium">
-            ✓ Saved successfully
+            Ã¢Å“â€œ Saved successfully
           </span>
         )}
       </div>

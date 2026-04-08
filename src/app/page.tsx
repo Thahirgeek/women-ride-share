@@ -1,236 +1,245 @@
+"use client";
+
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 
-const features = [
-  {
-    icon: "👩",
-    title: "Ladies-Only Matching",
-    description:
-      "Filter rides to match only with drivers carrying lady passengers. Travel with peace of mind.",
-  },
-  {
-    icon: "👨‍👩‍👧",
-    title: "Family-Verified Drivers",
-    description:
-      "Choose rides where families and children are already onboard for a comfortable, safe journey.",
-  },
-  {
-    icon: "📍",
-    title: "Real-Time Tracking",
-    description:
-      "Track your ride with location updates. Share your trip status with trusted contacts anytime.",
-  },
-];
-
-const steps = [
-  {
-    step: "01",
-    title: "Register",
-    description: "Create your account and choose your role — passenger or driver.",
-  },
-  {
-    step: "02",
-    title: "Search & Filter",
-    description: "Find rides using safety filters. See who's onboard before you book.",
-  },
-  {
-    step: "03",
-    title: "Book & Ride",
-    description: "Confirm your booking, meet your driver, and enjoy a safer ride.",
-  },
-];
-
-const vehicles = [
-  { icon: "🚗", label: "Car", desc: "Comfortable sedan rides" },
-  { icon: "🛺", label: "Auto", desc: "Quick city commutes" },
-  { icon: "🚐", label: "Van", desc: "Group and family rides" },
-  { icon: "🚕", label: "Taxi", desc: "Professional cab service" },
-];
-
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen bg-transparent">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden">
-        {/* Background dot pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, #c4c4c4 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-          }}
-        />
-        <div className="relative mx-auto max-w-6xl px-6">
-          <div className="flex flex-col items-center text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-1.5 text-sm text-gray-600">
-              <span className="inline-block h-2 w-2 rounded-full bg-emerald-400" />
-              Trusted by 10,000+ riders
-            </div>
-            <h1 className="max-w-3xl text-5xl font-bold leading-[1.1] tracking-tight text-gray-900 sm:text-7xl">
-              Ride Smarter.
+      <section className="px-6 pb-20 pt-32 sm:pt-36">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
+          <div>
+            <span className="pill animate-fade-up inline-flex px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.08em]">
+              The Frictionless Concierge
+            </span>
+            <h1 className="animate-fade-up delay-100 mt-5 text-4xl font-extrabold leading-tight text-foreground sm:text-5xl lg:text-6xl">
+              The New Era of
               <br />
-              <span className="font-[var(--font-instrument-serif)] italic text-gray-600">
-                Ride Safer.
-              </span>
+              Safe Rides for Women
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-500">
-              Book shared rides with women‑safety filters. See who&apos;s onboard
-              before you travel — ladies‑only, family rides, or mixed groups.
+            <p className="animate-fade-up delay-200 mt-5 max-w-xl text-base text-(--text-2) sm:text-lg">
+              SafeRide pairs every booking with verified drivers, transparent ride composition,
+              and clean in-app workflows built for confidence at every step.
             </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+
+            <div className="animate-fade-up delay-300 mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/register">
-                <Button variant="primary" className="px-8 py-3 text-base">
-                  Find a Ride
-                </Button>
+                <Button className="px-6 py-3 text-sm">Join Now</Button>
               </Link>
-              <Link href="/register">
-                <Button variant="secondary" className="px-8 py-3 text-base">
-                  Offer a Ride
-                </Button>
+              <Link href="/passenger/search">
+                <Button variant="secondary" className="px-6 py-3 text-sm">Explore Rides</Button>
               </Link>
             </div>
 
-            {/* Decorative ride card mockup */}
-            <div className="mt-16 w-full max-w-md">
-              <Card className="text-left">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-sm font-bold text-gray-600">
-                      SR
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-gray-900">
-                        Sarah Rahman
-                      </p>
-                      <p className="text-xs text-gray-500">Toyota Camry • White</p>
-                    </div>
-                  </div>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-semibold text-purple-700">
-                    👩 Ladies Onboard
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                  <span className="font-medium text-gray-900">Koramangala</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                  </svg>
-                  <span className="font-medium text-gray-900">Whitefield</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">Today, 5:30 PM</span>
-                  <span className="font-semibold text-gray-900">₹120 / seat</span>
-                </div>
-                <div className="mt-3 flex items-center justify-between">
-                  <span className="text-xs text-gray-500">3 seats available</span>
-                  <span className="rounded-lg bg-gray-900 px-4 py-1.5 text-xs font-semibold text-white">
-                    Book Ride →
-                  </span>
-                </div>
-              </Card>
+            <div className="mt-7 flex flex-wrap items-center gap-5 text-sm text-(--text-3)">
+              <span>Verified Drivers</span>
+              <span className="h-1 w-1 rounded-full bg-[var(--text-3)]" />
+              <span>Safety Filters</span>
+              <span className="h-1 w-1 rounded-full bg-[var(--text-3)]" />
+              <span>Live Booking Status</span>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Safety Features Section */}
-      <section id="features" className="py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-              Safety, built in
-            </h2>
-            <p className="mt-4 text-lg text-gray-500">
-              Every feature designed with your safety as the top priority.
-            </p>
-          </div>
-          <div id="safety" className="grid gap-6 sm:grid-cols-3">
-            {features.map((f) => (
-              <Card key={f.title} className="text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-100 text-2xl">
-                  {f.icon}
+          <div className="animate-fade-up delay-200 relative">
+            <div className="absolute -left-6 -top-6 h-28 w-28 rounded-full bg-(--primary)/15 blur-2xl" />
+            <div className="absolute -bottom-6 -right-4 h-24 w-24 rounded-full bg-sky-100 blur-xl" />
+            <Card className="relative overflow-hidden border-(--primary)/15">
+              <div className="mb-4 flex items-center justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.08em] text-(--text-3)">Upcoming Ride</p>
+                  <h3 className="mt-1 text-lg font-semibold text-foreground">Indiranagar to HSR Layout</h3>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">{f.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                  {f.description}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 sm:py-28 bg-white border-y border-gray-200">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-              How it works
-            </h2>
-            <p className="mt-4 text-lg text-gray-500">
-              Three simple steps to a safer ride.
-            </p>
-          </div>
-          <div className="relative grid gap-8 sm:grid-cols-3">
-            {/* Dashed connector line — desktop only */}
-            <div className="absolute top-12 left-[20%] right-[20%] hidden h-px border-t-2 border-dashed border-gray-300 sm:block" />
-            {steps.map((s) => (
-              <div key={s.step} className="relative text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-900 text-sm font-bold text-white">
-                  {s.step}
-                </div>
-                <h3 className="text-lg font-bold text-gray-900">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                  {s.description}
-                </p>
+                <span className="rounded-full bg-(--primary-soft) px-3 py-1 text-xs font-semibold text-(--primary)">
+                  Ladies Preferred
+                </span>
               </div>
-            ))}
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="rounded-lg border border-(--border) bg-(--bg-muted) p-3">
+                  <p className="text-xs text-(--text-3)">Driver</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">Ananya R.</p>
+                </div>
+                <div className="rounded-lg border border-(--border) bg-(--bg-muted) p-3">
+                  <p className="text-xs text-(--text-3)">Departure</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">7:30 PM</p>
+                </div>
+                <div className="rounded-lg border border-(--border) bg-(--bg-muted) p-3">
+                  <p className="text-xs text-(--text-3)">Seats</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">2 left</p>
+                </div>
+              </div>
+
+              <div className="mt-5 flex items-center justify-between border-t border-(--border) pt-4">
+                <p className="text-sm text-(--text-2)">Secure fare</p>
+                <p className="text-xl font-bold text-foreground">Rs 140</p>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Vehicle Types Section */}
-      <section className="py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-              Choose your ride
+      <section className="section-muted border-y border-(--border) px-6 py-8">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-6 text-sm font-medium text-(--text-2) sm:gap-12">
+          <span>Trusted by verified commuters</span>
+          <span className="h-1 w-1 rounded-full bg-[var(--text-3)]" />
+          <span>Integrated safety onboarding</span>
+          <span className="h-1 w-1 rounded-full bg-[var(--text-3)]" />
+          <span>Built for women-first comfort</span>
+        </div>
+      </section>
+
+      <section id="why" className="px-6 py-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-10 max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-(--primary)">Why SafeRide</p>
+            <h2 className="mt-3 text-3xl font-bold text-foreground sm:text-4xl">
+              Designed like a concierge, not a chaotic marketplace.
             </h2>
-            <p className="mt-4 text-lg text-gray-500">
-              Multiple vehicle types for every journey.
+            <p className="mt-3 text-(--text-2)">
+              Every surface focuses on speed, clarity, and trust so passengers can decide quickly and travel safely.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {vehicles.map((v) => (
-              <Card key={v.label} className="text-center transition-transform duration-200 hover:-translate-y-1">
-                <div className="text-4xl mb-3">{v.icon}</div>
-                <h3 className="text-base font-bold text-gray-900">{v.label}</h3>
-                <p className="mt-1 text-xs text-gray-500">{v.desc}</p>
-              </Card>
-            ))}
+          <div className="grid gap-4 md:grid-cols-3">
+            <Card>
+              <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-(--primary-soft) text-(--primary)">
+                âœ“
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">Identity-Checked Drivers</h3>
+              <p className="mt-2 text-sm text-(--text-2)">Strict onboarding and verification before rides go live.</p>
+            </Card>
+            <Card>
+              <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-(--primary-soft) text-(--primary)">
+                âš¡
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">Fast Decision UX</h3>
+              <p className="mt-2 text-sm text-(--text-2)">Critical ride details are visible upfront for faster, safer booking.</p>
+            </Card>
+            <Card>
+              <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-(--primary-soft) text-(--primary)">
+                ðŸ›¡
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">Women-First Controls</h3>
+              <p className="mt-2 text-sm text-(--text-2)">Use safety filters and composition signals before confirming.</p>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 sm:py-28 bg-white border-t border-gray-200">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-            Ready to ride safer?
-          </h2>
-          <p className="mt-4 text-lg text-gray-500">
-            Join thousands of passengers and drivers who trust SafeRide.
+      <section id="features" className="section-muted border-y border-(--border) px-6 py-20">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">Feature Highlights</h2>
+          <p className="mt-3 max-w-2xl text-(--text-2)">
+            A clean card-first architecture inspired by high-performance SaaS experiences.
           </p>
-          <div className="mt-8">
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <Card className="animate-fade-up">
+              <h3 className="text-lg font-semibold text-foreground">Composition Visibility</h3>
+              <p className="mt-2 text-sm text-(--text-2)">Preview current passenger mix before choosing your ride.</p>
+            </Card>
+            <Card className="animate-fade-up delay-100">
+              <h3 className="text-lg font-semibold text-foreground">Live Booking States</h3>
+              <p className="mt-2 text-sm text-(--text-2)">Track pending, confirmed, and completed rides in one flow.</p>
+            </Card>
+            <Card className="animate-fade-up delay-200">
+              <h3 className="text-lg font-semibold text-foreground">Driver Availability Controls</h3>
+              <p className="mt-2 text-sm text-(--text-2)">Drivers can instantly set online status and composition mode.</p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section id="safety" className="px-6 py-20">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">Safety, Compared</h2>
+          <p className="mt-3 max-w-2xl text-(--text-2)">The difference between manual coordination and SafeRide operations.</p>
+
+          <div className="mt-8 grid gap-4 lg:grid-cols-2">
+            <Card className="border-red-100 bg-red-50/70">
+              <p className="text-sm font-semibold text-red-700">Manual Ride Coordination</p>
+              <ul className="mt-4 space-y-3 text-sm text-red-900/85">
+                <li>Unclear passenger composition before pickup.</li>
+                <li>No consistent verification trail.</li>
+                <li>Scattered messages and uncertain status updates.</li>
+              </ul>
+            </Card>
+
+            <Card className="border-(--primary)/15 bg-(--primary-soft)/35">
+              <p className="text-sm font-semibold text-(--primary)">With SafeRide</p>
+              <ul className="mt-4 space-y-3 text-sm text-foreground">
+                <li>Composition-aware booking before confirmation.</li>
+                <li>Structured driver onboarding and verification.</li>
+                <li>Single source of truth for booking status and actions.</li>
+              </ul>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section id="app-preview" className="section-muted border-y border-(--border) px-6 py-20">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-(--primary)">Mobile Preview</p>
+            <h2 className="mt-3 text-3xl font-bold text-foreground sm:text-4xl">
+              A calm, secure app experience in your pocket.
+            </h2>
+            <p className="mt-3 text-(--text-2)">
+              Search rides, apply safety filters, and confirm bookings with a touch-first interface built for confidence.
+            </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Link href="/register">
+                <Button className="px-6 py-3">Create Free Account</Button>
+              </Link>
+              <Link href="/login">
+                <Button variant="secondary" className="px-6 py-3">Sign In</Button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex items-end justify-center gap-5">
+            <div className="animate-float rounded-[28px] border border-(--border) bg-white p-3 shadow-[0_16px_40px_rgba(20,27,52,0.10)]">
+              <div className="h-[280px] w-[150px] rounded-[22px] border border-(--border) bg-(--bg-muted) p-3">
+                <div className="rounded-lg bg-white p-2 text-xs text-(--text-3)">Safety Filter</div>
+                <div className="mt-2 rounded-lg bg-(--primary-soft) p-2 text-xs font-semibold text-(--primary)">Ladies Preferred</div>
+                <div className="mt-3 rounded-lg bg-white p-2 text-xs text-(--text-2)">Ride Confirmed</div>
+              </div>
+            </div>
+
+            <div className="rounded-[28px] border border-(--border) bg-white p-3 shadow-[0_16px_40px_rgba(20,27,52,0.10)]">
+              <div className="h-[320px] w-[170px] rounded-[22px] border border-(--border) bg-(--bg-muted) p-3">
+                <div className="rounded-lg bg-white p-3">
+                  <p className="text-xs text-(--text-3)">Upcoming Ride</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">HSR Layout</p>
+                </div>
+                <div className="mt-3 rounded-lg bg-white p-3">
+                  <p className="text-xs text-(--text-3)">Driver</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">Ananya R.</p>
+                </div>
+                <div className="mt-3 rounded-lg bg-(--primary) p-3 text-center text-sm font-semibold text-white">
+                  Track Booking
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-(--primary)/20 bg-(--primary-soft)/45 px-6 py-10 text-center sm:px-12">
+          <h2 className="text-3xl font-bold text-foreground">Ready to ride safer?</h2>
+          <p className="mt-3 text-(--text-2)">
+            Join SafeRide and start booking with clarity, trust, and women-first confidence.
+          </p>
+          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href="/register">
-              <Button variant="primary" className="px-10 py-3 text-base">
-                Get Started — it&apos;s free
-              </Button>
+              <Button className="px-6 py-3">Join Now</Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="secondary" className="px-6 py-3">Sign In</Button>
             </Link>
           </div>
         </div>

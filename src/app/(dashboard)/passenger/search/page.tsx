@@ -59,8 +59,8 @@ export default function SearchRidesPage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Search Rides</h1>
-        <p className="mt-1 text-gray-500">
+        <h1 className="text-3xl font-bold text-foreground">Search Rides</h1>
+        <p className="mt-1 text-(--text-2)">
           Find safe, affordable shared rides.
         </p>
       </div>
@@ -92,14 +92,14 @@ export default function SearchRidesPage() {
           />
           <SafetyFilter value={safetyFilter} onChange={setSafetyFilter} />
           <Button type="submit" isLoading={loading}>
-            🔍 Search Rides
+            Ã°Å¸â€Â Search Rides
           </Button>
         </form>
       </Card>
 
       {searched && (
         <div>
-          <h2 className="mb-4 text-xl font-bold text-gray-900">
+          <h2 className="mb-4 text-xl font-bold text-foreground">
             {results.length > 0
               ? `${results.length} ride${results.length > 1 ? "s" : ""} found`
               : "No rides found"}
@@ -109,19 +109,19 @@ export default function SearchRidesPage() {
               <Card key={ride.id}>
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-sm font-bold text-gray-600">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-(--bg-muted) text-sm font-bold text-(--text-2)">
                       {ride.driver.user.name
                         .split(" ")
                         .map((n) => n[0])
                         .join("")}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-gray-900">
+                      <p className="text-sm font-semibold text-foreground">
                         {ride.driver.user.name}
                       </p>
                       {ride.driver.vehicle && (
-                        <p className="text-xs text-gray-500">
-                          {ride.driver.vehicle.model} •{" "}
+                        <p className="text-xs text-(--text-2)">
+                          {ride.driver.vehicle.model} Ã¢â‚¬Â¢{" "}
                           {ride.driver.vehicle.color}
                         </p>
                       )}
@@ -131,8 +131,8 @@ export default function SearchRidesPage() {
                     composition={ride.currentPassengerComposition}
                   />
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                  <span className="font-medium text-gray-900">
+                <div className="flex items-center gap-2 text-sm text-(--text-2) mb-2">
+                  <span className="font-medium text-foreground">
                     {ride.source}
                   </span>
                   <svg
@@ -148,20 +148,20 @@ export default function SearchRidesPage() {
                     <path d="M5 12h14" />
                     <path d="m12 5 7 7-7 7" />
                   </svg>
-                  <span className="font-medium text-gray-900">
+                  <span className="font-medium text-foreground">
                     {ride.destination}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm mb-3">
-                  <span className="text-gray-500">
+                  <span className="text-(--text-2)">
                     {new Date(ride.scheduledAt).toLocaleString()}
                   </span>
-                  <span className="font-semibold text-gray-900">
-                    ₹{ride.fare} / seat
+                  <span className="font-semibold text-foreground">
+                    Ã¢â€šÂ¹{ride.fare} / seat
                   </span>
                 </div>
                 {ride.notes && (
-                  <p className="text-xs text-gray-500 mb-3 italic">
+                  <p className="text-xs text-(--text-2) mb-3 italic">
                     &quot;{ride.notes}&quot;
                   </p>
                 )}
@@ -171,7 +171,7 @@ export default function SearchRidesPage() {
                   </Badge>
                   <Link href={`/passenger/book/${ride.id}`}>
                     <Button variant="primary" className="text-xs px-4 py-2">
-                      Book Ride →
+                      Book Ride Ã¢â€ â€™
                     </Button>
                   </Link>
                 </div>

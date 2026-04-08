@@ -49,23 +49,23 @@ export default async function PassengerDashboard() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
-          Welcome, {user.name?.split(" ")[0]} 👋
+        <h1 className="text-3xl font-bold text-foreground">
+          Welcome, {user.name?.split(" ")[0]} Ã°Å¸â€˜â€¹
         </h1>
-        <p className="mt-1 text-gray-500">Here&apos;s your ride overview.</p>
+        <p className="mt-1 text-(--text-2)">Here&apos;s your ride overview.</p>
       </div>
 
       {/* Quick stats */}
       <div className="mb-8 grid gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-sm text-gray-500">Total Rides</p>
-          <p className="mt-1 text-3xl font-bold text-gray-900">
+          <p className="text-sm text-(--text-2)">Total Rides</p>
+          <p className="mt-1 text-3xl font-bold text-foreground">
             {totalBookings}
           </p>
         </Card>
         <Card>
-          <p className="text-sm text-gray-500">Upcoming Bookings</p>
-          <p className="mt-1 text-3xl font-bold text-gray-900">
+          <p className="text-sm text-(--text-2)">Upcoming Bookings</p>
+          <p className="mt-1 text-3xl font-bold text-foreground">
             {upcomingBookings}
           </p>
         </Card>
@@ -74,18 +74,18 @@ export default async function PassengerDashboard() {
       {/* Quick action */}
       <div className="mb-8">
         <Link href="/passenger/search">
-          <Button variant="primary">🔍 Search for a Ride</Button>
+          <Button variant="primary">Ã°Å¸â€Â Search for a Ride</Button>
         </Link>
       </div>
 
       {/* Recent bookings */}
       <div>
-        <h2 className="mb-4 text-xl font-bold text-gray-900">
+        <h2 className="mb-4 text-xl font-bold text-foreground">
           Recent Bookings
         </h2>
         {!passenger || passenger.bookings.length === 0 ? (
           <Card>
-            <p className="text-center text-sm text-gray-500 py-6">
+            <p className="text-center text-sm text-(--text-2) py-6">
               No bookings yet. Start by searching for a ride!
             </p>
           </Card>
@@ -95,11 +95,11 @@ export default async function PassengerDashboard() {
               <Card key={booking.id}>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 text-sm">
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-foreground">
                       {booking.ride.source}
                     </span>
-                    <span className="text-gray-400">→</span>
-                    <span className="font-semibold text-gray-900">
+                    <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                    <span className="font-semibold text-foreground">
                       {booking.ride.destination}
                     </span>
                   </div>
@@ -107,10 +107,10 @@ export default async function PassengerDashboard() {
                     {booking.status}
                   </Badge>
                 </div>
-                <p className="text-xs text-gray-500">
-                  Driver: {booking.ride.driver.user.name} •{" "}
-                  {new Date(booking.ride.scheduledAt).toLocaleDateString()} •{" "}
-                  ₹{booking.ride.fare}
+                <p className="text-xs text-(--text-2)">
+                  Driver: {booking.ride.driver.user.name} Ã¢â‚¬Â¢{" "}
+                  {new Date(booking.ride.scheduledAt).toLocaleDateString()} Ã¢â‚¬Â¢{" "}
+                  Ã¢â€šÂ¹{booking.ride.fare}
                 </p>
               </Card>
             ))}

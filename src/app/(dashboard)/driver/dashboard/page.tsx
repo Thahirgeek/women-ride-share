@@ -64,7 +64,7 @@ export default function DriverDashboard() {
   if (!profile) {
     return (
       <Card>
-        <p className="text-center text-gray-500 py-6">
+        <p className="text-center text-(--text-2) py-6">
           Complete your onboarding to access the driver dashboard.
         </p>
       </Card>
@@ -81,8 +81,8 @@ export default function DriverDashboard() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Driver Dashboard</h1>
-        <p className="mt-1 text-gray-500">Manage your rides and availability.</p>
+        <h1 className="text-3xl font-bold text-foreground">Driver Dashboard</h1>
+        <p className="mt-1 text-(--text-2)">Manage your rides and availability.</p>
       </div>
 
       {/* Availability + Composition controls */}
@@ -90,9 +90,9 @@ export default function DriverDashboard() {
         <Card>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Status</p>
-              <p className="mt-1 text-lg font-bold text-gray-900">
-                {profile.isAvailable ? "🟢 Available" : "🔴 Offline"}
+              <p className="text-sm font-medium text-(--text-2)">Status</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {profile.isAvailable ? "Ã°Å¸Å¸Â¢ Available" : "Ã°Å¸â€Â´ Offline"}
               </p>
             </div>
             <button
@@ -117,10 +117,10 @@ export default function DriverDashboard() {
             value={profile.currentPassengerComposition}
             onChange={(e) => updateComposition(e.target.value)}
             options={[
-              { value: "SOLO", label: "🚗 Solo" },
-              { value: "LADIES", label: "👩 Ladies" },
-              { value: "FAMILY", label: "👨‍👩‍👧 Family" },
-              { value: "MIXED", label: "👥 Mixed" },
+              { value: "SOLO", label: "Ã°Å¸Å¡â€” Solo" },
+              { value: "LADIES", label: "Ã°Å¸â€˜Â© Ladies" },
+              { value: "FAMILY", label: "Ã°Å¸â€˜Â¨Ã¢â‚¬ÂÃ°Å¸â€˜Â©Ã¢â‚¬ÂÃ°Å¸â€˜Â§ Family" },
+              { value: "MIXED", label: "Ã°Å¸â€˜Â¥ Mixed" },
             ]}
           />
         </Card>
@@ -129,18 +129,18 @@ export default function DriverDashboard() {
       {/* Stats */}
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
         <Card>
-          <p className="text-sm text-gray-500">Total Rides</p>
-          <p className="mt-1 text-3xl font-bold text-gray-900">
+          <p className="text-sm text-(--text-2)">Total Rides</p>
+          <p className="mt-1 text-3xl font-bold text-foreground">
             {profile._count?.rides ?? profile.rides?.length ?? 0}
           </p>
         </Card>
         <Card>
-          <p className="text-sm text-gray-500">Active Rides</p>
-          <p className="mt-1 text-3xl font-bold text-gray-900">{activeRides}</p>
+          <p className="text-sm text-(--text-2)">Active Rides</p>
+          <p className="mt-1 text-3xl font-bold text-foreground">{activeRides}</p>
         </Card>
         <Card>
-          <p className="text-sm text-gray-500">Completed</p>
-          <p className="mt-1 text-3xl font-bold text-gray-900">{completedRides}</p>
+          <p className="text-sm text-(--text-2)">Completed</p>
+          <p className="mt-1 text-3xl font-bold text-foreground">{completedRides}</p>
         </Card>
       </div>
 
@@ -148,12 +148,12 @@ export default function DriverDashboard() {
       {!profile.isVerified && (
         <Card className="mb-8">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">⏳</span>
+            <span className="text-2xl">Ã¢ÂÂ³</span>
             <div>
               <p className="text-sm font-semibold text-amber-700">
                 Verification Pending
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-(--text-2)">
                 An admin will verify your profile soon.
               </p>
             </div>
@@ -162,10 +162,10 @@ export default function DriverDashboard() {
       )}
 
       {/* Recent rides */}
-      <h2 className="mb-4 text-xl font-bold text-gray-900">Recent Rides</h2>
+      <h2 className="mb-4 text-xl font-bold text-foreground">Recent Rides</h2>
       {!profile.rides || profile.rides.length === 0 ? (
         <Card>
-          <p className="text-center text-sm text-gray-500 py-6">
+          <p className="text-center text-sm text-(--text-2) py-6">
             No rides created yet.
           </p>
         </Card>
@@ -176,15 +176,15 @@ export default function DriverDashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2 text-sm">
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-foreground">
                       {ride.source}
                     </span>
-                    <span className="text-gray-400">→</span>
-                    <span className="font-semibold text-gray-900">
+                    <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                    <span className="font-semibold text-foreground">
                       {ride.destination}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-(--text-2) mt-1">
                     {new Date(ride.scheduledAt).toLocaleString()}
                   </p>
                 </div>

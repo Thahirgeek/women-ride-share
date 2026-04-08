@@ -75,8 +75,8 @@ export default function DriverRidesPage() {
     <>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">My Rides</h1>
-          <p className="mt-1 text-gray-500">Manage your published rides.</p>
+          <h1 className="text-3xl font-bold text-foreground">My Rides</h1>
+          <p className="mt-1 text-(--text-2)">Manage your published rides.</p>
         </div>
         <Link href="/driver/rides/create">
           <Button>+ Create Ride</Button>
@@ -85,7 +85,7 @@ export default function DriverRidesPage() {
 
       {rides.length === 0 ? (
         <Card>
-          <p className="text-center text-sm text-gray-500 py-6">
+          <p className="text-center text-sm text-(--text-2) py-6">
             No rides created yet.
           </p>
         </Card>
@@ -96,16 +96,16 @@ export default function DriverRidesPage() {
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <div className="flex items-center gap-2 text-sm mb-1">
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-foreground">
                       {ride.source}
                     </span>
-                    <span className="text-gray-400">→</span>
-                    <span className="font-semibold text-gray-900">
+                    <span className="text-(--text-3)">Ã¢â€ â€™</span>
+                    <span className="font-semibold text-foreground">
                       {ride.destination}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    {new Date(ride.scheduledAt).toLocaleString()} • ₹{ride.fare}
+                  <p className="text-xs text-(--text-2)">
+                    {new Date(ride.scheduledAt).toLocaleString()} Ã¢â‚¬Â¢ Ã¢â€šÂ¹{ride.fare}
                     /seat
                   </p>
                 </div>
@@ -117,7 +117,7 @@ export default function DriverRidesPage() {
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-(--text-2)">
                   {ride.totalSeats - ride.availableSeats} / {ride.totalSeats}{" "}
                   seats filled
                 </span>

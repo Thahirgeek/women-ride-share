@@ -19,14 +19,14 @@ export default function Select({
       {label && (
         <label
           htmlFor={id}
-          className="text-sm font-medium text-gray-700"
+          className="text-sm font-medium text-(--text-2)"
         >
           {label}
         </label>
       )}
       <select
         id={id}
-        className={`rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 outline-none transition-all duration-200 focus:border-gray-500 focus:ring-2 focus:ring-gray-200 disabled:bg-gray-50 disabled:text-gray-500 ${error ? "border-red-400 focus:border-red-500 focus:ring-red-100" : ""} ${className}`}
+        className={`rounded-lg border border-(--border) bg-white px-3.5 py-2.5 text-sm text-foreground outline-none transition-all duration-200 focus:border-(--primary)/55 focus:ring-2 focus:ring-(--primary)/15 disabled:bg-(--bg-muted) disabled:text-(--text-3) ${error ? "border-(--danger)/45 focus:border-(--danger) focus:ring-(--danger)/20" : ""} ${className}`}
         {...props}
       >
         {options.map((opt) => (
@@ -35,7 +35,7 @@ export default function Select({
           </option>
         ))}
       </select>
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-(--danger)">{error}</p>}
     </div>
   );
 }

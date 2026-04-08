@@ -16,65 +16,56 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-gray-200/60 bg-white/80 backdrop-blur-xl"
-          : "bg-transparent"
+      className={`fixed left-0 right-0 top-0 z-50 border-b border-(--border) transition-colors ${
+        scrolled ? "bg-white/85 backdrop-blur-xl" : "bg-white/70 backdrop-blur-xl"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-900">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
-            </svg>
-          </div>
-          <span className="text-lg font-bold text-gray-900">SafeRide</span>
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-(--primary) text-sm font-bold text-white">
+            S
+          </span>
+          <span className="text-lg font-bold tracking-tight text-foreground">SafeRide</span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
           <a
+            href="#why"
+            className="text-sm font-medium text-(--text-2) hover:text-foreground"
+          >
+            Why SafeRide
+          </a>
+          <a
             href="#features"
-            className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+            className="text-sm font-medium text-(--text-2) hover:text-foreground"
           >
             Features
           </a>
           <a
-            href="#how-it-works"
-            className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
-          >
-            How it works
-          </a>
-          <a
             href="#safety"
-            className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+            className="text-sm font-medium text-(--text-2) hover:text-foreground"
           >
             Safety
+          </a>
+          <a
+            href="#app-preview"
+            className="text-sm font-medium text-(--text-2) hover:text-foreground"
+          >
+            App Preview
           </a>
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
           <Link href="/login">
-            <Button variant="secondary">Log in</Button>
+            <Button variant="secondary" className="px-4 py-2.5 text-xs">Log in</Button>
           </Link>
           <Link href="/register">
-            <Button variant="primary">Get Started</Button>
+            <Button variant="primary" className="px-5 py-2.5">Join Now</Button>
           </Link>
         </div>
 
         <button
-          className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-gray-100 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-(--border) bg-white text-foreground hover:border-(--primary)/25 md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -104,25 +95,25 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-gray-100 bg-white/95 backdrop-blur-xl md:hidden">
+        <div className="border-t border-(--border) bg-white md:hidden">
           <div className="flex flex-col gap-1 px-6 py-4">
             <a
+              href="#why"
+              className="rounded-lg px-3 py-2 text-sm text-(--text-2) hover:bg-(--bg-muted)"
+              onClick={() => setMobileOpen(false)}
+            >
+              Why SafeRide
+            </a>
+            <a
               href="#features"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
+              className="rounded-lg px-3 py-2 text-sm text-(--text-2) hover:bg-(--bg-muted)"
               onClick={() => setMobileOpen(false)}
             >
               Features
             </a>
             <a
-              href="#how-it-works"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
-              onClick={() => setMobileOpen(false)}
-            >
-              How it works
-            </a>
-            <a
               href="#safety"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
+              className="rounded-lg px-3 py-2 text-sm text-(--text-2) hover:bg-(--bg-muted)"
               onClick={() => setMobileOpen(false)}
             >
               Safety
@@ -135,7 +126,7 @@ export default function Navbar() {
               </Link>
               <Link href="/register">
                 <Button variant="primary" fullWidth>
-                  Get Started
+                  Join Now
                 </Button>
               </Link>
             </div>
