@@ -78,9 +78,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-8">
+    <div className="mx-auto w-120 px-6 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Profile</h1>
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Profile</h1>
         <p className="mt-1 text-(--text-2)">Manage your account details.</p>
       </div>
 
@@ -179,7 +179,7 @@ export default function ProfilePage() {
         </Card>
       )}
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 font-[inter-bold]">
         <Button onClick={handleSave} isLoading={loading}>
           Save Changes
         </Button>

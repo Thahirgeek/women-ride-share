@@ -130,7 +130,7 @@ export default function AdminDashboard() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Admin Dashboard</h1>
         <p className="mt-1 text-(--text-2)">
           Manage users, rides, and drivers.
         </p>
@@ -149,14 +149,14 @@ export default function AdminDashboard() {
       )}
 
       {/* Tabs */}
-      <div className="mb-6 flex gap-1 rounded-lg bg-(--bg-muted) p-1 w-fit">
+      <div className="mb-6 flex gap-1 rounded-lg bg-(--bg-muted) border border-black/15 p-1 w-fit">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`rounded-md px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
+            className={`rounded-sm px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
               tab === t.key
-                ? "bg-white text-foreground shadow-sm"
+                ? "bg-black/70 text-white shadow-sm"
                 : "text-(--text-2) hover:text-foreground"
             }`}
           >
@@ -244,7 +244,14 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {drivers.map((d) => (
+                    {drivers.length === 0 ? (
+                      <tr>
+                        <td colSpan={5} className="py-6 text-center text-(--text-2)">
+                          No drivers found.
+                        </td>
+                      </tr>
+                    ) : (
+                    drivers.map((d) => (
                       <tr key={d.id} className="border-b border-(--border)">
                         <td className="py-3 font-medium text-foreground">{d.user.name}</td>
                         <td className="py-3 text-(--text-2)">{d.licenseNumber || "-"}</td>
@@ -282,7 +289,7 @@ export default function AdminDashboard() {
                           </div>
                         </td>
                       </tr>
-                    ))}
+                    )))}
                   </tbody>
                 </table>
               </div>

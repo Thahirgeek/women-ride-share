@@ -166,11 +166,11 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
         <div className="flex h-full flex-col">
           <div className="border-b border-(--border) px-6 py-5">
             <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-(--primary) text-sm font-bold text-white">
-                S
-              </div>
-              <span className="text-lg font-bold text-foreground">SafeRide</span>
-            </Link>
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white">
+          <img src="/8442672.svg" className="bg-transparent"></img>
+</div>
+          <span className="text-lg font-bold tracking-tight text-foreground">SafeRide</span>
+        </Link>
           </div>
           <nav className="flex-1 px-4 py-4">
             <ul className="flex flex-col gap-1">

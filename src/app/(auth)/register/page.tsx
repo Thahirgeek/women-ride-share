@@ -56,7 +56,7 @@ export default function RegisterPage() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-(--primary) text-sm font-bold text-white">S</div>
           <span className="text-lg font-bold text-foreground">SafeRide</span>
         </Link>
-        <h1 className="text-3xl font-bold text-foreground">Create an account</h1>
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Create an account</h1>
         <p className="mt-2 text-sm text-(--text-2)">
           Join SafeRide for safer shared rides
         </p>

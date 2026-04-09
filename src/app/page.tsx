@@ -30,13 +30,13 @@ export default function Home() {
       <section className="px-6 pb-20 pt-32 sm:pt-36">
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
           <div>
-            <span className="pill animate-fade-up inline-flex px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.08em]">
+            <span className="pill animate-fade-up inline-flex px-4 py-1.5 text-xs font-semibold uppercase tracking-widest">
               The Frictionless Concierge
             </span>
-            <h1 className="animate-fade-up delay-100 mt-5 text-4xl font-[inter] leading-tight text-foreground sm:text-5xl lg:text-7xl">
+            <h1 className="animate-fade-up delay-100 mt-5 text-4xl font-[inter-semibold] leading-tight tracking-tighter text-foreground sm:text-5xl lg:text-7xl">
               The New Era of
               <br />
-              Safe Rides for <span className="font-[instrumentserif]">Women</span>
+              Safe Rides for <span className="font-[instrumentserif-italic] text-8xl">Women</span>
             </h1>
             <p className="animate-fade-up delay-200 mt-5 max-w-xl text-base text-(--text-2) sm:text-lg">
               SafeRide pairs every booking with verified drivers, transparent ride composition,

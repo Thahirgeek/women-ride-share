@@ -81,7 +81,7 @@ export default function DriverDashboard() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Driver Dashboard</h1>
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Driver Dashboard</h1>
         <p className="mt-1 text-(--text-2)">Manage your rides and availability.</p>
       </div>
 
@@ -91,7 +91,7 @@ export default function DriverDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-(--text-2)">Status</p>
-              <p className="mt-1 text-lg font-bold text-foreground">
+              <p className="mt-1 text-lg font-[inter-medium] text-foreground">
                 {profile.isAvailable ? "Available" : "Offline"}
               </p>
             </div>
@@ -150,7 +150,7 @@ export default function DriverDashboard() {
           <div className="flex items-center gap-3">
             <span className="text-2xl">...</span>
             <div>
-              <p className="text-sm font-semibold text-amber-700">
+              <p className="text-sm font-[inter-medium] text-red-700">
                 Verification Pending
               </p>
               <p className="text-xs text-(--text-2)">
@@ -162,7 +162,7 @@ export default function DriverDashboard() {
       )}
 
       {/* Recent rides */}
-      <h2 className="mb-4 text-xl font-bold text-foreground">Recent Rides</h2>
+      <h2 className="mb-4 text-xl font-[inter-semibold] text-foreground">Recent Rides</h2>
       {!profile.rides || profile.rides.length === 0 ? (
         <Card>
           <p className="text-center text-sm text-(--text-2) py-6">

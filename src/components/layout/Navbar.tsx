@@ -16,40 +16,38 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed left-0 right-0 top-0 z-50 border-b border-(--border) transition-colors ${
-        scrolled ? "bg-white/85 backdrop-blur-xl" : "bg-white/70 backdrop-blur-xl"
-      }`}
+      className={`fixed left-0 right-0 mx-auto rounded-lg top-5 w-[60%] z-50 px-6 py-1 border-2 border-white bg-[#f6f6f6]/50 shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] transition-colors backdrop-blur-xl`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
         <Link href="/" className="flex items-center gap-2">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-(--primary) text-sm font-bold text-white">
-            S
-          </span>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white">
+          <img src="/8442672.svg" className="bg-transparent"></img>
+</div>
           <span className="text-lg font-bold tracking-tight text-foreground">SafeRide</span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
           <a
             href="#why"
-            className="text-sm font-medium text-(--text-2) hover:text-foreground"
+            className="text-sm font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] px-2 py-1 rounded-md transition-colors"
           >
             Why SafeRide
           </a>
           <a
             href="#features"
-            className="text-sm font-medium text-(--text-2) hover:text-foreground"
+            className="text-sm font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] px-2 py-1 rounded-md transition-colors"
           >
             Features
           </a>
           <a
             href="#safety"
-            className="text-sm font-medium text-(--text-2) hover:text-foreground"
+            className="text-sm font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] px-2 py-1 rounded-md transition-colors"
           >
             Safety
           </a>
           <a
             href="#app-preview"
-            className="text-sm font-medium text-(--text-2) hover:text-foreground"
+            className="text-sm font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] px-2 py-1 rounded-md transition-colors"
           >
             App Preview
           </a>
