@@ -6,19 +6,23 @@
 
 @font-face {
   font-family: instrumentsans-regular;
-  src: url(../../public/fonts/Instrument_Sans/static/InstrumentSans-Regular.ttf);
+  src: url('/fonts/Instrument_Sans/static/InstrumentSans-Regular.ttf');
 }
 @font-face {
   font-family: instrumentsans-medium;
-  src: url(../../public/fonts/Instrument_Sans/static/InstrumentSans-Medium.ttf);
+  src: url('/fonts/Instrument_Sans/static/InstrumentSans-Medium.ttf');
 }
 @font-face {
   font-family: instrumentsans-bold;
-  src: url(../../public/fonts/Instrument_Sans/static/InstrumentSans-Bold.ttf);
+  src: url('/fonts/Instrument_Sans/static/InstrumentSans-Bold.ttf');
+}
+@font-face {
+  font-family: inter;
+  src: url(../../public/fonts/Inter/Inter_24pt-Bold.ttf);
 }
 @font-face {
   font-family: instrumentserif;
-  src: url(../../public/fonts/InstrumentSerif/InstrumentSerif-Regular.ttf);
+  src: url('/fonts/InstrumentSerif/InstrumentSerif-Regular.ttf');
 }
 
 @theme inline {

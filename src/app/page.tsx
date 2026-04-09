@@ -5,10 +5,26 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import ColorBends from "@/components/ColorBends";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="relative min-h-screen bg-transparent">
+      <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
+        <ColorBends
+          rotation={45}
+          speed={0.15}
+          colors={["#5227FF", "#9efdff", "#4c00ff"]}
+          transparent
+          autoRotate={0.5}
+          scale={1.3}
+          frequency={1}
+          warpStrength={1}
+          mouseInfluence={0.2}
+          parallax={0.5}
+          noise={0.1}
+        />
+      </div>
       <Navbar />
 
       <section className="px-6 pb-20 pt-32 sm:pt-36">
@@ -17,10 +33,10 @@ export default function Home() {
             <span className="pill animate-fade-up inline-flex px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.08em]">
               The Frictionless Concierge
             </span>
-            <h1 className="animate-fade-up delay-100 mt-5 text-4xl font-extrabold leading-tight text-foreground sm:text-5xl lg:text-6xl">
+            <h1 className="animate-fade-up delay-100 mt-5 text-4xl font-[inter] leading-tight text-foreground sm:text-5xl lg:text-7xl">
               The New Era of
               <br />
-              Safe Rides for Women
+              Safe Rides for <span className="font-[instrumentserif]">Women</span>
             </h1>
             <p className="animate-fade-up delay-200 mt-5 max-w-xl text-base text-(--text-2) sm:text-lg">
               SafeRide pairs every booking with verified drivers, transparent ride composition,
@@ -83,7 +99,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-muted border-y border-(--border) px-6 py-8">
+      <section className="border-y border-(--border) px-6 py-8">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-6 text-sm font-medium text-(--text-2) sm:gap-12">
           <span>Trusted by verified commuters</span>
           <span className="h-1 w-1 rounded-full bg-(--text-3)" />
