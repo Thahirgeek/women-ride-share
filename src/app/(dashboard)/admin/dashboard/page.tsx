@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
+import BasicModal from "@/components/modal";
 
 type Tab = "users" | "rides" | "drivers";
 
@@ -42,6 +43,11 @@ export default function AdminDashboard() {
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [loading, setLoading] = useState(true);
   const [verifyLoadingId, setVerifyLoadingId] = useState<string | null>(null);
+  const [pendingVerification, setPendingVerification] = useState<{
+    driverId: string;
+    driverName: string;
+    action: "VERIFY" | "REVOKE";
+  } | null>(null);
   const [actionMessage, setActionMessage] = useState<{
     type: "success" | "error";
     text: string;
@@ -74,13 +80,6 @@ export default function AdminDashboard() {
     action: "VERIFY" | "REVOKE"
   ) => {
     const isVerify = action === "VERIFY";
-    const confirmed = window.confirm(
-      isVerify
-        ? "Verify this driver? They will be able to publish rides immediately."
-        : "Revoke this driver? Their OPEN rides will be cancelled."
-    );
-
-    if (!confirmed) return;
 
     setActionMessage(null);
     setVerifyLoadingId(driverId);
@@ -121,6 +120,29 @@ export default function AdminDashboard() {
     }
   };
 
+  const requestVerificationAction = (
+    driverId: string,
+    driverName: string,
+    action: "VERIFY" | "REVOKE"
+  ) => {
+    setPendingVerification({ driverId, driverName, action });
+  };
+
+  const closeVerificationModal = () => {
+    if (verifyLoadingId) return;
+    setPendingVerification(null);
+  };
+
+  const confirmVerificationAction = async () => {
+    if (!pendingVerification) return;
+
+    await updateVerification(
+      pendingVerification.driverId,
+      pendingVerification.action
+    );
+    setPendingVerification(null);
+  };
+
   const tabs: { key: Tab; label: string }[] = [
     { key: "users", label: "Users" },
     { key: "rides", label: "Rides" },
@@ -129,6 +151,50 @@ export default function AdminDashboard() {
 
   return (
     <>
+      <BasicModal
+        isOpen={!!pendingVerification}
+        onClose={closeVerificationModal}
+        title={
+          pendingVerification?.action === "VERIFY"
+            ? "Verify Driver"
+            : "Revoke Driver"
+        }
+        size="md"
+      >
+        <div className="space-y-5">
+          <p className="text-sm text-(--text-2)">
+            {pendingVerification?.action === "VERIFY"
+              ? `Verify ${pendingVerification.driverName}? They will be able to publish rides immediately.`
+              : `Revoke ${pendingVerification?.driverName}? Their OPEN rides will be cancelled.`}
+          </p>
+
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="secondary"
+              onClick={closeVerificationModal}
+              disabled={!!verifyLoadingId}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant={
+                pendingVerification?.action === "VERIFY" ? "primary" : "danger"
+              }
+              onClick={confirmVerificationAction}
+              isLoading={
+                pendingVerification
+                  ? verifyLoadingId === pendingVerification.driverId
+                  : false
+              }
+            >
+              {pendingVerification?.action === "VERIFY"
+                ? "Confirm Verify"
+                : "Confirm Revoke"}
+            </Button>
+          </div>
+        </div>
+      </BasicModal>
+
       <div className="mb-8">
         <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Admin Dashboard</h1>
         <p className="mt-1 text-(--text-2)">
@@ -273,7 +339,13 @@ export default function AdminDashboard() {
                                 variant="danger"
                                 className="px-3 py-1 text-xs"
                                 isLoading={verifyLoadingId === d.id}
-                                onClick={() => updateVerification(d.id, "REVOKE")}
+                                onClick={() =>
+                                  requestVerificationAction(
+                                    d.id,
+                                    d.user.name,
+                                    "REVOKE"
+                                  )
+                                }
                               >
                                 Revoke
                               </Button>
@@ -281,7 +353,13 @@ export default function AdminDashboard() {
                               <Button
                                 className="px-3 py-1 text-xs"
                                 isLoading={verifyLoadingId === d.id}
-                                onClick={() => updateVerification(d.id, "VERIFY")}
+                                onClick={() =>
+                                  requestVerificationAction(
+                                    d.id,
+                                    d.user.name,
+                                    "VERIFY"
+                                  )
+                                }
                               >
                                 Verify
                               </Button>
