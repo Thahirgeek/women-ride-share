@@ -7,7 +7,7 @@ import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
-import Spinner from "@/components/ui/Spinner";
+import RippleWaveLoader from "@/components/RippleWaveLoader";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -75,7 +75,7 @@ export default function OnboardingPage() {
   if (isPending) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <Spinner className="h-8 w-8" />
+        <RippleWaveLoader />
       </div>
     );
   }

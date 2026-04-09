@@ -62,13 +62,12 @@ export default function CreateRidePage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Create a Ride</h1>
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Create a Ride</h1>
         <p className="mt-1 text-(--text-2)">
           Publish a new ride for passengers to book.
         </p>
       </div>
-
-      <Card className="max-w-2xl">
+      <Card className="max-w-full">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {error && (
             <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">

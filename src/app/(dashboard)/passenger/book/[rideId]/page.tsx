@@ -6,7 +6,7 @@ import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import CompositionBadge from "@/components/safety/CompositionBadge";
-import Spinner from "@/components/ui/Spinner";
+import RippleWaveLoader from "@/components/RippleWaveLoader";
 
 interface RideDetails {
   id: string;
@@ -82,7 +82,7 @@ export default function BookRidePage({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Spinner className="h-8 w-8" />
+        <RippleWaveLoader />
       </div>
     );
   }
