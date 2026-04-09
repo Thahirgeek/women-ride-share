@@ -20,6 +20,7 @@ interface RideResult {
   currentPassengerComposition: string;
   notes?: string;
   driver: {
+    isVerified: boolean;
     user: { name: string; gender: string };
     vehicle?: { vehicleType: string; model: string; color: string };
   };
@@ -116,9 +117,14 @@ export default function SearchRidesPage() {
                         .join("")}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground">
-                        {ride.driver.user.name}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-semibold text-foreground">
+                          {ride.driver.user.name}
+                        </p>
+                        {ride.driver.isVerified && (
+                          <Badge variant="success">Verified</Badge>
+                        )}
+                      </div>
                       {ride.driver.vehicle && (
                         <p className="text-xs text-(--text-2)">
                           {ride.driver.vehicle.model} -{" "}

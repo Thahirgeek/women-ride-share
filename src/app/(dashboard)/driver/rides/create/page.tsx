@@ -42,7 +42,13 @@ export default function CreateRidePage() {
 
       if (!res.ok) {
         const data = await res.json();
-        setError(data.error || "Failed to create ride");
+        if (data.code === "DRIVER_NOT_VERIFIED") {
+          setError(
+            "Your driver profile is not verified yet. An admin must verify your account before you can publish rides."
+          );
+        } else {
+          setError(data.error || "Failed to create ride");
+        }
       } else {
         router.push("/driver/rides");
       }

@@ -154,7 +154,7 @@ export default function DriverDashboard() {
                 Verification Pending
               </p>
               <p className="text-xs text-(--text-2)">
-                An admin will verify your profile soon.
+                Your profile is under review. You can manage settings, but you cannot publish rides until an admin verifies your account.
               </p>
             </div>
           </div>

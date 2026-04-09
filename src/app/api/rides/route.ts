@@ -49,6 +49,7 @@ export async function GET(request: NextRequest) {
   const where: Record<string, unknown> = {
     status: "OPEN",
     availableSeats: { gt: 0 },
+    driver: { isVerified: true },
   };
 
   if (source) {
@@ -83,7 +84,7 @@ export async function POST(request: NextRequest) {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const user = session.user as any;
+  const user = session.user as { role?: string };
   if (user.role !== "DRIVER") {
     return Response.json({ error: "Only drivers can create rides" }, { status: 403 });
   }
@@ -93,6 +94,15 @@ export async function POST(request: NextRequest) {
   });
   if (!driver) {
     return Response.json({ error: "Driver profile not found" }, { status: 400 });
+  }
+  if (!driver.isVerified) {
+    return Response.json(
+      {
+        code: "DRIVER_NOT_VERIFIED",
+        error: "Driver verification required before publishing rides.",
+      },
+      { status: 403 }
+    );
   }
 
   const body = await request.json();

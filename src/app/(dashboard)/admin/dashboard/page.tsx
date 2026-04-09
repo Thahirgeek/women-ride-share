@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
+import Button from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
 
 type Tab = "users" | "rides" | "drivers";
@@ -40,6 +41,17 @@ export default function AdminDashboard() {
   const [rides, setRides] = useState<Ride[]>([]);
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [loading, setLoading] = useState(true);
+  const [verifyLoadingId, setVerifyLoadingId] = useState<string | null>(null);
+  const [actionMessage, setActionMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
+  const fetchDrivers = async () => {
+    const r = await fetch("/api/admin/users?drivers=true");
+    const d = await r.json();
+    setDrivers(d.drivers || []);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -52,18 +64,61 @@ export default function AdminDashboard() {
         .then((r) => r.json())
         .then((d) => { setRides(d.rides || []); setLoading(false); });
     } else {
-      fetch("/api/admin/users?drivers=true")
-        .then((r) => r.json())
-        .then((d) => { setDrivers(d.drivers || []); setLoading(false); });
+      fetchDrivers()
+        .finally(() => setLoading(false));
     }
   }, [tab]);
 
-  const toggleVerify = async (driverId: string) => {
-    await fetch(`/api/admin/drivers/${driverId}/verify`, { method: "PATCH" });
-    // re-fetch
-    const r = await fetch("/api/admin/users?drivers=true");
-    const d = await r.json();
-    setDrivers(d.drivers || []);
+  const updateVerification = async (
+    driverId: string,
+    action: "VERIFY" | "REVOKE"
+  ) => {
+    const isVerify = action === "VERIFY";
+    const confirmed = window.confirm(
+      isVerify
+        ? "Verify this driver? They will be able to publish rides immediately."
+        : "Revoke this driver? Their OPEN rides will be cancelled."
+    );
+
+    if (!confirmed) return;
+
+    setActionMessage(null);
+    setVerifyLoadingId(driverId);
+    try {
+      const res = await fetch(`/api/admin/drivers/${driverId}/verify`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to update verification status.");
+      }
+
+      await fetchDrivers();
+
+      if (isVerify) {
+        setActionMessage({ type: "success", text: "Driver verified successfully." });
+      } else {
+        const cancelledCount = data.cancelledOpenRides ?? 0;
+        const plural = cancelledCount === 1 ? "ride" : "rides";
+        setActionMessage({
+          type: "success",
+          text: `Driver revoked. ${cancelledCount} open ${plural} cancelled.`,
+        });
+      }
+    } catch (error) {
+      setActionMessage({
+        type: "error",
+        text:
+          error instanceof Error
+            ? error.message
+            : "Failed to update verification status.",
+      });
+    } finally {
+      setVerifyLoadingId(null);
+    }
   };
 
   const tabs: { key: Tab; label: string }[] = [
@@ -80,6 +135,18 @@ export default function AdminDashboard() {
           Manage users, rides, and drivers.
         </p>
       </div>
+
+      {actionMessage && (
+        <div
+          className={`mb-4 rounded-lg border px-4 py-3 text-sm ${
+            actionMessage.type === "success"
+              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+              : "border-red-200 bg-red-50 text-red-700"
+          }`}
+        >
+          {actionMessage.text}
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="mb-6 flex gap-1 rounded-lg bg-(--bg-muted) p-1 w-fit">
@@ -173,7 +240,7 @@ export default function AdminDashboard() {
                       <th className="pb-3 text-left font-semibold text-(--text-2)">License</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Vehicle</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Available</th>
-                      <th className="pb-3 text-left font-semibold text-(--text-2)">Verified</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Verification</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -190,18 +257,29 @@ export default function AdminDashboard() {
                           </Badge>
                         </td>
                         <td className="py-3">
-                          <button
-                            onClick={() => toggleVerify(d.id)}
-                            className={`relative inline-flex h-6 w-10 items-center rounded-full transition-colors cursor-pointer ${
-                              d.isVerified ? "bg-emerald-500" : "bg-gray-300"
-                            }`}
-                          >
-                            <span
-                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow-sm ${
-                                d.isVerified ? "translate-x-5" : "translate-x-1"
-                              }`}
-                            />
-                          </button>
+                          <div className="flex items-center gap-2">
+                            <Badge variant={d.isVerified ? "success" : "warning"}>
+                              {d.isVerified ? "Verified" : "Pending"}
+                            </Badge>
+                            {d.isVerified ? (
+                              <Button
+                                variant="danger"
+                                className="px-3 py-1 text-xs"
+                                isLoading={verifyLoadingId === d.id}
+                                onClick={() => updateVerification(d.id, "REVOKE")}
+                              >
+                                Revoke
+                              </Button>
+                            ) : (
+                              <Button
+                                className="px-3 py-1 text-xs"
+                                isLoading={verifyLoadingId === d.id}
+                                onClick={() => updateVerification(d.id, "VERIFY")}
+                              >
+                                Verify
+                              </Button>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}
