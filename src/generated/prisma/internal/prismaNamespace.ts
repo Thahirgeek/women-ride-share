@@ -1373,7 +1373,13 @@ export const RideScalarFieldEnum = {
   id: 'id',
   driverId: 'driverId',
   source: 'source',
+  sourcePlaceId: 'sourcePlaceId',
+  sourceLat: 'sourceLat',
+  sourceLng: 'sourceLng',
   destination: 'destination',
+  destinationPlaceId: 'destinationPlaceId',
+  destinationLat: 'destinationLat',
+  destinationLng: 'destinationLng',
   scheduledAt: 'scheduledAt',
   status: 'status',
   totalSeats: 'totalSeats',
@@ -1394,7 +1400,13 @@ export const BookingScalarFieldEnum = {
   passengerId: 'passengerId',
   seatCount: 'seatCount',
   pickupPoint: 'pickupPoint',
+  pickupPlaceId: 'pickupPlaceId',
+  pickupLat: 'pickupLat',
+  pickupLng: 'pickupLng',
   dropPoint: 'dropPoint',
+  dropPlaceId: 'dropPlaceId',
+  dropLat: 'dropLat',
+  dropLng: 'dropLng',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1579,20 +1591,6 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'RideStatus'
- */
-export type EnumRideStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RideStatus'>
-    
-
-
-/**
- * Reference to a field of type 'RideStatus[]'
- */
-export type ListEnumRideStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RideStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1603,6 +1601,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RideStatus'
+ */
+export type EnumRideStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RideStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RideStatus[]'
+ */
+export type ListEnumRideStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RideStatus[]'>
     
 
 

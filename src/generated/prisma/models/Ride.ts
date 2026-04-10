@@ -27,12 +27,20 @@ export type AggregateRide = {
 }
 
 export type RideAvgAggregateOutputType = {
+  sourceLat: number | null
+  sourceLng: number | null
+  destinationLat: number | null
+  destinationLng: number | null
   totalSeats: number | null
   availableSeats: number | null
   fare: number | null
 }
 
 export type RideSumAggregateOutputType = {
+  sourceLat: number | null
+  sourceLng: number | null
+  destinationLat: number | null
+  destinationLng: number | null
   totalSeats: number | null
   availableSeats: number | null
   fare: number | null
@@ -42,7 +50,13 @@ export type RideMinAggregateOutputType = {
   id: string | null
   driverId: string | null
   source: string | null
+  sourcePlaceId: string | null
+  sourceLat: number | null
+  sourceLng: number | null
   destination: string | null
+  destinationPlaceId: string | null
+  destinationLat: number | null
+  destinationLng: number | null
   scheduledAt: Date | null
   status: $Enums.RideStatus | null
   totalSeats: number | null
@@ -58,7 +72,13 @@ export type RideMaxAggregateOutputType = {
   id: string | null
   driverId: string | null
   source: string | null
+  sourcePlaceId: string | null
+  sourceLat: number | null
+  sourceLng: number | null
   destination: string | null
+  destinationPlaceId: string | null
+  destinationLat: number | null
+  destinationLng: number | null
   scheduledAt: Date | null
   status: $Enums.RideStatus | null
   totalSeats: number | null
@@ -74,7 +94,13 @@ export type RideCountAggregateOutputType = {
   id: number
   driverId: number
   source: number
+  sourcePlaceId: number
+  sourceLat: number
+  sourceLng: number
   destination: number
+  destinationPlaceId: number
+  destinationLat: number
+  destinationLng: number
   scheduledAt: number
   status: number
   totalSeats: number
@@ -89,12 +115,20 @@ export type RideCountAggregateOutputType = {
 
 
 export type RideAvgAggregateInputType = {
+  sourceLat?: true
+  sourceLng?: true
+  destinationLat?: true
+  destinationLng?: true
   totalSeats?: true
   availableSeats?: true
   fare?: true
 }
 
 export type RideSumAggregateInputType = {
+  sourceLat?: true
+  sourceLng?: true
+  destinationLat?: true
+  destinationLng?: true
   totalSeats?: true
   availableSeats?: true
   fare?: true
@@ -104,7 +138,13 @@ export type RideMinAggregateInputType = {
   id?: true
   driverId?: true
   source?: true
+  sourcePlaceId?: true
+  sourceLat?: true
+  sourceLng?: true
   destination?: true
+  destinationPlaceId?: true
+  destinationLat?: true
+  destinationLng?: true
   scheduledAt?: true
   status?: true
   totalSeats?: true
@@ -120,7 +160,13 @@ export type RideMaxAggregateInputType = {
   id?: true
   driverId?: true
   source?: true
+  sourcePlaceId?: true
+  sourceLat?: true
+  sourceLng?: true
   destination?: true
+  destinationPlaceId?: true
+  destinationLat?: true
+  destinationLng?: true
   scheduledAt?: true
   status?: true
   totalSeats?: true
@@ -136,7 +182,13 @@ export type RideCountAggregateInputType = {
   id?: true
   driverId?: true
   source?: true
+  sourcePlaceId?: true
+  sourceLat?: true
+  sourceLng?: true
   destination?: true
+  destinationPlaceId?: true
+  destinationLat?: true
+  destinationLng?: true
   scheduledAt?: true
   status?: true
   totalSeats?: true
@@ -239,7 +291,13 @@ export type RideGroupByOutputType = {
   id: string
   driverId: string
   source: string
+  sourcePlaceId: string | null
+  sourceLat: number | null
+  sourceLng: number | null
   destination: string
+  destinationPlaceId: string | null
+  destinationLat: number | null
+  destinationLng: number | null
   scheduledAt: Date
   status: $Enums.RideStatus
   totalSeats: number
@@ -278,7 +336,13 @@ export type RideWhereInput = {
   id?: Prisma.StringFilter<"Ride"> | string
   driverId?: Prisma.StringFilter<"Ride"> | string
   source?: Prisma.StringFilter<"Ride"> | string
+  sourcePlaceId?: Prisma.StringNullableFilter<"Ride"> | string | null
+  sourceLat?: Prisma.FloatNullableFilter<"Ride"> | number | null
+  sourceLng?: Prisma.FloatNullableFilter<"Ride"> | number | null
   destination?: Prisma.StringFilter<"Ride"> | string
+  destinationPlaceId?: Prisma.StringNullableFilter<"Ride"> | string | null
+  destinationLat?: Prisma.FloatNullableFilter<"Ride"> | number | null
+  destinationLng?: Prisma.FloatNullableFilter<"Ride"> | number | null
   scheduledAt?: Prisma.DateTimeFilter<"Ride"> | Date | string
   status?: Prisma.EnumRideStatusFilter<"Ride"> | $Enums.RideStatus
   totalSeats?: Prisma.IntFilter<"Ride"> | number
@@ -297,7 +361,13 @@ export type RideOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  sourcePlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceLng?: Prisma.SortOrderInput | Prisma.SortOrder
   destination?: Prisma.SortOrder
+  destinationPlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  destinationLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  destinationLng?: Prisma.SortOrderInput | Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
@@ -319,7 +389,13 @@ export type RideWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.RideWhereInput | Prisma.RideWhereInput[]
   driverId?: Prisma.StringFilter<"Ride"> | string
   source?: Prisma.StringFilter<"Ride"> | string
+  sourcePlaceId?: Prisma.StringNullableFilter<"Ride"> | string | null
+  sourceLat?: Prisma.FloatNullableFilter<"Ride"> | number | null
+  sourceLng?: Prisma.FloatNullableFilter<"Ride"> | number | null
   destination?: Prisma.StringFilter<"Ride"> | string
+  destinationPlaceId?: Prisma.StringNullableFilter<"Ride"> | string | null
+  destinationLat?: Prisma.FloatNullableFilter<"Ride"> | number | null
+  destinationLng?: Prisma.FloatNullableFilter<"Ride"> | number | null
   scheduledAt?: Prisma.DateTimeFilter<"Ride"> | Date | string
   status?: Prisma.EnumRideStatusFilter<"Ride"> | $Enums.RideStatus
   totalSeats?: Prisma.IntFilter<"Ride"> | number
@@ -338,7 +414,13 @@ export type RideOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  sourcePlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceLng?: Prisma.SortOrderInput | Prisma.SortOrder
   destination?: Prisma.SortOrder
+  destinationPlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  destinationLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  destinationLng?: Prisma.SortOrderInput | Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
@@ -362,7 +444,13 @@ export type RideScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Ride"> | string
   driverId?: Prisma.StringWithAggregatesFilter<"Ride"> | string
   source?: Prisma.StringWithAggregatesFilter<"Ride"> | string
+  sourcePlaceId?: Prisma.StringNullableWithAggregatesFilter<"Ride"> | string | null
+  sourceLat?: Prisma.FloatNullableWithAggregatesFilter<"Ride"> | number | null
+  sourceLng?: Prisma.FloatNullableWithAggregatesFilter<"Ride"> | number | null
   destination?: Prisma.StringWithAggregatesFilter<"Ride"> | string
+  destinationPlaceId?: Prisma.StringNullableWithAggregatesFilter<"Ride"> | string | null
+  destinationLat?: Prisma.FloatNullableWithAggregatesFilter<"Ride"> | number | null
+  destinationLng?: Prisma.FloatNullableWithAggregatesFilter<"Ride"> | number | null
   scheduledAt?: Prisma.DateTimeWithAggregatesFilter<"Ride"> | Date | string
   status?: Prisma.EnumRideStatusWithAggregatesFilter<"Ride"> | $Enums.RideStatus
   totalSeats?: Prisma.IntWithAggregatesFilter<"Ride"> | number
@@ -377,7 +465,13 @@ export type RideScalarWhereWithAggregatesInput = {
 export type RideCreateInput = {
   id?: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -396,7 +490,13 @@ export type RideUncheckedCreateInput = {
   id?: string
   driverId: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -413,7 +513,13 @@ export type RideUncheckedCreateInput = {
 export type RideUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -432,7 +538,13 @@ export type RideUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -450,7 +562,13 @@ export type RideCreateManyInput = {
   id?: string
   driverId: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -465,7 +583,13 @@ export type RideCreateManyInput = {
 export type RideUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -481,7 +605,13 @@ export type RideUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -507,7 +637,13 @@ export type RideCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  sourcePlaceId?: Prisma.SortOrder
+  sourceLat?: Prisma.SortOrder
+  sourceLng?: Prisma.SortOrder
   destination?: Prisma.SortOrder
+  destinationPlaceId?: Prisma.SortOrder
+  destinationLat?: Prisma.SortOrder
+  destinationLng?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
@@ -520,6 +656,10 @@ export type RideCountOrderByAggregateInput = {
 }
 
 export type RideAvgOrderByAggregateInput = {
+  sourceLat?: Prisma.SortOrder
+  sourceLng?: Prisma.SortOrder
+  destinationLat?: Prisma.SortOrder
+  destinationLng?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
   availableSeats?: Prisma.SortOrder
   fare?: Prisma.SortOrder
@@ -529,7 +669,13 @@ export type RideMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  sourcePlaceId?: Prisma.SortOrder
+  sourceLat?: Prisma.SortOrder
+  sourceLng?: Prisma.SortOrder
   destination?: Prisma.SortOrder
+  destinationPlaceId?: Prisma.SortOrder
+  destinationLat?: Prisma.SortOrder
+  destinationLng?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
@@ -545,7 +691,13 @@ export type RideMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  sourcePlaceId?: Prisma.SortOrder
+  sourceLat?: Prisma.SortOrder
+  sourceLng?: Prisma.SortOrder
   destination?: Prisma.SortOrder
+  destinationPlaceId?: Prisma.SortOrder
+  destinationLat?: Prisma.SortOrder
+  destinationLng?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
@@ -558,6 +710,10 @@ export type RideMinOrderByAggregateInput = {
 }
 
 export type RideSumOrderByAggregateInput = {
+  sourceLat?: Prisma.SortOrder
+  sourceLng?: Prisma.SortOrder
+  destinationLat?: Prisma.SortOrder
+  destinationLng?: Prisma.SortOrder
   totalSeats?: Prisma.SortOrder
   availableSeats?: Prisma.SortOrder
   fare?: Prisma.SortOrder
@@ -610,6 +766,14 @@ export type RideUncheckedUpdateManyWithoutDriverNestedInput = {
   deleteMany?: Prisma.RideScalarWhereInput | Prisma.RideScalarWhereInput[]
 }
 
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type EnumRideStatusFieldUpdateOperationsInput = {
   set?: $Enums.RideStatus
 }
@@ -653,7 +817,13 @@ export type RideUpdateOneRequiredWithoutLocationUpdatesNestedInput = {
 export type RideCreateWithoutDriverInput = {
   id?: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -670,7 +840,13 @@ export type RideCreateWithoutDriverInput = {
 export type RideUncheckedCreateWithoutDriverInput = {
   id?: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -717,7 +893,13 @@ export type RideScalarWhereInput = {
   id?: Prisma.StringFilter<"Ride"> | string
   driverId?: Prisma.StringFilter<"Ride"> | string
   source?: Prisma.StringFilter<"Ride"> | string
+  sourcePlaceId?: Prisma.StringNullableFilter<"Ride"> | string | null
+  sourceLat?: Prisma.FloatNullableFilter<"Ride"> | number | null
+  sourceLng?: Prisma.FloatNullableFilter<"Ride"> | number | null
   destination?: Prisma.StringFilter<"Ride"> | string
+  destinationPlaceId?: Prisma.StringNullableFilter<"Ride"> | string | null
+  destinationLat?: Prisma.FloatNullableFilter<"Ride"> | number | null
+  destinationLng?: Prisma.FloatNullableFilter<"Ride"> | number | null
   scheduledAt?: Prisma.DateTimeFilter<"Ride"> | Date | string
   status?: Prisma.EnumRideStatusFilter<"Ride"> | $Enums.RideStatus
   totalSeats?: Prisma.IntFilter<"Ride"> | number
@@ -732,7 +914,13 @@ export type RideScalarWhereInput = {
 export type RideCreateWithoutBookingsInput = {
   id?: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -750,7 +938,13 @@ export type RideUncheckedCreateWithoutBookingsInput = {
   id?: string
   driverId: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -782,7 +976,13 @@ export type RideUpdateToOneWithWhereWithoutBookingsInput = {
 export type RideUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -800,7 +1000,13 @@ export type RideUncheckedUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -816,7 +1022,13 @@ export type RideUncheckedUpdateWithoutBookingsInput = {
 export type RideCreateWithoutLocationUpdatesInput = {
   id?: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -834,7 +1046,13 @@ export type RideUncheckedCreateWithoutLocationUpdatesInput = {
   id?: string
   driverId: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -866,7 +1084,13 @@ export type RideUpdateToOneWithWhereWithoutLocationUpdatesInput = {
 export type RideUpdateWithoutLocationUpdatesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -884,7 +1108,13 @@ export type RideUncheckedUpdateWithoutLocationUpdatesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -900,7 +1130,13 @@ export type RideUncheckedUpdateWithoutLocationUpdatesInput = {
 export type RideCreateManyDriverInput = {
   id?: string
   source: string
+  sourcePlaceId?: string | null
+  sourceLat?: number | null
+  sourceLng?: number | null
   destination: string
+  destinationPlaceId?: string | null
+  destinationLat?: number | null
+  destinationLng?: number | null
   scheduledAt: Date | string
   status?: $Enums.RideStatus
   totalSeats?: number
@@ -915,7 +1151,13 @@ export type RideCreateManyDriverInput = {
 export type RideUpdateWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -932,7 +1174,13 @@ export type RideUpdateWithoutDriverInput = {
 export type RideUncheckedUpdateWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -949,7 +1197,13 @@ export type RideUncheckedUpdateWithoutDriverInput = {
 export type RideUncheckedUpdateManyWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourcePlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sourceLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   destination?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  destinationLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  destinationLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   scheduledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumRideStatusFieldUpdateOperationsInput | $Enums.RideStatus
   totalSeats?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1005,7 +1259,13 @@ export type RideSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   driverId?: boolean
   source?: boolean
+  sourcePlaceId?: boolean
+  sourceLat?: boolean
+  sourceLng?: boolean
   destination?: boolean
+  destinationPlaceId?: boolean
+  destinationLat?: boolean
+  destinationLng?: boolean
   scheduledAt?: boolean
   status?: boolean
   totalSeats?: boolean
@@ -1025,7 +1285,13 @@ export type RideSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   driverId?: boolean
   source?: boolean
+  sourcePlaceId?: boolean
+  sourceLat?: boolean
+  sourceLng?: boolean
   destination?: boolean
+  destinationPlaceId?: boolean
+  destinationLat?: boolean
+  destinationLng?: boolean
   scheduledAt?: boolean
   status?: boolean
   totalSeats?: boolean
@@ -1042,7 +1308,13 @@ export type RideSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   driverId?: boolean
   source?: boolean
+  sourcePlaceId?: boolean
+  sourceLat?: boolean
+  sourceLng?: boolean
   destination?: boolean
+  destinationPlaceId?: boolean
+  destinationLat?: boolean
+  destinationLng?: boolean
   scheduledAt?: boolean
   status?: boolean
   totalSeats?: boolean
@@ -1059,7 +1331,13 @@ export type RideSelectScalar = {
   id?: boolean
   driverId?: boolean
   source?: boolean
+  sourcePlaceId?: boolean
+  sourceLat?: boolean
+  sourceLng?: boolean
   destination?: boolean
+  destinationPlaceId?: boolean
+  destinationLat?: boolean
+  destinationLng?: boolean
   scheduledAt?: boolean
   status?: boolean
   totalSeats?: boolean
@@ -1071,7 +1349,7 @@ export type RideSelectScalar = {
   updatedAt?: boolean
 }
 
-export type RideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "driverId" | "source" | "destination" | "scheduledAt" | "status" | "totalSeats" | "availableSeats" | "fare" | "currentPassengerComposition" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["ride"]>
+export type RideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "driverId" | "source" | "sourcePlaceId" | "sourceLat" | "sourceLng" | "destination" | "destinationPlaceId" | "destinationLat" | "destinationLng" | "scheduledAt" | "status" | "totalSeats" | "availableSeats" | "fare" | "currentPassengerComposition" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["ride"]>
 export type RideInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   driver?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
   bookings?: boolean | Prisma.Ride$bookingsArgs<ExtArgs>
@@ -1096,7 +1374,13 @@ export type $RidePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     driverId: string
     source: string
+    sourcePlaceId: string | null
+    sourceLat: number | null
+    sourceLng: number | null
     destination: string
+    destinationPlaceId: string | null
+    destinationLat: number | null
+    destinationLng: number | null
     scheduledAt: Date
     status: $Enums.RideStatus
     totalSeats: number
@@ -1535,7 +1819,13 @@ export interface RideFieldRefs {
   readonly id: Prisma.FieldRef<"Ride", 'String'>
   readonly driverId: Prisma.FieldRef<"Ride", 'String'>
   readonly source: Prisma.FieldRef<"Ride", 'String'>
+  readonly sourcePlaceId: Prisma.FieldRef<"Ride", 'String'>
+  readonly sourceLat: Prisma.FieldRef<"Ride", 'Float'>
+  readonly sourceLng: Prisma.FieldRef<"Ride", 'Float'>
   readonly destination: Prisma.FieldRef<"Ride", 'String'>
+  readonly destinationPlaceId: Prisma.FieldRef<"Ride", 'String'>
+  readonly destinationLat: Prisma.FieldRef<"Ride", 'Float'>
+  readonly destinationLng: Prisma.FieldRef<"Ride", 'Float'>
   readonly scheduledAt: Prisma.FieldRef<"Ride", 'DateTime'>
   readonly status: Prisma.FieldRef<"Ride", 'RideStatus'>
   readonly totalSeats: Prisma.FieldRef<"Ride", 'Int'>

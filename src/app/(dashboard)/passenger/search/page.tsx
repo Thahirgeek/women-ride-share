@@ -4,9 +4,11 @@ import { useState } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 import SafetyFilter from "@/components/safety/SafetyFilter";
 import CompositionBadge from "@/components/safety/CompositionBadge";
 import Badge from "@/components/ui/Badge";
+import { LocationSuggestion } from "@/lib/location-types";
 import Link from "next/link";
 
 interface RideResult {
@@ -28,22 +30,37 @@ interface RideResult {
 
 export default function SearchRidesPage() {
   const [source, setSource] = useState("");
+  const [sourceLocation, setSourceLocation] = useState<LocationSuggestion | null>(
+    null
+  );
   const [destination, setDestination] = useState("");
+  const [destinationLocation, setDestinationLocation] =
+    useState<LocationSuggestion | null>(null);
   const [date, setDate] = useState("");
   const [safetyFilter, setSafetyFilter] = useState("NONE");
   const [results, setResults] = useState<RideResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!sourceLocation || !destinationLocation) {
+      setError("Please select both locations from suggestions before searching.");
+      return;
+    }
+
+    setError("");
     setLoading(true);
     setSearched(true);
 
     try {
       const params = new URLSearchParams();
-      if (source) params.set("source", source);
-      if (destination) params.set("destination", destination);
+      params.set("source", sourceLocation.label);
+      params.set("sourcePlaceId", sourceLocation.placeId);
+      params.set("destination", destinationLocation.label);
+      params.set("destinationPlaceId", destinationLocation.placeId);
       if (date) params.set("date", date);
       if (safetyFilter !== "NONE") params.set("safetyFilter", safetyFilter);
 
@@ -69,19 +86,25 @@ export default function SearchRidesPage() {
       <Card className="mb-8">
         <form onSubmit={handleSearch} className="flex flex-col gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input
+            <LocationAutocomplete
               id="source"
               label="From"
               placeholder="Pickup location"
               value={source}
-              onChange={(e) => setSource(e.target.value)}
+              onValueChange={setSource}
+              selectedLocation={sourceLocation}
+              onSelectedLocationChange={setSourceLocation}
+              required
             />
-            <Input
+            <LocationAutocomplete
               id="destination"
               label="To"
               placeholder="Drop location"
               value={destination}
-              onChange={(e) => setDestination(e.target.value)}
+              onValueChange={setDestination}
+              selectedLocation={destinationLocation}
+              onSelectedLocationChange={setDestinationLocation}
+              required
             />
           </div>
           <Input
@@ -92,6 +115,9 @@ export default function SearchRidesPage() {
             onChange={(e) => setDate(e.target.value)}
           />
           <SafetyFilter value={safetyFilter} onChange={setSafetyFilter} />
+          {error && (
+            <p className="text-sm text-(--danger)">{error}</p>
+          )}
           <Button type="submit" isLoading={loading}>
             Search Rides
           </Button>

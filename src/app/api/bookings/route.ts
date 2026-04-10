@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { isLocationSuggestion, normalizeLocationLabel } from "@/lib/location-utils";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
@@ -9,7 +10,6 @@ export async function GET(request: NextRequest) {
 
   const url = request.nextUrl;
   const driverFilter = url.searchParams.get("driver");
-  const user = session.user as any;
 
   // Driver viewing bookings on their rides
   if (driverFilter === "me") {
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const user = session.user as any;
+  const user = session.user as { role?: string };
   if (user.role !== "PASSENGER") {
     return Response.json({ error: "Only passengers can book rides" }, { status: 403 });
   }
@@ -71,24 +71,45 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const { rideId, pickupPoint, dropPoint, seatCount = 1 } = body;
+  const { rideId, pickupLocation, dropLocation, seatCount = 1 } = body;
+
+  if (!isLocationSuggestion(pickupLocation) || !isLocationSuggestion(dropLocation)) {
+    return Response.json(
+      { error: "Pickup and drop locations must be selected from suggestions." },
+      { status: 400 }
+    );
+  }
+
+  const parsedSeatCount = Number.parseInt(String(seatCount), 10);
+  if (!Number.isFinite(parsedSeatCount) || parsedSeatCount < 1) {
+    return Response.json({ error: "Seat count must be at least 1" }, { status: 400 });
+  }
 
   const ride = await prisma.ride.findUnique({ where: { id: rideId } });
   if (!ride) return Response.json({ error: "Ride not found" }, { status: 404 });
   if (ride.status !== "OPEN") {
     return Response.json({ error: "Ride is not available for booking" }, { status: 400 });
   }
-  if (ride.availableSeats < seatCount) {
+  if (ride.availableSeats < parsedSeatCount) {
     return Response.json({ error: "Not enough seats available" }, { status: 400 });
   }
+
+  const normalizedPickup = normalizeLocationLabel(pickupLocation.label);
+  const normalizedDrop = normalizeLocationLabel(dropLocation.label);
 
   const booking = await prisma.booking.create({
     data: {
       rideId,
       passengerId: passenger.id,
-      seatCount,
-      pickupPoint,
-      dropPoint,
+      seatCount: parsedSeatCount,
+      pickupPoint: normalizedPickup,
+      pickupPlaceId: pickupLocation.placeId,
+      pickupLat: pickupLocation.lat,
+      pickupLng: pickupLocation.lng,
+      dropPoint: normalizedDrop,
+      dropPlaceId: dropLocation.placeId,
+      dropLat: dropLocation.lat,
+      dropLng: dropLocation.lng,
       status: "PENDING",
     },
   });

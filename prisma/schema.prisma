@@ -157,7 +157,13 @@ model Ride {
   driverId                    String
   driver                      Driver               @relation(fields: [driverId], references: [id], onDelete: Cascade)
   source                      String
+  sourcePlaceId               String?
+  sourceLat                   Float?
+  sourceLng                   Float?
   destination                 String
+  destinationPlaceId          String?
+  destinationLat              Float?
+  destinationLng              Float?
   scheduledAt                 DateTime
   status                      RideStatus           @default(CREATED)
   totalSeats                  Int                  @default(4)
@@ -169,6 +175,9 @@ model Ride {
   locationUpdates             Location[]
   createdAt                   DateTime             @default(now())
   updatedAt                   DateTime             @updatedAt
+
+  @@index([sourcePlaceId])
+  @@index([destinationPlaceId])
 }
 
 model Booking {
@@ -179,10 +188,19 @@ model Booking {
   passenger    Passenger     @relation(fields: [passengerId], references: [id], onDelete: Cascade)
   seatCount    Int           @default(1)
   pickupPoint  String?
+  pickupPlaceId String?
+  pickupLat    Float?
+  pickupLng    Float?
   dropPoint    String?
+  dropPlaceId  String?
+  dropLat      Float?
+  dropLng      Float?
   status       BookingStatus @default(PENDING)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+
+  @@index([pickupPlaceId])
+  @@index([dropPlaceId])
 }
 
 model Rating {

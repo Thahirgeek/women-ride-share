@@ -28,10 +28,18 @@ export type AggregateBooking = {
 
 export type BookingAvgAggregateOutputType = {
   seatCount: number | null
+  pickupLat: number | null
+  pickupLng: number | null
+  dropLat: number | null
+  dropLng: number | null
 }
 
 export type BookingSumAggregateOutputType = {
   seatCount: number | null
+  pickupLat: number | null
+  pickupLng: number | null
+  dropLat: number | null
+  dropLng: number | null
 }
 
 export type BookingMinAggregateOutputType = {
@@ -40,7 +48,13 @@ export type BookingMinAggregateOutputType = {
   passengerId: string | null
   seatCount: number | null
   pickupPoint: string | null
+  pickupPlaceId: string | null
+  pickupLat: number | null
+  pickupLng: number | null
   dropPoint: string | null
+  dropPlaceId: string | null
+  dropLat: number | null
+  dropLng: number | null
   status: $Enums.BookingStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,7 +66,13 @@ export type BookingMaxAggregateOutputType = {
   passengerId: string | null
   seatCount: number | null
   pickupPoint: string | null
+  pickupPlaceId: string | null
+  pickupLat: number | null
+  pickupLng: number | null
   dropPoint: string | null
+  dropPlaceId: string | null
+  dropLat: number | null
+  dropLng: number | null
   status: $Enums.BookingStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -64,7 +84,13 @@ export type BookingCountAggregateOutputType = {
   passengerId: number
   seatCount: number
   pickupPoint: number
+  pickupPlaceId: number
+  pickupLat: number
+  pickupLng: number
   dropPoint: number
+  dropPlaceId: number
+  dropLat: number
+  dropLng: number
   status: number
   createdAt: number
   updatedAt: number
@@ -74,10 +100,18 @@ export type BookingCountAggregateOutputType = {
 
 export type BookingAvgAggregateInputType = {
   seatCount?: true
+  pickupLat?: true
+  pickupLng?: true
+  dropLat?: true
+  dropLng?: true
 }
 
 export type BookingSumAggregateInputType = {
   seatCount?: true
+  pickupLat?: true
+  pickupLng?: true
+  dropLat?: true
+  dropLng?: true
 }
 
 export type BookingMinAggregateInputType = {
@@ -86,7 +120,13 @@ export type BookingMinAggregateInputType = {
   passengerId?: true
   seatCount?: true
   pickupPoint?: true
+  pickupPlaceId?: true
+  pickupLat?: true
+  pickupLng?: true
   dropPoint?: true
+  dropPlaceId?: true
+  dropLat?: true
+  dropLng?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -98,7 +138,13 @@ export type BookingMaxAggregateInputType = {
   passengerId?: true
   seatCount?: true
   pickupPoint?: true
+  pickupPlaceId?: true
+  pickupLat?: true
+  pickupLng?: true
   dropPoint?: true
+  dropPlaceId?: true
+  dropLat?: true
+  dropLng?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -110,7 +156,13 @@ export type BookingCountAggregateInputType = {
   passengerId?: true
   seatCount?: true
   pickupPoint?: true
+  pickupPlaceId?: true
+  pickupLat?: true
+  pickupLng?: true
   dropPoint?: true
+  dropPlaceId?: true
+  dropLat?: true
+  dropLng?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -209,7 +261,13 @@ export type BookingGroupByOutputType = {
   passengerId: string
   seatCount: number
   pickupPoint: string | null
+  pickupPlaceId: string | null
+  pickupLat: number | null
+  pickupLng: number | null
   dropPoint: string | null
+  dropPlaceId: string | null
+  dropLat: number | null
+  dropLng: number | null
   status: $Enums.BookingStatus
   createdAt: Date
   updatedAt: Date
@@ -244,7 +302,13 @@ export type BookingWhereInput = {
   passengerId?: Prisma.StringFilter<"Booking"> | string
   seatCount?: Prisma.IntFilter<"Booking"> | number
   pickupPoint?: Prisma.StringNullableFilter<"Booking"> | string | null
+  pickupPlaceId?: Prisma.StringNullableFilter<"Booking"> | string | null
+  pickupLat?: Prisma.FloatNullableFilter<"Booking"> | number | null
+  pickupLng?: Prisma.FloatNullableFilter<"Booking"> | number | null
   dropPoint?: Prisma.StringNullableFilter<"Booking"> | string | null
+  dropPlaceId?: Prisma.StringNullableFilter<"Booking"> | string | null
+  dropLat?: Prisma.FloatNullableFilter<"Booking"> | number | null
+  dropLng?: Prisma.FloatNullableFilter<"Booking"> | number | null
   status?: Prisma.EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -258,7 +322,13 @@ export type BookingOrderByWithRelationInput = {
   passengerId?: Prisma.SortOrder
   seatCount?: Prisma.SortOrder
   pickupPoint?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickupPlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickupLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickupLng?: Prisma.SortOrderInput | Prisma.SortOrder
   dropPoint?: Prisma.SortOrderInput | Prisma.SortOrder
+  dropPlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  dropLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  dropLng?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -275,7 +345,13 @@ export type BookingWhereUniqueInput = Prisma.AtLeast<{
   passengerId?: Prisma.StringFilter<"Booking"> | string
   seatCount?: Prisma.IntFilter<"Booking"> | number
   pickupPoint?: Prisma.StringNullableFilter<"Booking"> | string | null
+  pickupPlaceId?: Prisma.StringNullableFilter<"Booking"> | string | null
+  pickupLat?: Prisma.FloatNullableFilter<"Booking"> | number | null
+  pickupLng?: Prisma.FloatNullableFilter<"Booking"> | number | null
   dropPoint?: Prisma.StringNullableFilter<"Booking"> | string | null
+  dropPlaceId?: Prisma.StringNullableFilter<"Booking"> | string | null
+  dropLat?: Prisma.FloatNullableFilter<"Booking"> | number | null
+  dropLng?: Prisma.FloatNullableFilter<"Booking"> | number | null
   status?: Prisma.EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -289,7 +365,13 @@ export type BookingOrderByWithAggregationInput = {
   passengerId?: Prisma.SortOrder
   seatCount?: Prisma.SortOrder
   pickupPoint?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickupPlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickupLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickupLng?: Prisma.SortOrderInput | Prisma.SortOrder
   dropPoint?: Prisma.SortOrderInput | Prisma.SortOrder
+  dropPlaceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  dropLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  dropLng?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -309,7 +391,13 @@ export type BookingScalarWhereWithAggregatesInput = {
   passengerId?: Prisma.StringWithAggregatesFilter<"Booking"> | string
   seatCount?: Prisma.IntWithAggregatesFilter<"Booking"> | number
   pickupPoint?: Prisma.StringNullableWithAggregatesFilter<"Booking"> | string | null
+  pickupPlaceId?: Prisma.StringNullableWithAggregatesFilter<"Booking"> | string | null
+  pickupLat?: Prisma.FloatNullableWithAggregatesFilter<"Booking"> | number | null
+  pickupLng?: Prisma.FloatNullableWithAggregatesFilter<"Booking"> | number | null
   dropPoint?: Prisma.StringNullableWithAggregatesFilter<"Booking"> | string | null
+  dropPlaceId?: Prisma.StringNullableWithAggregatesFilter<"Booking"> | string | null
+  dropLat?: Prisma.FloatNullableWithAggregatesFilter<"Booking"> | number | null
+  dropLng?: Prisma.FloatNullableWithAggregatesFilter<"Booking"> | number | null
   status?: Prisma.EnumBookingStatusWithAggregatesFilter<"Booking"> | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Booking"> | Date | string
@@ -319,7 +407,13 @@ export type BookingCreateInput = {
   id?: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -333,7 +427,13 @@ export type BookingUncheckedCreateInput = {
   passengerId: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -343,7 +443,13 @@ export type BookingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -357,7 +463,13 @@ export type BookingUncheckedUpdateInput = {
   passengerId?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -369,7 +481,13 @@ export type BookingCreateManyInput = {
   passengerId: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -379,7 +497,13 @@ export type BookingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -391,7 +515,13 @@ export type BookingUncheckedUpdateManyInput = {
   passengerId?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -413,7 +543,13 @@ export type BookingCountOrderByAggregateInput = {
   passengerId?: Prisma.SortOrder
   seatCount?: Prisma.SortOrder
   pickupPoint?: Prisma.SortOrder
+  pickupPlaceId?: Prisma.SortOrder
+  pickupLat?: Prisma.SortOrder
+  pickupLng?: Prisma.SortOrder
   dropPoint?: Prisma.SortOrder
+  dropPlaceId?: Prisma.SortOrder
+  dropLat?: Prisma.SortOrder
+  dropLng?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -421,6 +557,10 @@ export type BookingCountOrderByAggregateInput = {
 
 export type BookingAvgOrderByAggregateInput = {
   seatCount?: Prisma.SortOrder
+  pickupLat?: Prisma.SortOrder
+  pickupLng?: Prisma.SortOrder
+  dropLat?: Prisma.SortOrder
+  dropLng?: Prisma.SortOrder
 }
 
 export type BookingMaxOrderByAggregateInput = {
@@ -429,7 +569,13 @@ export type BookingMaxOrderByAggregateInput = {
   passengerId?: Prisma.SortOrder
   seatCount?: Prisma.SortOrder
   pickupPoint?: Prisma.SortOrder
+  pickupPlaceId?: Prisma.SortOrder
+  pickupLat?: Prisma.SortOrder
+  pickupLng?: Prisma.SortOrder
   dropPoint?: Prisma.SortOrder
+  dropPlaceId?: Prisma.SortOrder
+  dropLat?: Prisma.SortOrder
+  dropLng?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -441,7 +587,13 @@ export type BookingMinOrderByAggregateInput = {
   passengerId?: Prisma.SortOrder
   seatCount?: Prisma.SortOrder
   pickupPoint?: Prisma.SortOrder
+  pickupPlaceId?: Prisma.SortOrder
+  pickupLat?: Prisma.SortOrder
+  pickupLng?: Prisma.SortOrder
   dropPoint?: Prisma.SortOrder
+  dropPlaceId?: Prisma.SortOrder
+  dropLat?: Prisma.SortOrder
+  dropLng?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -449,6 +601,10 @@ export type BookingMinOrderByAggregateInput = {
 
 export type BookingSumOrderByAggregateInput = {
   seatCount?: Prisma.SortOrder
+  pickupLat?: Prisma.SortOrder
+  pickupLng?: Prisma.SortOrder
+  dropLat?: Prisma.SortOrder
+  dropLng?: Prisma.SortOrder
 }
 
 export type BookingCreateNestedManyWithoutPassengerInput = {
@@ -543,7 +699,13 @@ export type BookingCreateWithoutPassengerInput = {
   id?: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -555,7 +717,13 @@ export type BookingUncheckedCreateWithoutPassengerInput = {
   rideId: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -596,7 +764,13 @@ export type BookingScalarWhereInput = {
   passengerId?: Prisma.StringFilter<"Booking"> | string
   seatCount?: Prisma.IntFilter<"Booking"> | number
   pickupPoint?: Prisma.StringNullableFilter<"Booking"> | string | null
+  pickupPlaceId?: Prisma.StringNullableFilter<"Booking"> | string | null
+  pickupLat?: Prisma.FloatNullableFilter<"Booking"> | number | null
+  pickupLng?: Prisma.FloatNullableFilter<"Booking"> | number | null
   dropPoint?: Prisma.StringNullableFilter<"Booking"> | string | null
+  dropPlaceId?: Prisma.StringNullableFilter<"Booking"> | string | null
+  dropLat?: Prisma.FloatNullableFilter<"Booking"> | number | null
+  dropLng?: Prisma.FloatNullableFilter<"Booking"> | number | null
   status?: Prisma.EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
@@ -606,7 +780,13 @@ export type BookingCreateWithoutRideInput = {
   id?: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -618,7 +798,13 @@ export type BookingUncheckedCreateWithoutRideInput = {
   passengerId: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -655,7 +841,13 @@ export type BookingCreateManyPassengerInput = {
   rideId: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -665,7 +857,13 @@ export type BookingUpdateWithoutPassengerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -677,7 +875,13 @@ export type BookingUncheckedUpdateWithoutPassengerInput = {
   rideId?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -688,7 +892,13 @@ export type BookingUncheckedUpdateManyWithoutPassengerInput = {
   rideId?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -699,7 +909,13 @@ export type BookingCreateManyRideInput = {
   passengerId: string
   seatCount?: number
   pickupPoint?: string | null
+  pickupPlaceId?: string | null
+  pickupLat?: number | null
+  pickupLng?: number | null
   dropPoint?: string | null
+  dropPlaceId?: string | null
+  dropLat?: number | null
+  dropLng?: number | null
   status?: $Enums.BookingStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -709,7 +925,13 @@ export type BookingUpdateWithoutRideInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -721,7 +943,13 @@ export type BookingUncheckedUpdateWithoutRideInput = {
   passengerId?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -732,7 +960,13 @@ export type BookingUncheckedUpdateManyWithoutRideInput = {
   passengerId?: Prisma.StringFieldUpdateOperationsInput | string
   seatCount?: Prisma.IntFieldUpdateOperationsInput | number
   pickupPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   dropPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropPlaceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dropLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -746,7 +980,13 @@ export type BookingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   passengerId?: boolean
   seatCount?: boolean
   pickupPoint?: boolean
+  pickupPlaceId?: boolean
+  pickupLat?: boolean
+  pickupLng?: boolean
   dropPoint?: boolean
+  dropPlaceId?: boolean
+  dropLat?: boolean
+  dropLng?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -760,7 +1000,13 @@ export type BookingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   passengerId?: boolean
   seatCount?: boolean
   pickupPoint?: boolean
+  pickupPlaceId?: boolean
+  pickupLat?: boolean
+  pickupLng?: boolean
   dropPoint?: boolean
+  dropPlaceId?: boolean
+  dropLat?: boolean
+  dropLng?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -774,7 +1020,13 @@ export type BookingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   passengerId?: boolean
   seatCount?: boolean
   pickupPoint?: boolean
+  pickupPlaceId?: boolean
+  pickupLat?: boolean
+  pickupLng?: boolean
   dropPoint?: boolean
+  dropPlaceId?: boolean
+  dropLat?: boolean
+  dropLng?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -788,13 +1040,19 @@ export type BookingSelectScalar = {
   passengerId?: boolean
   seatCount?: boolean
   pickupPoint?: boolean
+  pickupPlaceId?: boolean
+  pickupLat?: boolean
+  pickupLng?: boolean
   dropPoint?: boolean
+  dropPlaceId?: boolean
+  dropLat?: boolean
+  dropLng?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type BookingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rideId" | "passengerId" | "seatCount" | "pickupPoint" | "dropPoint" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["booking"]>
+export type BookingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rideId" | "passengerId" | "seatCount" | "pickupPoint" | "pickupPlaceId" | "pickupLat" | "pickupLng" | "dropPoint" | "dropPlaceId" | "dropLat" | "dropLng" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["booking"]>
 export type BookingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ride?: boolean | Prisma.RideDefaultArgs<ExtArgs>
   passenger?: boolean | Prisma.PassengerDefaultArgs<ExtArgs>
@@ -820,7 +1078,13 @@ export type $BookingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     passengerId: string
     seatCount: number
     pickupPoint: string | null
+    pickupPlaceId: string | null
+    pickupLat: number | null
+    pickupLng: number | null
     dropPoint: string | null
+    dropPlaceId: string | null
+    dropLat: number | null
+    dropLng: number | null
     status: $Enums.BookingStatus
     createdAt: Date
     updatedAt: Date
@@ -1254,7 +1518,13 @@ export interface BookingFieldRefs {
   readonly passengerId: Prisma.FieldRef<"Booking", 'String'>
   readonly seatCount: Prisma.FieldRef<"Booking", 'Int'>
   readonly pickupPoint: Prisma.FieldRef<"Booking", 'String'>
+  readonly pickupPlaceId: Prisma.FieldRef<"Booking", 'String'>
+  readonly pickupLat: Prisma.FieldRef<"Booking", 'Float'>
+  readonly pickupLng: Prisma.FieldRef<"Booking", 'Float'>
   readonly dropPoint: Prisma.FieldRef<"Booking", 'String'>
+  readonly dropPlaceId: Prisma.FieldRef<"Booking", 'String'>
+  readonly dropLat: Prisma.FieldRef<"Booking", 'Float'>
+  readonly dropLng: Prisma.FieldRef<"Booking", 'Float'>
   readonly status: Prisma.FieldRef<"Booking", 'BookingStatus'>
   readonly createdAt: Prisma.FieldRef<"Booking", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Booking", 'DateTime'>

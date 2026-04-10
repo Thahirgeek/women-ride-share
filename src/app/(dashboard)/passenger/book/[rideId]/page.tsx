@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 import CompositionBadge from "@/components/safety/CompositionBadge";
 import RippleWaveLoader from "@/components/RippleWaveLoader";
+import { LocationSuggestion } from "@/lib/location-types";
 
 interface RideDetails {
   id: string;
@@ -36,7 +38,10 @@ export default function BookRidePage({
   const [booking, setBooking] = useState(false);
   const [booked, setBooked] = useState(false);
   const [pickupPoint, setPickupPoint] = useState("");
+  const [pickupLocation, setPickupLocation] =
+    useState<LocationSuggestion | null>(null);
   const [dropPoint, setDropPoint] = useState("");
+  const [dropLocation, setDropLocation] = useState<LocationSuggestion | null>(null);
   const [seatCount, setSeatCount] = useState("1");
   const [error, setError] = useState("");
 
@@ -54,14 +59,20 @@ export default function BookRidePage({
     setError("");
     setBooking(true);
 
+    if (!pickupLocation || !dropLocation) {
+      setError("Please select pickup and drop points from suggestions.");
+      setBooking(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           rideId,
-          pickupPoint,
-          dropPoint,
+          pickupLocation,
+          dropLocation,
           seatCount: parseInt(seatCount),
         }),
       });
@@ -216,20 +227,24 @@ export default function BookRidePage({
               </div>
             )}
             <div className="flex flex-col gap-4">
-              <Input
+              <LocationAutocomplete
                 id="pickup"
                 label="Pickup Point"
                 placeholder="Your pickup location"
                 value={pickupPoint}
-                onChange={(e) => setPickupPoint(e.target.value)}
+                onValueChange={setPickupPoint}
+                selectedLocation={pickupLocation}
+                onSelectedLocationChange={setPickupLocation}
                 required
               />
-              <Input
+              <LocationAutocomplete
                 id="drop"
                 label="Drop Point"
                 placeholder="Your drop location"
                 value={dropPoint}
-                onChange={(e) => setDropPoint(e.target.value)}
+                onValueChange={setDropPoint}
+                selectedLocation={dropLocation}
+                onSelectedLocationChange={setDropLocation}
                 required
               />
               <Input

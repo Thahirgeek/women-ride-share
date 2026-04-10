@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 import Select from "@/components/ui/Select";
+import { LocationSuggestion } from "@/lib/location-types";
 
 export default function CreateRidePage() {
   const router = useRouter();
@@ -20,6 +22,11 @@ export default function CreateRidePage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [sourceLocation, setSourceLocation] = useState<LocationSuggestion | null>(
+    null
+  );
+  const [destinationLocation, setDestinationLocation] =
+    useState<LocationSuggestion | null>(null);
 
   const update = (key: string, value: string) =>
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -29,12 +36,22 @@ export default function CreateRidePage() {
     setError("");
     setLoading(true);
 
+    if (!sourceLocation || !destinationLocation) {
+      setError("Please select source and destination from location suggestions.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/rides", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...form,
+          sourceLocation,
+          destinationLocation,
+          scheduledAt: form.scheduledAt,
+          currentPassengerComposition: form.currentPassengerComposition,
+          notes: form.notes,
           totalSeats: parseInt(form.totalSeats),
           fare: parseFloat(form.fare),
         }),
@@ -75,20 +92,24 @@ export default function CreateRidePage() {
             </div>
           )}
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input
+            <LocationAutocomplete
               id="source"
               label="Source"
               placeholder="Pickup location"
               value={form.source}
-              onChange={(e) => update("source", e.target.value)}
+              onValueChange={(value) => update("source", value)}
+              selectedLocation={sourceLocation}
+              onSelectedLocationChange={setSourceLocation}
               required
             />
-            <Input
+            <LocationAutocomplete
               id="destination"
               label="Destination"
               placeholder="Drop-off location"
               value={form.destination}
-              onChange={(e) => update("destination", e.target.value)}
+              onValueChange={(value) => update("destination", value)}
+              selectedLocation={destinationLocation}
+              onSelectedLocationChange={setDestinationLocation}
               required
             />
           </div>
