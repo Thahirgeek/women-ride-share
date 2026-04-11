@@ -4,8 +4,8 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-(--primary) text-sm font-bold text-white">
-              S
+            <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white">
+              <img src="/8442672.svg" className="bg-transparent" alt="SafeRide logo"></img>
             </div>
             <span className="text-base font-bold text-foreground">SafeRide</span>
           </div>

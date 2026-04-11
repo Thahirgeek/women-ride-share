@@ -4,6 +4,7 @@ import * as THREE from 'three';
 type ColorBendsProps = {
   className?: string;
   style?: React.CSSProperties;
+  onReady?: () => void;
   rotation?: number;
   speed?: number;
   colors?: string[];
@@ -114,6 +115,7 @@ void main() {
 export default function ColorBends({
   className,
   style,
+  onReady,
   rotation = 45,
   speed = 0.2,
   colors = [],
@@ -130,6 +132,8 @@ export default function ColorBends({
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const rafRef = useRef<number | null>(null);
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+  const onReadyRef = useRef<ColorBendsProps['onReady']>(onReady);
+  const hasNotifiedReadyRef = useRef<boolean>(false);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const rotationRef = useRef<number>(rotation);
   const autoRotateRef = useRef<number>(autoRotate);
@@ -138,6 +142,11 @@ export default function ColorBends({
   const pointerSmoothRef = useRef<number>(8);
 
   useEffect(() => {
+    onReadyRef.current = onReady;
+  }, [onReady]);
+
+  useEffect(() => {
+    hasNotifiedReadyRef.current = false;
     const container = containerRef.current!;
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -221,6 +230,10 @@ export default function ColorBends({
       cur.lerp(tgt, amt);
       (material.uniforms.uPointer.value as THREE.Vector2).copy(cur);
       renderer.render(scene, camera);
+      if (!hasNotifiedReadyRef.current) {
+        hasNotifiedReadyRef.current = true;
+        onReadyRef.current?.();
+      }
       rafRef.current = requestAnimationFrame(loop);
     };
     rafRef.current = requestAnimationFrame(loop);
