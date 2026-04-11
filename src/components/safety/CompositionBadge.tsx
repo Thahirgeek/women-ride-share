@@ -36,10 +36,10 @@ export default function CompositionBadge({
   className = "",
 }: CompositionBadgeProps) {
   const config = compositionConfig[composition] || compositionConfig.SOLO;
+  const compositionBadgeClassName = `w-fit shrink-0 justify-center text-center whitespace-nowrap ${className}`;
 
   return (
-    <Badge variant={config.variant} className={className}>
-      <span>{config.emoji}</span>
+    <Badge variant={config.variant} className={compositionBadgeClassName}>
       {config.label}
     </Badge>
   );

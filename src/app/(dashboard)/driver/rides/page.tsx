@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
-import RippleWaveLoader from "@/components/RippleWaveLoader";
+import { WaveLoader } from "@/components/wave-loader";
 import CompositionBadge from "@/components/safety/CompositionBadge";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 
 interface Ride {
   id: string;
@@ -66,7 +67,7 @@ export default function DriverRidesPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <RippleWaveLoader />
+        <WaveLoader />
       </div>
     );
   }
@@ -75,11 +76,11 @@ export default function DriverRidesPage() {
     <>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">My Rides</h1>
+          <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">My Rides</h1>
           <p className="mt-1 text-(--text-2)">Manage your published rides.</p>
         </div>
         <Link href="/driver/rides/create">
-          <Button>+ Create Ride</Button>
+          <Button><Plus size={15} /> Create Ride</Button>
         </Link>
       </div>
 
@@ -96,11 +97,11 @@ export default function DriverRidesPage() {
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <div className="flex items-center gap-2 text-sm mb-1">
-                    <span className="font-semibold text-foreground">
+                    <span className="font-[inter-semibold] text-foreground">
                       {ride.source}
                     </span>
                     <span className="text-(--text-3)">-&gt;</span>
-                    <span className="font-semibold text-foreground">
+                    <span className="font-[inter-semibold] text-foreground">
                       {ride.destination}
                     </span>
                   </div>

@@ -64,7 +64,7 @@ export default function RegisterPage() {
         </p>
       </div>
 
-      <Card className="bg-white/95">
+      <Card className="shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.20),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)]">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {error && (
             <div className="rounded-lg border border-(--danger)/20 bg-(--danger-soft) px-4 py-3 text-sm text-(--danger)">

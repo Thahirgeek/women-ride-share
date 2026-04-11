@@ -77,7 +77,7 @@ export default function SearchRidesPage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Search Rides</h1>
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Search Rides</h1>
         <p className="mt-1 text-(--text-2)">
           Find safe, affordable shared rides.
         </p>
@@ -126,7 +126,7 @@ export default function SearchRidesPage() {
 
       {searched && (
         <div>
-          <h2 className="mb-4 text-xl font-bold text-foreground">
+          <h2 className="mb-4 text-xl font-[inter-bold] text-foreground">
             {results.length > 0
               ? `${results.length} ride${results.length > 1 ? "s" : ""} found`
               : "No rides found"}
@@ -136,7 +136,7 @@ export default function SearchRidesPage() {
               <Card key={ride.id}>
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-(--bg-muted) text-sm font-bold text-(--text-2)">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-400 text-sm font-[inter-bold] text-black">
                       {ride.driver.user.name
                         .split(" ")
                         .map((n) => n[0])
@@ -144,7 +144,7 @@ export default function SearchRidesPage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-semibold text-foreground">
+                        <p className="text-sm font-[inter-semibold] text-foreground">
                           {ride.driver.user.name}
                         </p>
                         {ride.driver.isVerified && (
@@ -164,7 +164,7 @@ export default function SearchRidesPage() {
                   />
                 </div>
                 <div className="flex items-center gap-2 text-sm text-(--text-2) mb-2">
-                  <span className="font-medium text-foreground">
+                  <span className="font-[inter-medium] text-foreground">
                     {ride.source}
                   </span>
                   <svg
@@ -180,7 +180,7 @@ export default function SearchRidesPage() {
                     <path d="M5 12h14" />
                     <path d="m12 5 7 7-7 7" />
                   </svg>
-                  <span className="font-medium text-foreground">
+                  <span className="font-[inter-medium] text-foreground">
                     {ride.destination}
                   </span>
                 </div>
@@ -188,7 +188,7 @@ export default function SearchRidesPage() {
                   <span className="text-(--text-2)">
                     {new Date(ride.scheduledAt).toLocaleString()}
                   </span>
-                  <span className="font-semibold text-foreground">
+                  <span className="font-[inter-semibold] text-foreground">
                     Rs {ride.fare} / seat
                   </span>
                 </div>

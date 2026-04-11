@@ -270,7 +270,7 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
               <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white">
                 <img src="/8442672.svg" className="bg-transparent"></img>
               </div>
-              <span className="text-xl font-bold tracking-tight text-foreground">
+              <span className="text-xl font-[inter-bold] tracking-tight text-foreground">
                 SafeRide
               </span>
             </Link>

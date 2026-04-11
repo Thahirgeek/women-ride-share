@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 import CompositionBadge from "@/components/safety/CompositionBadge";
-import RippleWaveLoader from "@/components/RippleWaveLoader";
+import { WaveLoader } from "@/components/wave-loader";
 import { LocationSuggestion } from "@/lib/location-types";
 
 interface RideDetails {
@@ -93,7 +93,7 @@ export default function BookRidePage({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <RippleWaveLoader />
+        <WaveLoader />
       </div>
     );
   }
@@ -112,7 +112,7 @@ export default function BookRidePage({
         <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
           OK
         </div>
-        <h1 className="text-2xl font-bold text-foreground mb-2">
+        <h1 className="text-4xl font-[instrumentserif-regular] text-foreground mb-2">
           Booking Confirmed!
         </h1>
         <p className="text-(--text-2) mb-8">
@@ -127,7 +127,7 @@ export default function BookRidePage({
               <path d="M7 11V7a5 5 0 0 1 10 0v4" />
             </svg>
             <div>
-              <p className="text-sm font-medium">Payment step</p>
+              <p className="text-sm font-[inter-medium]">Payment step</p>
               <p className="text-xs">
                 Payment processing would happen here
               </p>
@@ -149,7 +149,7 @@ export default function BookRidePage({
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Book Ride</h1>
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Book Ride</h1>
         <p className="mt-1 text-(--text-2)">
           Review ride details and confirm your booking.
         </p>
@@ -159,14 +159,14 @@ export default function BookRidePage({
         {/* Ride details */}
         <div className="flex flex-col gap-4">
           <Card>
-            <h2 className="text-lg font-bold text-foreground mb-4">
+            <h2 className="text-lg font-[inter-bold] text-foreground mb-4">
               Ride Details
             </h2>
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2 text-sm">
-                <span className="font-semibold text-foreground">{ride.source}</span>
+                <span className="font-[inter-semibold] text-foreground">{ride.source}</span>
                 <span className="text-(--text-3)">-&gt;</span>
-                <span className="font-semibold text-foreground">{ride.destination}</span>
+                <span className="font-[inter-semibold] text-foreground">{ride.destination}</span>
               </div>
               <p className="text-sm text-(--text-2)">
                 Time: {new Date(ride.scheduledAt).toLocaleString()}
@@ -174,7 +174,7 @@ export default function BookRidePage({
               <p className="text-sm text-(--text-2)">
                 Seats: {ride.availableSeats} seats available
               </p>
-              <p className="text-lg font-bold text-foreground">
+              <p className="text-lg font-[inter-bold] text-foreground">
                 Rs {ride.fare} per seat
               </p>
               {ride.notes && (
@@ -187,22 +187,22 @@ export default function BookRidePage({
 
           {/* Safety Snapshot */}
           <Card>
-            <h2 className="text-lg font-bold text-foreground mb-4">
+            <h2 className="text-lg font-[inter-bold] text-foreground mb-4">
               Safety Snapshot
             </h2>
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-(--text-2)">Driver</span>
-                <span className="text-sm font-semibold text-foreground">{ride.driver.user.name}</span>
+                <span className="text-sm font-[inter-semibold] text-foreground">{ride.driver.user.name}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-(--text-2)">Gender</span>
-                <span className="text-sm font-semibold text-foreground">{ride.driver.user.gender}</span>
+                <span className="text-sm font-[inter-semibold] text-foreground">{ride.driver.user.gender}</span>
               </div>
               {ride.driver.vehicle && (
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-(--text-2)">Vehicle</span>
-                  <span className="text-sm font-semibold text-foreground">
+                  <span className="text-sm font-[inter-semibold] text-foreground">
                     {ride.driver.vehicle.model} ({ride.driver.vehicle.color})
                   </span>
                 </div>
@@ -218,7 +218,7 @@ export default function BookRidePage({
         {/* Booking form */}
         <div>
           <Card>
-            <h2 className="text-lg font-bold text-foreground mb-4">
+            <h2 className="text-lg font-[inter-bold] text-foreground mb-4">
               Your Booking
             </h2>
             {error && (
@@ -259,7 +259,7 @@ export default function BookRidePage({
               <div className="mt-2 rounded-lg bg-(--bg-muted) p-3">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-(--text-2)">Total</span>
-                  <span className="text-lg font-bold text-foreground">
+                  <span className="text-lg font-[inter-bold] text-foreground">
                     Rs {ride.fare * parseInt(seatCount || "1")}
                   </span>
                 </div>

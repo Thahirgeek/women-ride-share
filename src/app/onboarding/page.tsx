@@ -7,7 +7,7 @@ import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
-import RippleWaveLoader from "@/components/RippleWaveLoader";
+import { WaveLoader } from "@/components/wave-loader";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -75,7 +75,7 @@ export default function OnboardingPage() {
   if (isPending) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <RippleWaveLoader />
+        <WaveLoader />
       </div>
     );
   }
@@ -86,7 +86,7 @@ export default function OnboardingPage() {
       <div className="pointer-events-none absolute -right-16 bottom-0 h-52 w-52 rounded-full bg-sky-100 blur-3xl" />
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-foreground">
+          <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">
             Complete your profile
           </h1>
           <p className="mt-2 text-sm text-(--text-2)">

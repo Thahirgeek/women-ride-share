@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Select from "@/components/ui/Select";
-import RippleWaveLoader from "@/components/RippleWaveLoader";
+import { WaveLoader } from "@/components/wave-loader";
 
 interface DriverProfile {
   isAvailable: boolean;
@@ -56,7 +56,7 @@ export default function DriverDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <RippleWaveLoader />
+        <WaveLoader />
       </div>
     );
   }

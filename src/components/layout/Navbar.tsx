@@ -9,56 +9,78 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed left-0 right-0 mx-auto rounded-lg top-5 w-[60%] z-50 px-6 py-1 border-2 border-white bg-[#f6f6f6]/50 shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] transition-colors backdrop-blur-xl`}
+      className={`fixed left-0 right-0 mx-auto z-50 rounded-lg border-2 border-white bg-[#f6f6f6]/50 px-6 py-1 shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] backdrop-blur-xl transition-[top,width] duration-300 ease-out ${
+        scrolled ? "top-3 w-[88%] md:w-[56%]" : "top-5 w-[92%] md:w-[64%]"
+      }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
-        <Link href="/" className="flex items-center gap-2">
+      <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 py-2 md:gap-4">
+        <Link href="/" className="flex shrink-0 items-center gap-2">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white">
-          <img src="/8442672.svg" className="bg-transparent"></img>
-</div>
-          <span className="text-lg font-bold tracking-tight text-foreground">SafeRide</span>
+            <img src="/8442672.svg" className="bg-transparent" alt="SafeRide logo"></img>
+          </div>
+          <span className={`font-bold tracking-tight text-foreground transition-[font-size] duration-300 ${scrolled ? "text-base lg:text-lg" : "text-lg"}`}>
+            SafeRide
+          </span>
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className={`hidden min-w-0 flex-1 items-center justify-center md:flex ${scrolled ? "gap-2 lg:gap-3" : "gap-3 lg:gap-5"}`}>
           <a
             href="#why"
-            className="text-sm font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] px-2 py-1 rounded-md transition-colors"
+            aria-label="Why SafeRide"
+            className={`whitespace-nowrap font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] rounded-md transition-all duration-300 ${
+              scrolled ? "px-1.5 py-1 text-xs lg:text-sm" : "px-2 py-1 text-sm"
+            }`}
           >
-            Why SafeRide
+            <span className="lg:hidden">Why</span>
+            <span className="hidden lg:inline">Why SafeRide</span>
           </a>
           <a
             href="#features"
-            className="text-sm font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] px-2 py-1 rounded-md transition-colors"
+            className={`whitespace-nowrap font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] rounded-md transition-all duration-300 ${
+              scrolled ? "px-1.5 py-1 text-xs lg:text-sm" : "px-2 py-1 text-sm"
+            }`}
           >
             Features
           </a>
           <a
             href="#safety"
-            className="text-sm font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] px-2 py-1 rounded-md transition-colors"
+            className={`whitespace-nowrap font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] rounded-md transition-all duration-300 ${
+              scrolled ? "px-1.5 py-1 text-xs lg:text-sm" : "px-2 py-1 text-sm"
+            }`}
           >
             Safety
           </a>
           <a
             href="#app-preview"
-            className="text-sm font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] px-2 py-1 rounded-md transition-colors"
+            aria-label="App Preview"
+            className={`whitespace-nowrap font-medium text-(--text-2) border-transparent hover:border-white hover:bg-[#efefed]/70 hover:text-[#171411] hover:shadow-[0_-3px_6px_rgba(255,255,255,1),0_-1px_0px_rgba(255,255,255,1),0_8px_16px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.08),1px_0_2px_rgba(0,0,0,0.03),-1px_0_2px_rgba(0,0,0,0.03)] rounded-md transition-all duration-300 ${
+              scrolled ? "px-1.5 py-1 text-xs lg:text-sm" : "px-2 py-1 text-sm"
+            }`}
           >
-            App Preview
+            <span className="lg:hidden">Preview</span>
+            <span className="hidden lg:inline">App Preview</span>
           </a>
         </div>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className={`hidden shrink-0 items-center md:flex ${scrolled ? "gap-2" : "gap-3"}`}>
           <Link href="/login">
-            <Button variant="secondary" className="px-4 py-2.5 text-xs">Log in</Button>
+            <Button variant="secondary" className={`text-xs transition-all duration-300 ${scrolled ? "px-3 py-2" : "px-4 py-2.5"}`}>
+              Log in
+            </Button>
           </Link>
           <Link href="/register">
-            <Button variant="primary" className="px-5 py-2.5">Join Now</Button>
+            <Button variant="primary" className={`transition-all duration-300 ${scrolled ? "px-4 py-2" : "px-5 py-2.5"}`}>
+              <span className="lg:hidden">Join</span>
+              <span className="hidden lg:inline">Join Now</span>
+            </Button>
           </Link>
         </div>
 

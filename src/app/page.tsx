@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
+import AnimatedButton from "@/components/button-1";
 import ColorBends from "@/components/ColorBends";
 
 export default function Home() {
@@ -43,13 +44,11 @@ export default function Home() {
               and clean in-app workflows built for confidence at every step.
             </p>
 
-            <div className="animate-fade-up delay-300 mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="animate-fade-up delay-300 mt-8">
               <Link href="/register">
-                <Button className="px-6 py-3 text-sm">Join Now</Button>
+                <AnimatedButton className="px-6 py-3 text-md font-[inter-medium] shadow-xl shadow-black/60">Join Now →</AnimatedButton>
               </Link>
-              <Link href="/passenger/search">
-                <Button variant="secondary" className="px-6 py-3 text-sm">Explore Rides</Button>
-              </Link>
+              
             </div>
 
             <div className="mt-7 flex flex-wrap items-center gap-5 text-sm text-(--text-3)">
@@ -68,9 +67,9 @@ export default function Home() {
               <div className="mb-4 flex items-center justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-[0.08em] text-(--text-3)">Upcoming Ride</p>
-                  <h3 className="mt-1 text-lg font-semibold text-foreground">Indiranagar to HSR Layout</h3>
+                  <h3 className="mt-1 text-lg font-[inter-semibold] text-foreground">Indiranagar to HSR Layout</h3>
                 </div>
-                <span className="rounded-full bg-(--primary-soft) px-3 py-1 text-xs font-semibold text-(--primary)">
+                <span className="rounded-full  border border-black/15 bg-white px-3 py-1 text-xs font-[inter-semibold] text-(--primary)">
                   Ladies Preferred
                 </span>
               </div>
@@ -78,21 +77,21 @@ export default function Home() {
               <div className="grid gap-3 sm:grid-cols-3">
                 <div className="rounded-lg border border-(--border) bg-(--bg-muted) p-3">
                   <p className="text-xs text-(--text-3)">Driver</p>
-                  <p className="mt-1 text-sm font-semibold text-foreground">Ananya R.</p>
+                  <p className="mt-1 text-sm font-[inter-semibold] text-foreground">Verstappen Max</p>
                 </div>
                 <div className="rounded-lg border border-(--border) bg-(--bg-muted) p-3">
                   <p className="text-xs text-(--text-3)">Departure</p>
-                  <p className="mt-1 text-sm font-semibold text-foreground">7:30 PM</p>
+                  <p className="mt-1 text-sm font-[inter-semibold] text-foreground">7:30 PM</p>
                 </div>
                 <div className="rounded-lg border border-(--border) bg-(--bg-muted) p-3">
                   <p className="text-xs text-(--text-3)">Seats</p>
-                  <p className="mt-1 text-sm font-semibold text-foreground">2 left</p>
+                  <p className="mt-1 text-sm font-[inter-semibold] text-foreground">2 left</p>
                 </div>
               </div>
 
               <div className="mt-5 flex items-center justify-between border-t border-(--border) pt-4">
                 <p className="text-sm text-(--text-2)">Secure fare</p>
-                <p className="text-xl font-bold text-foreground">Rs 140</p>
+                <p className="text-xl font-[inter-bold] text-foreground">Rs 140</p>
               </div>
             </Card>
           </div>
@@ -100,7 +99,7 @@ export default function Home() {
       </section>
 
       <section className="border-y border-(--border) px-6 py-8">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-6 text-sm font-medium text-(--text-2) sm:gap-12">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-6 text-sm font-[inter-medium] text-(--text-2) sm:gap-12">
           <span>Trusted by verified commuters</span>
           <span className="h-1 w-1 rounded-full bg-(--text-3)" />
           <span>Integrated safety onboarding</span>

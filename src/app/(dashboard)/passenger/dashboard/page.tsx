@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import { Search } from "lucide-react";
 
 export default async function PassengerDashboard() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -49,7 +50,7 @@ export default async function PassengerDashboard() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">
           Welcome, {user.name?.split(" ")[0]}
         </h1>
         <p className="mt-1 text-(--text-2)">Here&apos;s your ride overview.</p>
@@ -72,15 +73,15 @@ export default async function PassengerDashboard() {
       </div>
 
       {/* Quick action */}
-      <div className="mb-8">
+      <div className="mb-10">
         <Link href="/passenger/search">
-          <Button variant="primary">Search for a Ride</Button>
+          <Button variant="primary"><Search size={15}/> Search for a Ride</Button>
         </Link>
       </div>
 
       {/* Recent bookings */}
       <div>
-        <h2 className="mb-4 text-xl font-bold text-foreground">
+        <h2 className="mb-4 text-xl font-[inter-bold] text-foreground">
           Recent Bookings
         </h2>
         {!passenger || passenger.bookings.length === 0 ? (
@@ -95,11 +96,11 @@ export default async function PassengerDashboard() {
               <Card key={booking.id}>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 text-sm">
-                    <span className="font-semibold text-foreground">
+                    <span className="font-[inter-semibold] text-foreground">
                       {booking.ride.source}
                     </span>
                     <span className="text-(--text-3)">-&gt;</span>
-                    <span className="font-semibold text-foreground">
+                    <span className="font-[inter-semibold] text-foreground">
                       {booking.ride.destination}
                     </span>
                   </div>

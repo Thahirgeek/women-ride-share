@@ -28,7 +28,7 @@ const options = [
 export default function SafetyFilter({ value, onChange }: SafetyFilterProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-semibold text-(--text-2)">
+      <label className="text-sm font-[inter-semibold] text-(--text-2)">
         Safety Filter
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
@@ -37,7 +37,7 @@ export default function SafetyFilter({ value, onChange }: SafetyFilterProps) {
             key={opt.value}
             className={`flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-all duration-200 ${
               value === opt.value
-                ? "border-(--primary)/35 bg-(--primary-soft)/65"
+                ? "border-(--primary)/35 bg-blue-100"
                 : "border-(--border) bg-white hover:border-(--primary)/25"
             }`}
           >
@@ -50,8 +50,7 @@ export default function SafetyFilter({ value, onChange }: SafetyFilterProps) {
               className="sr-only"
             />
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-foreground">
-                {opt.emoji && `${opt.emoji} `}
+              <span className="text-sm font-[inter-medium] text-foreground">
                 {opt.label}
               </span>
               <span className="text-xs text-(--text-3)">{opt.description}</span>

@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import Badge from "@/components/ui/Badge";
-import RippleWaveLoader from "@/components/RippleWaveLoader";
+import { WaveLoader } from "@/components/wave-loader";
 
 export default function ProfilePage() {
   const { data: session, isPending } = useSession();
@@ -72,7 +72,7 @@ export default function ProfilePage() {
   if (isPending) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <RippleWaveLoader />
+        <WaveLoader />
       </div>
     );
   }

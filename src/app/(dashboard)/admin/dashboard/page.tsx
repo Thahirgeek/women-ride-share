@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
-import RippleWaveLoader from "@/components/RippleWaveLoader";
+import { WaveLoader } from "@/components/wave-loader";
 import BasicModal from "@/components/modal";
 
 type Tab = "users" | "rides" | "drivers";
@@ -233,7 +233,7 @@ export default function AdminDashboard() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <RippleWaveLoader />
+          <WaveLoader />
         </div>
       ) : (
         <>

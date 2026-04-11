@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
-import RippleWaveLoader from "@/components/RippleWaveLoader";
+import { WaveLoader } from "@/components/wave-loader";
 
 interface BookingRequest {
   id: string;
@@ -60,7 +60,7 @@ export default function DriverBookingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <RippleWaveLoader />
+        <WaveLoader />
       </div>
     );
   }
@@ -68,7 +68,7 @@ export default function DriverBookingsPage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Booking Requests</h1>
+        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Booking Requests</h1>
         <p className="mt-1 text-(--text-2)">
           Manage passenger booking requests on your rides.
         </p>
@@ -87,7 +87,7 @@ export default function DriverBookingsPage() {
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <div className="flex items-center gap-2 text-sm mb-1">
-                    <span className="font-semibold text-foreground">
+                    <span className="font-[inter-semibold] text-foreground">
                       {booking.passenger.user.name}
                     </span>
                     {genderBadge(booking.passenger.user.gender)}
