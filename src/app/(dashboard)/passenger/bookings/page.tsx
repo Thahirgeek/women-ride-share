@@ -152,7 +152,7 @@ export default function PassengerBookingsPage() {
                   )}
                   {booking.status === "CONFIRMED" && booking.ride.status === "COMPLETED" && (
                     <Link href={`/passenger/rate-driver/${booking.ride.id}`}>
-                      <Button variant="primary" className="text-xs px-3 py-1.5">
+                      <Button variant="primary" className="text-xs px-3 py-1.5 whitespace-nowrap">
                         Rate Driver
                       </Button>
                     </Link>

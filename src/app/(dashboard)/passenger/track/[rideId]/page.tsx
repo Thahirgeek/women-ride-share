@@ -164,7 +164,7 @@ export default function PassengerTrackRidePage({
         <div className="flex items-center gap-2">
           {data.ride.status === "COMPLETED" && (
             <Link href={`/passenger/rate-driver/${data.ride.id}`}>
-              <Button variant="primary" className="px-3 py-1.5 text-xs">
+              <Button variant="primary" className="px-3 py-1.5 text-xs whitespace-nowrap">
                 Rate Driver
               </Button>
             </Link>

@@ -18,14 +18,14 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-[inter-semibold] shadow-sm transition-all disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)/35";
+    "inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-[inter-semibold] shadow-sm transition-all disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--ring)/55 focus-visible:ring-offset-2 focus-visible:ring-offset-(--surface)";
 
   const variants = {
     primary:
-      "bg-(--primary) text-white hover:bg-(--primary-hover)",
+      "bg-(--primary) text-(--accent-fg) shadow-[0_10px_20px_rgba(20,48,110,0.25)] hover:bg-(--primary-hover)",
     secondary:
-      "border border-(--border) bg-white text-foreground hover:border-(--primary)/30 hover:bg-(--primary-soft)/30",
-    danger: "bg-[var(--danger)] text-white hover:bg-[#c73131]",
+      "border border-(--primary)/18 bg-(--surface) text-(--primary) hover:border-(--primary)/35 hover:bg-(--primary-soft)",
+    danger: "bg-(--danger) text-white hover:bg-(--danger-hover)",
   };
 
   return (

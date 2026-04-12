@@ -5,6 +5,9 @@ interface BadgeProps {
     | "success"
     | "warning"
     | "danger"
+    | "pending"
+    | "info"
+    | "completed"
     | "purple"
     | "blue"
     | "gray";
@@ -13,12 +16,15 @@ interface BadgeProps {
 
 const variantStyles: Record<string, string> = {
   default: "bg-(--primary-soft) text-(--primary) border border-(--primary)/12",
-  success: "bg-emerald-50 text-emerald-700 border border-emerald-200",
-  warning: "bg-amber-50 text-amber-700 border border-amber-200",
+  success: "bg-(--success-soft) text-(--success) border border-(--success)/22",
+  warning: "bg-(--warning-soft) text-(--warning) border border-(--warning)/22",
   danger: "bg-(--danger-soft) text-(--danger) border border-(--danger)/20",
+  pending: "bg-(--warning-soft) text-(--warning) border border-(--warning)/22",
+  info: "bg-(--info-soft) text-(--info) border border-(--info)/22",
+  completed: "bg-(--success-soft) text-(--success) border border-(--success)/22",
   purple: "bg-(--primary-soft) text-(--primary) border border-(--primary)/12",
-  blue: "bg-sky-50 text-sky-700 border border-sky-200",
-  gray: "bg-slate-100 text-slate-700 border border-slate-200",
+  blue: "bg-(--info-soft) text-(--info) border border-(--info)/22",
+  gray: "bg-(--bg-muted) text-(--text-2) border border-(--border)",
 };
 
 export default function Badge({

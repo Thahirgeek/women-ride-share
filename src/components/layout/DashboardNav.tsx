@@ -263,7 +263,7 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-(--border) bg-white lg:block">
+      <aside className="hidden w-64 shrink-0 border-r border-(--border) bg-(--surface) lg:block">
         <div className="flex h-full flex-col">
           <div className="border-b border-(--border) px-6 py-5">
             <Link href="/" className="flex items-center gap-2">
@@ -287,8 +287,8 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
                       href={item.href}
                       className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
                         isActive
-                          ? "bg-(--primary-soft) text-(--primary)"
-                          : "text-(--text-2) hover:bg-(--bg-muted) hover:text-foreground"
+                          ? "border border-(--primary)/20 bg-(--primary-soft) text-(--primary) shadow-[0_8px_18px_rgba(20,48,110,0.14)]"
+                          : "border border-transparent text-(--text-2) hover:border-(--primary)/18 hover:bg-(--primary-soft)/45 hover:text-(--primary)"
                       }`}
                     >
                       {item.icon}
@@ -307,7 +307,7 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
             )}
             <button
               onClick={handleSignOut}
-              className="flex w-full justify-center cursor-pointer items-center gap-3 rounded-md border bg-black/10 px-3 py-2.5 text-sm font-medium text-(--text-2) transition-all duration-200 hover:text-white hover:bg-red-500"
+              className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-md border border-(--danger)/18 bg-(--danger-soft) px-3 py-2.5 text-sm font-medium text-(--danger) transition-all duration-200 hover:bg-(--danger) hover:text-white"
             >
               <svg
                 width="18"
@@ -339,8 +339,10 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center gap-0.5 px-3 py-1.5 text-xs transition-colors ${
-                  isActive ? "text-(--primary)" : "text-(--text-3)"
+                className={`flex flex-col items-center gap-0.5 rounded-lg px-3 py-1.5 text-xs transition-all duration-200 ${
+                  isActive
+                    ? "bg-(--primary-soft) text-(--primary)"
+                    : "text-(--text-3) hover:bg-(--primary-soft)/40 hover:text-(--primary)"
                 }`}
               >
                 {item.icon}

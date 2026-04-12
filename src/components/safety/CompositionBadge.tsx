@@ -7,7 +7,11 @@ interface CompositionBadgeProps {
 
 const compositionConfig: Record<
   string,
-  { label: string; emoji: string; variant: "purple" | "blue" | "gray" | "default" }
+  {
+    label: string;
+    emoji: string;
+    variant: "default" | "info" | "pending" | "gray";
+  }
 > = {
   LADIES: {
     label: "Ladies Onboard",
@@ -17,12 +21,12 @@ const compositionConfig: Record<
   FAMILY: {
     label: "Family Ride",
     emoji: "[F]",
-    variant: "blue",
+    variant: "info",
   },
   MIXED: {
     label: "Mixed Group",
     emoji: "[M]",
-    variant: "gray",
+    variant: "pending",
   },
   SOLO: {
     label: "Solo Driver",

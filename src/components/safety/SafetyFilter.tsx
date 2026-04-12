@@ -37,8 +37,8 @@ export default function SafetyFilter({ value, onChange }: SafetyFilterProps) {
             key={opt.value}
             className={`flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-all duration-200 ${
               value === opt.value
-                ? "border-(--primary)/35 bg-blue-100"
-                : "border-(--border) bg-white hover:border-(--primary)/25"
+                ? "border-(--primary)/35 bg-(--primary-soft) shadow-[0_8px_16px_rgba(20,48,110,0.14)]"
+                : "border-(--border) bg-(--surface) hover:border-(--primary)/25 hover:bg-(--primary-soft)/45"
             }`}
           >
             <input

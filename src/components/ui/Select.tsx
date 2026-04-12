@@ -26,7 +26,7 @@ export default function Select({
       )}
       <select
         id={id}
-        className={`rounded-lg border border-(--border) bg-white px-3.5 py-2.5 text-sm text-foreground outline-none transition-all duration-200 focus:border-(--primary)/55 focus:ring-2 focus:ring-(--primary)/15 disabled:bg-(--bg-muted) disabled:text-(--text-3) ${error ? "border-(--danger)/45 focus:border-(--danger) focus:ring-(--danger)/20" : ""} ${className}`}
+        className={`rounded-lg border border-(--border) bg-(--surface) px-3.5 py-2.5 text-sm text-foreground outline-none transition-all duration-200 focus:border-(--primary)/55 focus:ring-2 focus:ring-(--ring)/35 disabled:bg-(--primary-soft)/35 disabled:text-(--text-3) ${error ? "border-(--danger)/45 focus:border-(--danger) focus:ring-(--danger)/24" : ""} ${className}`}
         {...props}
       >
         {options.map((opt) => (
