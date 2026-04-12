@@ -8,6 +8,19 @@ import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import Badge from "@/components/ui/Badge";
 import { WaveLoader } from "@/components/wave-loader";
+import RatingSummary from "@/components/ratings/RatingSummary";
+import RecentComments from "@/components/ratings/RecentComments";
+
+interface DriverFeedbackComment {
+  id: string;
+  score: number;
+  comment: string | null;
+  tags: string[];
+  createdAt: string;
+  rater: {
+    name: string;
+  };
+}
 
 export default function ProfilePage() {
   const { data: session, isPending } = useSession();
@@ -23,6 +36,14 @@ export default function ProfilePage() {
     color: "",
     seatsAvailable: "4",
   });
+  const [driverRatingSummary, setDriverRatingSummary] = useState<{
+    averageScore: number | null;
+    totalRatings: number;
+  }>({
+    averageScore: null,
+    totalRatings: 0,
+  });
+  const [recentFeedback, setRecentFeedback] = useState<DriverFeedbackComment[]>([]);
 
   const user = session?.user as any;
   const isDriver = user?.role === "DRIVER";
@@ -45,6 +66,20 @@ export default function ProfilePage() {
                 color: d.driver.vehicle.color || "",
                 seatsAvailable: String(d.driver.vehicle.seatsAvailable || 4),
               });
+            }
+
+            if (d.driver?.ratingSummary) {
+              setDriverRatingSummary({
+                averageScore:
+                  typeof d.driver.ratingSummary.averageScore === "number"
+                    ? d.driver.ratingSummary.averageScore
+                    : null,
+                totalRatings: d.driver.ratingSummary.totalRatings ?? 0,
+              });
+            }
+
+            if (Array.isArray(d.driver?.recentFeedback)) {
+              setRecentFeedback(d.driver.recentFeedback);
             }
           });
       }
@@ -120,63 +155,76 @@ export default function ProfilePage() {
       </Card>
 
       {isDriver && (
-        <Card className="mb-6">
-          <h2 className="text-lg font-bold text-foreground mb-4">
-            Vehicle Details
-          </h2>
-          <div className="flex flex-col gap-4">
-            <Select
-              id="vehicleType"
-              label="Vehicle Type"
-              value={vehicle.vehicleType}
-              onChange={(e) =>
-                setVehicle((v) => ({ ...v, vehicleType: e.target.value }))
-              }
-              options={[
-                { value: "CAR", label: "Car" },
-                { value: "AUTO", label: "Auto" },
-                { value: "VAN", label: "Van" },
-                { value: "TAXI", label: "Taxi" },
-              ]}
+        <>
+          <Card className="mb-6">
+            <h2 className="text-lg font-bold text-foreground mb-4">
+              Vehicle Details
+            </h2>
+            <div className="flex flex-col gap-4">
+              <Select
+                id="vehicleType"
+                label="Vehicle Type"
+                value={vehicle.vehicleType}
+                onChange={(e) =>
+                  setVehicle((v) => ({ ...v, vehicleType: e.target.value }))
+                }
+                options={[
+                  { value: "CAR", label: "Car" },
+                  { value: "AUTO", label: "Auto" },
+                  { value: "VAN", label: "Van" },
+                  { value: "TAXI", label: "Taxi" },
+                ]}
+              />
+              <Input
+                id="reg"
+                label="Registration Number"
+                value={vehicle.registrationNumber}
+                onChange={(e) =>
+                  setVehicle((v) => ({
+                    ...v,
+                    registrationNumber: e.target.value,
+                  }))
+                }
+              />
+              <Input
+                id="vModel"
+                label="Model"
+                value={vehicle.model}
+                onChange={(e) =>
+                  setVehicle((v) => ({ ...v, model: e.target.value }))
+                }
+              />
+              <Input
+                id="vColor"
+                label="Color"
+                value={vehicle.color}
+                onChange={(e) =>
+                  setVehicle((v) => ({ ...v, color: e.target.value }))
+                }
+              />
+              <Input
+                id="vSeats"
+                label="Seats Available"
+                type="number"
+                value={vehicle.seatsAvailable}
+                onChange={(e) =>
+                  setVehicle((v) => ({ ...v, seatsAvailable: e.target.value }))
+                }
+              />
+            </div>
+          </Card>
+
+          <Card className="mb-6">
+            <h2 className="mb-2 text-lg font-bold text-foreground">Passenger Feedback</h2>
+            <RatingSummary
+              averageScore={driverRatingSummary.averageScore}
+              totalRatings={driverRatingSummary.totalRatings}
             />
-            <Input
-              id="reg"
-              label="Registration Number"
-              value={vehicle.registrationNumber}
-              onChange={(e) =>
-                setVehicle((v) => ({
-                  ...v,
-                  registrationNumber: e.target.value,
-                }))
-              }
-            />
-            <Input
-              id="vModel"
-              label="Model"
-              value={vehicle.model}
-              onChange={(e) =>
-                setVehicle((v) => ({ ...v, model: e.target.value }))
-              }
-            />
-            <Input
-              id="vColor"
-              label="Color"
-              value={vehicle.color}
-              onChange={(e) =>
-                setVehicle((v) => ({ ...v, color: e.target.value }))
-              }
-            />
-            <Input
-              id="vSeats"
-              label="Seats Available"
-              type="number"
-              value={vehicle.seatsAvailable}
-              onChange={(e) =>
-                setVehicle((v) => ({ ...v, seatsAvailable: e.target.value }))
-              }
-            />
-          </div>
-        </Card>
+            <div className="mt-4">
+              <RecentComments comments={recentFeedback} />
+            </div>
+          </Card>
+        </>
       )}
 
       <div className="flex items-center gap-4 font-[inter-bold]">

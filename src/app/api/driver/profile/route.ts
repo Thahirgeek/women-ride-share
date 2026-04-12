@@ -18,5 +18,49 @@ export async function GET() {
     },
   });
 
-  return Response.json({ driver });
+  if (!driver) {
+    return Response.json({ driver: null });
+  }
+
+  const [summary, recentFeedback] = await Promise.all([
+    prisma.rating.aggregate({
+      where: {
+        driverId: driver.id,
+        passengerId: { not: null },
+      },
+      _avg: { score: true },
+      _count: { _all: true },
+    }),
+    prisma.rating.findMany({
+      where: {
+        driverId: driver.id,
+        passengerId: { not: null },
+        comment: { not: null },
+      },
+      orderBy: { createdAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        score: true,
+        comment: true,
+        tags: true,
+        createdAt: true,
+        rater: { select: { name: true } },
+      },
+    }),
+  ]);
+
+  return Response.json({
+    driver: {
+      ...driver,
+      ratingSummary: {
+        averageScore:
+          typeof summary._avg.score === "number"
+            ? Math.round(summary._avg.score * 10) / 10
+            : null,
+        totalRatings: summary._count._all,
+      },
+      recentFeedback,
+    },
+  });
 }

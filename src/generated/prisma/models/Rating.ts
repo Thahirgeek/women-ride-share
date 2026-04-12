@@ -67,6 +67,7 @@ export type RatingCountAggregateOutputType = {
   passengerId: number
   score: number
   comment: number
+  tags: number
   createdAt: number
   _all: number
 }
@@ -113,6 +114,7 @@ export type RatingCountAggregateInputType = {
   passengerId?: true
   score?: true
   comment?: true
+  tags?: true
   createdAt?: true
   _all?: true
 }
@@ -212,6 +214,7 @@ export type RatingGroupByOutputType = {
   passengerId: string | null
   score: number
   comment: string | null
+  tags: string[]
   createdAt: Date
   _count: RatingCountAggregateOutputType | null
   _avg: RatingAvgAggregateOutputType | null
@@ -247,6 +250,7 @@ export type RatingWhereInput = {
   passengerId?: Prisma.StringNullableFilter<"Rating"> | string | null
   score?: Prisma.IntFilter<"Rating"> | number
   comment?: Prisma.StringNullableFilter<"Rating"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Rating">
   createdAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
   rater?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   ratee?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -263,6 +267,7 @@ export type RatingOrderByWithRelationInput = {
   passengerId?: Prisma.SortOrderInput | Prisma.SortOrder
   score?: Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   rater?: Prisma.UserOrderByWithRelationInput
   ratee?: Prisma.UserOrderByWithRelationInput
@@ -272,6 +277,7 @@ export type RatingOrderByWithRelationInput = {
 
 export type RatingWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  rideId_raterId_rateeId?: Prisma.RatingRideIdRaterIdRateeIdCompoundUniqueInput
   AND?: Prisma.RatingWhereInput | Prisma.RatingWhereInput[]
   OR?: Prisma.RatingWhereInput[]
   NOT?: Prisma.RatingWhereInput | Prisma.RatingWhereInput[]
@@ -282,12 +288,13 @@ export type RatingWhereUniqueInput = Prisma.AtLeast<{
   passengerId?: Prisma.StringNullableFilter<"Rating"> | string | null
   score?: Prisma.IntFilter<"Rating"> | number
   comment?: Prisma.StringNullableFilter<"Rating"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Rating">
   createdAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
   rater?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   ratee?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   driver?: Prisma.XOR<Prisma.DriverNullableScalarRelationFilter, Prisma.DriverWhereInput> | null
   passenger?: Prisma.XOR<Prisma.PassengerNullableScalarRelationFilter, Prisma.PassengerWhereInput> | null
-}, "id">
+}, "id" | "rideId_raterId_rateeId">
 
 export type RatingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -298,6 +305,7 @@ export type RatingOrderByWithAggregationInput = {
   passengerId?: Prisma.SortOrderInput | Prisma.SortOrder
   score?: Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.RatingCountOrderByAggregateInput
   _avg?: Prisma.RatingAvgOrderByAggregateInput
@@ -318,6 +326,7 @@ export type RatingScalarWhereWithAggregatesInput = {
   passengerId?: Prisma.StringNullableWithAggregatesFilter<"Rating"> | string | null
   score?: Prisma.IntWithAggregatesFilter<"Rating"> | number
   comment?: Prisma.StringNullableWithAggregatesFilter<"Rating"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Rating">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Rating"> | Date | string
 }
 
@@ -326,6 +335,7 @@ export type RatingCreateInput = {
   rideId: string
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
   rater: Prisma.UserCreateNestedOneWithoutRatingsGivenInput
   ratee: Prisma.UserCreateNestedOneWithoutRatingsReceivedInput
@@ -342,6 +352,7 @@ export type RatingUncheckedCreateInput = {
   passengerId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -350,6 +361,7 @@ export type RatingUpdateInput = {
   rideId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rater?: Prisma.UserUpdateOneRequiredWithoutRatingsGivenNestedInput
   ratee?: Prisma.UserUpdateOneRequiredWithoutRatingsReceivedNestedInput
@@ -366,6 +378,7 @@ export type RatingUncheckedUpdateInput = {
   passengerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -378,6 +391,7 @@ export type RatingCreateManyInput = {
   passengerId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -386,6 +400,7 @@ export type RatingUpdateManyMutationInput = {
   rideId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -398,6 +413,7 @@ export type RatingUncheckedUpdateManyInput = {
   passengerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -411,6 +427,20 @@ export type RatingOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
+export type RatingRideIdRaterIdRateeIdCompoundUniqueInput = {
+  rideId: string
+  raterId: string
+  rateeId: string
+}
+
 export type RatingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   rideId?: Prisma.SortOrder
@@ -420,6 +450,7 @@ export type RatingCountOrderByAggregateInput = {
   passengerId?: Prisma.SortOrder
   score?: Prisma.SortOrder
   comment?: Prisma.SortOrder
+  tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -623,11 +654,21 @@ export type RatingUncheckedUpdateManyWithoutPassengerNestedInput = {
   deleteMany?: Prisma.RatingScalarWhereInput | Prisma.RatingScalarWhereInput[]
 }
 
+export type RatingCreatetagsInput = {
+  set: string[]
+}
+
+export type RatingUpdatetagsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
 export type RatingCreateWithoutRaterInput = {
   id?: string
   rideId: string
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
   ratee: Prisma.UserCreateNestedOneWithoutRatingsReceivedInput
   driver?: Prisma.DriverCreateNestedOneWithoutRatingsInput
@@ -642,6 +683,7 @@ export type RatingUncheckedCreateWithoutRaterInput = {
   passengerId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -660,6 +702,7 @@ export type RatingCreateWithoutRateeInput = {
   rideId: string
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
   rater: Prisma.UserCreateNestedOneWithoutRatingsGivenInput
   driver?: Prisma.DriverCreateNestedOneWithoutRatingsInput
@@ -674,6 +717,7 @@ export type RatingUncheckedCreateWithoutRateeInput = {
   passengerId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -715,6 +759,7 @@ export type RatingScalarWhereInput = {
   passengerId?: Prisma.StringNullableFilter<"Rating"> | string | null
   score?: Prisma.IntFilter<"Rating"> | number
   comment?: Prisma.StringNullableFilter<"Rating"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Rating">
   createdAt?: Prisma.DateTimeFilter<"Rating"> | Date | string
 }
 
@@ -739,6 +784,7 @@ export type RatingCreateWithoutDriverInput = {
   rideId: string
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
   rater: Prisma.UserCreateNestedOneWithoutRatingsGivenInput
   ratee: Prisma.UserCreateNestedOneWithoutRatingsReceivedInput
@@ -753,6 +799,7 @@ export type RatingUncheckedCreateWithoutDriverInput = {
   passengerId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -787,6 +834,7 @@ export type RatingCreateWithoutPassengerInput = {
   rideId: string
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
   rater: Prisma.UserCreateNestedOneWithoutRatingsGivenInput
   ratee: Prisma.UserCreateNestedOneWithoutRatingsReceivedInput
@@ -801,6 +849,7 @@ export type RatingUncheckedCreateWithoutPassengerInput = {
   driverId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -838,6 +887,7 @@ export type RatingCreateManyRaterInput = {
   passengerId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -849,6 +899,7 @@ export type RatingCreateManyRateeInput = {
   passengerId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -857,6 +908,7 @@ export type RatingUpdateWithoutRaterInput = {
   rideId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ratee?: Prisma.UserUpdateOneRequiredWithoutRatingsReceivedNestedInput
   driver?: Prisma.DriverUpdateOneWithoutRatingsNestedInput
@@ -871,6 +923,7 @@ export type RatingUncheckedUpdateWithoutRaterInput = {
   passengerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -882,6 +935,7 @@ export type RatingUncheckedUpdateManyWithoutRaterInput = {
   passengerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -890,6 +944,7 @@ export type RatingUpdateWithoutRateeInput = {
   rideId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rater?: Prisma.UserUpdateOneRequiredWithoutRatingsGivenNestedInput
   driver?: Prisma.DriverUpdateOneWithoutRatingsNestedInput
@@ -904,6 +959,7 @@ export type RatingUncheckedUpdateWithoutRateeInput = {
   passengerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -915,6 +971,7 @@ export type RatingUncheckedUpdateManyWithoutRateeInput = {
   passengerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -926,6 +983,7 @@ export type RatingCreateManyDriverInput = {
   passengerId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -934,6 +992,7 @@ export type RatingUpdateWithoutDriverInput = {
   rideId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rater?: Prisma.UserUpdateOneRequiredWithoutRatingsGivenNestedInput
   ratee?: Prisma.UserUpdateOneRequiredWithoutRatingsReceivedNestedInput
@@ -948,6 +1007,7 @@ export type RatingUncheckedUpdateWithoutDriverInput = {
   passengerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -959,6 +1019,7 @@ export type RatingUncheckedUpdateManyWithoutDriverInput = {
   passengerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -970,6 +1031,7 @@ export type RatingCreateManyPassengerInput = {
   driverId?: string | null
   score: number
   comment?: string | null
+  tags?: Prisma.RatingCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
@@ -978,6 +1040,7 @@ export type RatingUpdateWithoutPassengerInput = {
   rideId?: Prisma.StringFieldUpdateOperationsInput | string
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rater?: Prisma.UserUpdateOneRequiredWithoutRatingsGivenNestedInput
   ratee?: Prisma.UserUpdateOneRequiredWithoutRatingsReceivedNestedInput
@@ -992,6 +1055,7 @@ export type RatingUncheckedUpdateWithoutPassengerInput = {
   driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1003,6 +1067,7 @@ export type RatingUncheckedUpdateManyWithoutPassengerInput = {
   driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.IntFieldUpdateOperationsInput | number
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.RatingUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1017,6 +1082,7 @@ export type RatingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   passengerId?: boolean
   score?: boolean
   comment?: boolean
+  tags?: boolean
   createdAt?: boolean
   rater?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ratee?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1033,6 +1099,7 @@ export type RatingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   passengerId?: boolean
   score?: boolean
   comment?: boolean
+  tags?: boolean
   createdAt?: boolean
   rater?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ratee?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1049,6 +1116,7 @@ export type RatingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   passengerId?: boolean
   score?: boolean
   comment?: boolean
+  tags?: boolean
   createdAt?: boolean
   rater?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ratee?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1065,10 +1133,11 @@ export type RatingSelectScalar = {
   passengerId?: boolean
   score?: boolean
   comment?: boolean
+  tags?: boolean
   createdAt?: boolean
 }
 
-export type RatingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rideId" | "raterId" | "rateeId" | "driverId" | "passengerId" | "score" | "comment" | "createdAt", ExtArgs["result"]["rating"]>
+export type RatingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rideId" | "raterId" | "rateeId" | "driverId" | "passengerId" | "score" | "comment" | "tags" | "createdAt", ExtArgs["result"]["rating"]>
 export type RatingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rater?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ratee?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1105,6 +1174,7 @@ export type $RatingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     passengerId: string | null
     score: number
     comment: string | null
+    tags: string[]
     createdAt: Date
   }, ExtArgs["result"]["rating"]>
   composites: {}
@@ -1541,6 +1611,7 @@ export interface RatingFieldRefs {
   readonly passengerId: Prisma.FieldRef<"Rating", 'String'>
   readonly score: Prisma.FieldRef<"Rating", 'Int'>
   readonly comment: Prisma.FieldRef<"Rating", 'String'>
+  readonly tags: Prisma.FieldRef<"Rating", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Rating", 'DateTime'>
 }
     

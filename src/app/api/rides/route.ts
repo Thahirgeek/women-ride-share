@@ -31,7 +31,33 @@ export async function GET(request: NextRequest) {
         },
       },
     });
-    return Response.json({ ride });
+
+    if (!ride) return Response.json({ ride: null });
+
+    const summary = await prisma.rating.aggregate({
+      where: {
+        driverId: ride.driverId,
+        passengerId: { not: null },
+      },
+      _avg: { score: true },
+      _count: { _all: true },
+    });
+
+    return Response.json({
+      ride: {
+        ...ride,
+        driver: {
+          ...ride.driver,
+          ratingSummary: {
+            averageScore:
+              typeof summary._avg.score === "number"
+                ? Math.round(summary._avg.score * 10) / 10
+                : null,
+            totalRatings: summary._count._all,
+          },
+        },
+      },
+    });
   }
 
   // Driver's own rides
@@ -119,7 +145,48 @@ export async function GET(request: NextRequest) {
     orderBy: { scheduledAt: "asc" },
   });
 
-  return Response.json({ rides });
+  const driverIds = [...new Set(rides.map((ride) => ride.driver.id))];
+  const summaries =
+    driverIds.length > 0
+      ? await prisma.rating.groupBy({
+          by: ["driverId"],
+          where: {
+            driverId: { in: driverIds },
+            passengerId: { not: null },
+          },
+          _avg: { score: true },
+          _count: { _all: true },
+        })
+      : [];
+
+  const summaryByDriverId = new Map(
+    summaries
+      .filter(
+        (item): item is typeof item & { driverId: string } =>
+          typeof item.driverId === "string"
+      )
+      .map((item) => [item.driverId, item])
+  );
+
+  const ridesWithRatings = rides.map((ride) => {
+    const summary = summaryByDriverId.get(ride.driver.id);
+
+    return {
+      ...ride,
+      driver: {
+        ...ride.driver,
+        ratingSummary: {
+          averageScore:
+            typeof summary?._avg.score === "number"
+              ? Math.round(summary._avg.score * 10) / 10
+              : null,
+          totalRatings: summary?._count._all ?? 0,
+        },
+      },
+    };
+  });
+
+  return Response.json({ rides: ridesWithRatings });
 }
 
 export async function POST(request: NextRequest) {

@@ -60,6 +60,7 @@ export const ModelName = {
   Vehicle: 'Vehicle',
   Ride: 'Ride',
   Booking: 'Booking',
+  Message: 'Message',
   Rating: 'Rating',
   Location: 'Location'
 } as const
@@ -228,6 +229,19 @@ export const BookingScalarFieldEnum = {
 export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
 
 
+export const MessageScalarFieldEnum = {
+  id: 'id',
+  bookingId: 'bookingId',
+  senderId: 'senderId',
+  content: 'content',
+  readAt: 'readAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
 export const RatingScalarFieldEnum = {
   id: 'id',
   rideId: 'rideId',
@@ -237,6 +251,7 @@ export const RatingScalarFieldEnum = {
   passengerId: 'passengerId',
   score: 'score',
   comment: 'comment',
+  tags: 'tags',
   createdAt: 'createdAt'
 } as const
 

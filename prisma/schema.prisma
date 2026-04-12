@@ -73,6 +73,7 @@ model User {
   accounts       Account[]
   ratingsGiven   Rating[]  @relation("RaterRatings")
   ratingsReceived Rating[] @relation("RateeRatings")
+  sentMessages   Message[]
 }
 
 model Session {
@@ -196,11 +197,27 @@ model Booking {
   dropLat      Float?
   dropLng      Float?
   status       BookingStatus @default(PENDING)
+  messages     Message[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
   @@index([pickupPlaceId])
   @@index([dropPlaceId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content   String
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([bookingId, createdAt])
+  @@index([senderId, createdAt])
 }
 
 model Rating {
@@ -216,7 +233,11 @@ model Rating {
   passenger   Passenger? @relation(fields: [passengerId], references: [id])
   score     Int
   comment   String?
+  tags      String[] @default([])
   createdAt DateTime @default(now())
+
+  @@unique([rideId, raterId, rateeId])
+  @@index([driverId, createdAt])
 }
 
 model Location {
@@ -226,4 +247,6 @@ model Location {
   latitude  Float
   longitude Float
   timestamp DateTime @default(now())
+
+  @@index([rideId, timestamp])
 }

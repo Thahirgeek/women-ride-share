@@ -6,6 +6,9 @@ import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import { WaveLoader } from "@/components/wave-loader";
 import CompositionBadge from "@/components/safety/CompositionBadge";
+import ChatWindow from "@/components/chat/ChatWindow";
+import RatingSummary from "@/components/ratings/RatingSummary";
+import Link from "next/link";
 
 interface Booking {
   id: string;
@@ -15,13 +18,19 @@ interface Booking {
   status: string;
   createdAt: string;
   ride: {
+    id: string;
     source: string;
     destination: string;
     scheduledAt: string;
+    status: string;
     fare: number;
     currentPassengerComposition: string;
     driver: {
       user: { name: string };
+      ratingSummary?: {
+        averageScore: number | null;
+        totalRatings: number;
+      };
     };
   };
 }
@@ -29,6 +38,9 @@ interface Booking {
 export default function PassengerBookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeChatBookingId, setActiveChatBookingId] = useState<string | null>(
+    null
+  );
 
   const fetchBookings = async () => {
     const res = await fetch("/api/bookings");
@@ -102,6 +114,11 @@ export default function PassengerBookingsPage() {
                   <p className="text-sm text-(--text-2)">
                     Driver: {booking.ride.driver.user.name}
                   </p>
+                  <RatingSummary
+                    averageScore={booking.ride.driver.ratingSummary?.averageScore ?? null}
+                    totalRatings={booking.ride.driver.ratingSummary?.totalRatings ?? 0}
+                    className="mt-1"
+                  />
                 </div>
                 <div className="flex items-center gap-2">
                   <CompositionBadge
@@ -123,19 +140,55 @@ export default function PassengerBookingsPage() {
                     {booking.ride.fare * booking.seatCount}
                   </p>
                 </div>
-                {booking.status === "PENDING" && (
-                  <Button
-                    variant="danger"
-                    className="text-xs px-3 py-1.5"
-                    onClick={() => handleCancel(booking.id)}
-                  >
-                    Cancel
-                  </Button>
-                )}
+                <div className="flex items-center gap-2">
+                  {booking.status === "CONFIRMED" && (
+                    <Button
+                      variant="secondary"
+                      className="text-xs px-3 py-1.5"
+                      onClick={() => setActiveChatBookingId(booking.id)}
+                    >
+                      Chat
+                    </Button>
+                  )}
+                  {booking.status === "CONFIRMED" && booking.ride.status === "COMPLETED" && (
+                    <Link href={`/passenger/rate-driver/${booking.ride.id}`}>
+                      <Button variant="primary" className="text-xs px-3 py-1.5">
+                        Rate Driver
+                      </Button>
+                    </Link>
+                  )}
+                  {booking.status === "CONFIRMED" &&
+                    (booking.ride.status === "BOOKED" ||
+                      booking.ride.status === "ONGOING") && (
+                      <Link href={`/passenger/track/${booking.ride.id}`}>
+                        <Button variant="primary" className="text-xs px-3 py-1.5">
+                          Track
+                        </Button>
+                      </Link>
+                    )}
+                  {booking.status === "PENDING" && (
+                    <Button
+                      variant="danger"
+                      className="text-xs px-3 py-1.5"
+                      onClick={() => handleCancel(booking.id)}
+                    >
+                      Cancel
+                    </Button>
+                  )}
+                </div>
               </div>
             </Card>
           ))}
         </div>
+      )}
+
+      {activeChatBookingId && (
+        <ChatWindow
+          bookingId={activeChatBookingId}
+          isOpen={Boolean(activeChatBookingId)}
+          onClose={() => setActiveChatBookingId(null)}
+          title="Passenger Chat"
+        />
       )}
     </>
   );

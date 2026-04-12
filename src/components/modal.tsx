@@ -85,12 +85,12 @@ export default function BasicModal({
               {/* Header */}
               <div className="mb-4 flex items-center justify-between gap-2">
                 {title && (
-                  <h3 id="basic-modal-title" className="text-xl font-[inter-semibold] leading-6">
+                  <h3 id="basic-modal-title" className="text-3xl font-[instrumentserif-regular] leading-6">
                     {title}
                   </h3>
                 )}
                 <motion.button
-                  className="ml-auto rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="ml-auto rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-secondary hover:cursor-pointer hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   onClick={onClose}
                   whileHover={{ rotate: 90 }}
                   transition={{ duration: 0.2 }}

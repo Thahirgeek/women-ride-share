@@ -50,7 +50,7 @@ export function WaveLoader({
           .map((_, index) => (
             <motion.div
               key={index}
-              className={cn("w-1.5 h-3 bg-blue-700 origin-bottom", className)}
+              className={cn("w-1.5 h-3 bg-primary origin-bottom", className)}
               animate={{ scaleY: [1, 2, 1] }}
               transition={{
                 duration: 1,

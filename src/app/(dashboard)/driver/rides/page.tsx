@@ -123,6 +123,13 @@ export default function DriverRidesPage() {
                   seats filled
                 </span>
                 <div className="flex gap-2">
+                  {(ride.status === "BOOKED" || ride.status === "ONGOING") && (
+                    <Link href={`/driver/track/${ride.id}`}>
+                      <Button variant="secondary" className="text-xs px-3 py-1.5">
+                        Track Live
+                      </Button>
+                    </Link>
+                  )}
                   {ride.status === "CREATED" && (
                     <Button
                       variant="primary"

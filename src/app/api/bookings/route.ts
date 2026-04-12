@@ -51,7 +51,51 @@ export async function GET(request: NextRequest) {
     orderBy: { createdAt: "desc" },
   });
 
-  return Response.json({ bookings });
+  const driverIds = [...new Set(bookings.map((booking) => booking.ride.driver.id))];
+  const summaries =
+    driverIds.length > 0
+      ? await prisma.rating.groupBy({
+          by: ["driverId"],
+          where: {
+            driverId: { in: driverIds },
+            passengerId: { not: null },
+          },
+          _avg: { score: true },
+          _count: { _all: true },
+        })
+      : [];
+
+  const summaryByDriverId = new Map(
+    summaries
+      .filter(
+        (item): item is typeof item & { driverId: string } =>
+          typeof item.driverId === "string"
+      )
+      .map((item) => [item.driverId, item])
+  );
+
+  const bookingsWithRatings = bookings.map((booking) => {
+    const summary = summaryByDriverId.get(booking.ride.driver.id);
+
+    return {
+      ...booking,
+      ride: {
+        ...booking.ride,
+        driver: {
+          ...booking.ride.driver,
+          ratingSummary: {
+            averageScore:
+              typeof summary?._avg.score === "number"
+                ? Math.round(summary._avg.score * 10) / 10
+                : null,
+            totalRatings: summary?._count._all ?? 0,
+          },
+        },
+      },
+    };
+  });
+
+  return Response.json({ bookings: bookingsWithRatings });
 }
 
 export async function POST(request: NextRequest) {

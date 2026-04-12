@@ -87,6 +87,11 @@ export type Ride = Prisma.RideModel
  */
 export type Booking = Prisma.BookingModel
 /**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
+/**
  * Model Rating
  * 
  */

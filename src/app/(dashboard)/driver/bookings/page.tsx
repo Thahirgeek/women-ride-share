@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import { WaveLoader } from "@/components/wave-loader";
+import ChatWindow from "@/components/chat/ChatWindow";
 
 interface BookingRequest {
   id: string;
@@ -25,6 +26,9 @@ interface BookingRequest {
 export default function DriverBookingsPage() {
   const [bookings, setBookings] = useState<BookingRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeChatBookingId, setActiveChatBookingId] = useState<string | null>(
+    null
+  );
 
   const fetchBookings = async () => {
     const res = await fetch("/api/bookings?driver=me");
@@ -131,9 +135,29 @@ export default function DriverBookingsPage() {
                   </Button>
                 </div>
               )}
+              {booking.status === "CONFIRMED" && (
+                <div className="mt-2 flex justify-end">
+                  <Button
+                    variant="secondary"
+                    className="text-xs px-3 py-1.5"
+                    onClick={() => setActiveChatBookingId(booking.id)}
+                  >
+                    Chat with Passenger
+                  </Button>
+                </div>
+              )}
             </Card>
           ))}
         </div>
+      )}
+
+      {activeChatBookingId && (
+        <ChatWindow
+          bookingId={activeChatBookingId}
+          isOpen={Boolean(activeChatBookingId)}
+          onClose={() => setActiveChatBookingId(null)}
+          title="Driver Chat"
+        />
       )}
     </>
   );

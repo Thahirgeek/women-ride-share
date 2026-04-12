@@ -8,6 +8,7 @@ import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 import SafetyFilter from "@/components/safety/SafetyFilter";
 import CompositionBadge from "@/components/safety/CompositionBadge";
 import Badge from "@/components/ui/Badge";
+import RatingSummary from "@/components/ratings/RatingSummary";
 import { LocationSuggestion } from "@/lib/location-types";
 import Link from "next/link";
 
@@ -25,6 +26,10 @@ interface RideResult {
     isVerified: boolean;
     user: { name: string; gender: string };
     vehicle?: { vehicleType: string; model: string; color: string };
+    ratingSummary?: {
+      averageScore: number | null;
+      totalRatings: number;
+    };
   };
 }
 
@@ -157,6 +162,11 @@ export default function SearchRidesPage() {
                           {ride.driver.vehicle.color}
                         </p>
                       )}
+                      <RatingSummary
+                        averageScore={ride.driver.ratingSummary?.averageScore ?? null}
+                        totalRatings={ride.driver.ratingSummary?.totalRatings ?? 0}
+                        className="mt-1"
+                      />
                     </div>
                   </div>
                   <CompositionBadge
