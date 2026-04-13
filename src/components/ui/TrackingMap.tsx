@@ -127,7 +127,7 @@ export default function TrackingMap({
         bounds={mapBounds}
         boundsOptions={{ padding: [30, 30] }}
         scrollWheelZoom
-        className="h-104 w-full"
+        className="h-70 w-full sm:h-85 lg:h-104"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

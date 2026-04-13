@@ -50,7 +50,7 @@ export default async function PassengerDashboard() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">
           Welcome, {user.name?.split(" ")[0]}
         </h1>
         <p className="mt-1 text-(--text-2)">Here&apos;s your ride overview.</p>
@@ -94,7 +94,7 @@ export default async function PassengerDashboard() {
           <div className="flex flex-col gap-4">
             {passenger.bookings.map((booking) => (
               <Card key={booking.id}>
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-2 text-sm">
                     <span className="font-[inter-semibold] text-foreground">
                       {booking.ride.source}

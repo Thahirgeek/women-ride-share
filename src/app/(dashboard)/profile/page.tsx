@@ -113,9 +113,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto w-120 px-6 py-8">
+    <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6">
       <div className="mb-8">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Profile</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Profile</h1>
         <p className="mt-1 text-(--text-2)">Manage your account details.</p>
       </div>
 
@@ -227,7 +227,7 @@ export default function ProfilePage() {
         </>
       )}
 
-      <div className="flex items-center gap-4 font-[inter-bold]">
+      <div className="flex flex-col gap-3 font-[inter-bold] sm:flex-row sm:items-center sm:gap-4">
         <Button onClick={handleSave} isLoading={loading}>
           Save Changes
         </Button>

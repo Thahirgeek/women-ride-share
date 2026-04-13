@@ -133,9 +133,9 @@ export default function PassengerTrackRidePage({
 
   return (
     <>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Live Ride Tracking</h1>
+          <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Live Ride Tracking</h1>
           <p className="mt-1 text-(--text-2)">
             {data.ride.source} -&gt; {data.ride.destination}
           </p>
@@ -154,23 +154,23 @@ export default function PassengerTrackRidePage({
         <p className="mt-3 text-xs text-(--text-2)">{routeError}</p>
       )}
 
-      <div className="mt-4 flex items-center justify-between rounded-lg border border-border bg-white px-4 py-3 text-sm text-(--text-2)">
+      <div className="mt-4 flex flex-col gap-3 rounded-lg border border-border bg-white px-4 py-3 text-sm text-(--text-2) sm:flex-row sm:items-center sm:justify-between">
         <span>
           Last update:{" "}
           {data.latestLocation
             ? new Date(data.latestLocation.timestamp).toLocaleTimeString()
             : "No update yet"}
         </span>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           {data.ride.status === "COMPLETED" && (
             <Link href={`/passenger/rate-driver/${data.ride.id}`}>
-              <Button variant="primary" className="px-3 py-1.5 text-xs whitespace-nowrap">
+              <Button variant="primary" className="w-full whitespace-nowrap px-3 py-1.5 text-xs sm:w-auto">
                 Rate Driver
               </Button>
             </Link>
           )}
           <Link href="/passenger/bookings">
-            <Button variant="secondary" className="px-3 py-1.5 text-xs">
+            <Button variant="secondary" className="w-full px-3 py-1.5 text-xs sm:w-auto">
               Back to Bookings
             </Button>
           </Link>

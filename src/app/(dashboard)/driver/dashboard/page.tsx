@@ -81,7 +81,7 @@ export default function DriverDashboard() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Driver Dashboard</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Driver Dashboard</h1>
         <p className="mt-1 text-(--text-2)">Manage your rides and availability.</p>
       </div>
 
@@ -173,7 +173,7 @@ export default function DriverDashboard() {
         <div className="flex flex-col gap-4">
           {profile.rides.slice(0, 5).map((ride) => (
             <Card key={ride.id}>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <div className="flex items-center gap-2 text-sm">
                     <span className="font-semibold text-foreground">

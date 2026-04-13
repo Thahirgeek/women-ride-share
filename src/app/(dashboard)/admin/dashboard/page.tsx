@@ -168,7 +168,7 @@ export default function AdminDashboard() {
               : `Revoke ${pendingVerification?.driverName}? Their OPEN rides will be cancelled.`}
           </p>
 
-          <div className="flex justify-end gap-2">
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
             <Button
               variant="secondary"
               onClick={closeVerificationModal}
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
       </BasicModal>
 
       <div className="mb-8">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Admin Dashboard</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Admin Dashboard</h1>
         <p className="mt-1 text-(--text-2)">
           Manage users, rides, and drivers.
         </p>
@@ -215,12 +215,12 @@ export default function AdminDashboard() {
       )}
 
       {/* Tabs */}
-      <div className="mb-6 flex gap-1 rounded-lg bg-(--bg-muted) border border-black/15 p-1 w-fit">
+      <div className="mb-6 flex w-full gap-1 rounded-lg border border-black/15 bg-(--bg-muted) p-1 sm:w-fit">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`rounded-sm px-4 py-2 text-sm font-medium transition-all cursor-pointer ${
+            className={`flex-1 cursor-pointer rounded-sm px-4 py-2 text-sm font-medium transition-all sm:flex-none ${
               tab === t.key
                 ? "bg-black/70 text-white shadow-sm"
                 : "text-(--text-2) hover:text-foreground"
@@ -240,10 +240,33 @@ export default function AdminDashboard() {
           {/* Users Tab */}
           {tab === "users" && (
             <Card>
-              <div className="overflow-x-auto">
+              <div className="space-y-3 md:hidden">
+                {users.length === 0 ? (
+                  <p className="py-6 text-center text-sm text-(--text-2)">No users found.</p>
+                ) : (
+                  users.map((u) => (
+                    <div key={u.id} className="rounded-lg border border-border bg-white p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-sm font-semibold text-foreground">{u.name}</p>
+                          <p className="text-xs text-(--text-2)">{u.email}</p>
+                        </div>
+                        <Badge>{u.role}</Badge>
+                      </div>
+                      <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-(--text-2)">
+                        <span>{u.gender}</span>
+                        <span>-</span>
+                        <span>Joined {new Date(u.createdAt).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="hidden overflow-x-auto md:block">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-(--border)">
+                    <tr className="border-b border-border">
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Name</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Email</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Role</th>
@@ -252,15 +275,23 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((u) => (
-                      <tr key={u.id} className="border-b border-(--border)">
-                        <td className="py-3 font-medium text-foreground">{u.name}</td>
-                        <td className="py-3 text-(--text-2)">{u.email}</td>
-                        <td className="py-3"><Badge>{u.role}</Badge></td>
-                        <td className="py-3 text-(--text-2)">{u.gender}</td>
-                        <td className="py-3 text-(--text-2)">{new Date(u.createdAt).toLocaleDateString()}</td>
+                    {users.length === 0 ? (
+                      <tr>
+                        <td colSpan={5} className="py-6 text-center text-(--text-2)">
+                          No users found.
+                        </td>
                       </tr>
-                    ))}
+                    ) : (
+                      users.map((u) => (
+                        <tr key={u.id} className="border-b border-border">
+                          <td className="py-3 font-medium text-foreground">{u.name}</td>
+                          <td className="py-3 text-(--text-2)">{u.email}</td>
+                          <td className="py-3"><Badge>{u.role}</Badge></td>
+                          <td className="py-3 text-(--text-2)">{u.gender}</td>
+                          <td className="py-3 text-(--text-2)">{new Date(u.createdAt).toLocaleDateString()}</td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -270,10 +301,31 @@ export default function AdminDashboard() {
           {/* Rides Tab */}
           {tab === "rides" && (
             <Card>
-              <div className="overflow-x-auto">
+              <div className="space-y-3 md:hidden">
+                {rides.length === 0 ? (
+                  <p className="py-6 text-center text-sm text-(--text-2)">No rides found.</p>
+                ) : (
+                  rides.map((r) => (
+                    <div key={r.id} className="rounded-lg border border-border bg-white p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-sm font-semibold text-foreground">{r.driver.user.name}</p>
+                          <p className="text-xs text-(--text-2)">{r.source} -&gt; {r.destination}</p>
+                        </div>
+                        <Badge>{r.status}</Badge>
+                      </div>
+                      <p className="mt-2 text-xs text-(--text-2)">
+                        Created {new Date(r.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="hidden overflow-x-auto md:block">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-(--border)">
+                    <tr className="border-b border-border">
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Driver</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Route</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Status</th>
@@ -281,14 +333,22 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {rides.map((r) => (
-                      <tr key={r.id} className="border-b border-(--border)">
-                        <td className="py-3 font-medium text-foreground">{r.driver.user.name}</td>
-                        <td className="py-3 text-(--text-2)">{r.source} -&gt; {r.destination}</td>
-                        <td className="py-3"><Badge>{r.status}</Badge></td>
-                        <td className="py-3 text-(--text-2)">{new Date(r.createdAt).toLocaleDateString()}</td>
+                    {rides.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="py-6 text-center text-(--text-2)">
+                          No rides found.
+                        </td>
                       </tr>
-                    ))}
+                    ) : (
+                      rides.map((r) => (
+                        <tr key={r.id} className="border-b border-border">
+                          <td className="py-3 font-medium text-foreground">{r.driver.user.name}</td>
+                          <td className="py-3 text-(--text-2)">{r.source} -&gt; {r.destination}</td>
+                          <td className="py-3"><Badge>{r.status}</Badge></td>
+                          <td className="py-3 text-(--text-2)">{new Date(r.createdAt).toLocaleDateString()}</td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -298,10 +358,66 @@ export default function AdminDashboard() {
           {/* Drivers Tab */}
           {tab === "drivers" && (
             <Card>
-              <div className="overflow-x-auto">
+              <div className="space-y-3 md:hidden">
+                {drivers.length === 0 ? (
+                  <p className="py-6 text-center text-sm text-(--text-2)">No drivers found.</p>
+                ) : (
+                  drivers.map((d) => (
+                    <div key={d.id} className="rounded-lg border border-border bg-white p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-sm font-semibold text-foreground">{d.user.name}</p>
+                          <p className="text-xs text-(--text-2)">{d.licenseNumber || "-"}</p>
+                        </div>
+                        <Badge variant={d.isVerified ? "success" : "warning"}>
+                          {d.isVerified ? "Verified" : "Pending"}
+                        </Badge>
+                      </div>
+                      <div className="mt-2 space-y-1 text-xs text-(--text-2)">
+                        <p>Vehicle: {d.vehicle ? `${d.vehicle.vehicleType} - ${d.vehicle.model}` : "-"}</p>
+                        <p>Status: {d.isAvailable ? "Online" : "Offline"}</p>
+                      </div>
+                      <div className="mt-3 flex">
+                        {d.isVerified ? (
+                          <Button
+                            variant="danger"
+                            className="w-full px-3 py-1 text-xs"
+                            isLoading={verifyLoadingId === d.id}
+                            onClick={() =>
+                              requestVerificationAction(
+                                d.id,
+                                d.user.name,
+                                "REVOKE"
+                              )
+                            }
+                          >
+                            Revoke
+                          </Button>
+                        ) : (
+                          <Button
+                            className="w-full px-3 py-1 text-xs"
+                            isLoading={verifyLoadingId === d.id}
+                            onClick={() =>
+                              requestVerificationAction(
+                                d.id,
+                                d.user.name,
+                                "VERIFY"
+                              )
+                            }
+                          >
+                            Verify
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="hidden overflow-x-auto md:block">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-(--border)">
+                    <tr className="border-b border-border">
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Name</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">License</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Vehicle</th>
@@ -318,7 +434,7 @@ export default function AdminDashboard() {
                       </tr>
                     ) : (
                     drivers.map((d) => (
-                      <tr key={d.id} className="border-b border-(--border)">
+                      <tr key={d.id} className="border-b border-border">
                         <td className="py-3 font-medium text-foreground">{d.user.name}</td>
                         <td className="py-3 text-(--text-2)">{d.licenseNumber || "-"}</td>
                         <td className="py-3 text-(--text-2)">

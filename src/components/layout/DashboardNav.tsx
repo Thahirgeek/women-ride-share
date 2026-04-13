@@ -263,9 +263,9 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-(--border) bg-(--surface) lg:block">
+      <aside className="hidden w-60 shrink-0 border-r border-border bg-(--surface) lg:block xl:w-64">
         <div className="flex h-full flex-col">
-          <div className="border-b border-(--border) px-6 py-5">
+          <div className="border-b border-border px-6 py-5">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white">
                 <img src="/8442672.svg" className="bg-transparent"></img>
@@ -287,8 +287,8 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
                       href={item.href}
                       className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
                         isActive
-                          ? "border border-(--primary)/20 bg-(--primary-soft) text-(--primary) shadow-[0_8px_18px_rgba(20,48,110,0.14)]"
-                          : "border border-transparent text-(--text-2) hover:border-(--primary)/18 hover:bg-(--primary-soft)/45 hover:text-(--primary)"
+                          ? "border border-(--primary)/20 bg-(--primary-soft) text-primary shadow-[0_8px_18px_rgba(20,48,110,0.14)]"
+                          : "border border-transparent text-(--text-2) hover:border-(--primary)/18 hover:bg-(--primary-soft)/45 hover:text-primary"
                       }`}
                     >
                       {item.icon}
@@ -299,7 +299,7 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
               })}
             </ul>
           </nav>
-          <div className="border-t border-(--border) px-4 py-4">
+          <div className="border-t border-border px-4 py-4">
             {userName && (
               <p className="mb-2 truncate px-3 text-sm text-(--text-3)">
                 {userName}
@@ -330,7 +330,7 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
       </aside>
 
       {/* Mobile bottom nav */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-(--border) bg-white/95 backdrop-blur-xl lg:hidden">
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-white/95 backdrop-blur-xl lg:hidden">
         <div className="flex items-center justify-around py-2">
           {links.slice(0, 5).map((item) => {
             const isActive =
@@ -339,14 +339,15 @@ export default function DashboardNav({ role, userName }: DashboardNavProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center gap-0.5 rounded-lg px-3 py-1.5 text-xs transition-all duration-200 ${
+                aria-label={item.label}
+                className={`flex flex-col items-center gap-0.5 rounded-lg px-1.5 py-1.5 text-xs transition-all duration-200 min-[360px]:px-2 sm:px-3 ${
                   isActive
-                    ? "bg-(--primary-soft) text-(--primary)"
-                    : "text-(--text-3) hover:bg-(--primary-soft)/40 hover:text-(--primary)"
+                    ? "bg-(--primary-soft) text-primary"
+                    : "text-(--text-3) hover:bg-(--primary-soft)/40 hover:text-primary"
                 }`}
               >
                 {item.icon}
-                <span className="text-[10px] font-medium">{item.label}</span>
+                <span className="hidden text-[10px] font-medium leading-none min-[360px]:inline">{item.label}</span>
               </Link>
             );
           })}

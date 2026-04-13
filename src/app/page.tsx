@@ -70,13 +70,13 @@ export default function Home() {
             </motion.span>
             <motion.h1
               {...blurUp(0.14)}
-              className="mt-5 text-4xl font-[inter-semibold] leading-tight tracking-tighter text-foreground sm:text-5xl lg:text-7xl"
+              className="mt-5 text-5xl font-[inter-semibold] leading-tight tracking-tighter text-foreground sm:text-5xl lg:text-7xl"
             >
-              The New <span className="font-[instrumentserif-italic] text-[80px]">Era</span> of
+              The New <span className="font-[instrumentserif-italic] text-5xl sm:text-6xl lg:text-[80px]">Era</span> of
               <br />
-              <span className="font-[instrumentserif-italic] text-[80px]">Safe</span> Ride Sharing
+              <span className="font-[instrumentserif-italic] text-5xl sm:text-6xl lg:text-[80px]">Safe</span> Ride Sharing
               <br />
-              for <span className="font-[instrumentserif-italic] text-[80px]">Women</span>
+              for <span className="font-[instrumentserif-italic] text-5xl sm:text-6xl lg:text-[80px]">Women</span>
             </motion.h1>
             <motion.p
               {...blurUp(0.24)}

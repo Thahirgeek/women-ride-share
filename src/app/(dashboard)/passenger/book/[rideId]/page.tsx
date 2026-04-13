@@ -112,7 +112,7 @@ export default function BookRidePage({
         <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
           OK
         </div>
-        <h1 className="text-4xl font-[instrumentserif-regular] text-foreground mb-2">
+        <h1 className="mb-2 text-3xl font-[instrumentserif-regular] text-foreground sm:text-4xl">
           Booking Confirmed!
         </h1>
         <p className="text-(--text-2) mb-8">
@@ -149,7 +149,7 @@ export default function BookRidePage({
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Book Ride</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Book Ride</h1>
         <p className="mt-1 text-(--text-2)">
           Review ride details and confirm your booking.
         </p>

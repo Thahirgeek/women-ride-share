@@ -183,9 +183,9 @@ export default function DriverTrackRidePage({
 
   return (
     <>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Driver Live Tracking</h1>
+          <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Driver Live Tracking</h1>
           <p className="mt-1 text-(--text-2)">
             {data.ride.source} -&gt; {data.ride.destination}
           </p>
@@ -199,18 +199,18 @@ export default function DriverTrackRidePage({
         </div>
       )}
 
-      <div className="mb-4 flex items-center gap-2">
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center">
         {!sharing ? (
-          <Button onClick={startSharing} disabled={!canShare}>
+          <Button onClick={startSharing} disabled={!canShare} className="w-full sm:w-auto">
             Start Sharing Location
           </Button>
         ) : (
-          <Button variant="danger" onClick={stopSharing}>
+          <Button variant="danger" onClick={stopSharing} className="w-full sm:w-auto">
             Stop Sharing
           </Button>
         )}
         <Link href="/driver/rides">
-          <Button variant="secondary">Back to My Rides</Button>
+          <Button variant="secondary" className="w-full sm:w-auto">Back to My Rides</Button>
         </Link>
       </div>
 

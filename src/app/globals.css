@@ -6,11 +6,21 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 7rem;
+  scroll-padding-top: 5.25rem;
 }
 
 section[id] {
-  scroll-margin-top: 7rem;
+  scroll-margin-top: 5.25rem;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 7rem;
+  }
+
+  section[id] {
+    scroll-margin-top: 7rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

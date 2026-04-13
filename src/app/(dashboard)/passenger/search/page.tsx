@@ -82,7 +82,7 @@ export default function SearchRidesPage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Search Rides</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Search Rides</h1>
         <p className="mt-1 text-(--text-2)">
           Find safe, affordable shared rides.
         </p>
@@ -139,8 +139,8 @@ export default function SearchRidesPage() {
           <div className="flex flex-col gap-4">
             {results.map((ride) => (
               <Card key={ride.id}>
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-3">
+                <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0 flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-400 text-sm font-[inter-bold] text-black">
                       {ride.driver.user.name
                         .split(" ")
@@ -194,7 +194,7 @@ export default function SearchRidesPage() {
                     {ride.destination}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-sm mb-3">
+                <div className="mb-3 flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between">
                   <span className="text-(--text-2)">
                     {new Date(ride.scheduledAt).toLocaleString()}
                   </span>
@@ -207,12 +207,12 @@ export default function SearchRidesPage() {
                     &quot;{ride.notes}&quot;
                   </p>
                 )}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <Badge variant="default">
                     {ride.availableSeats} of {ride.totalSeats} seats
                   </Badge>
                   <Link href={`/passenger/book/${ride.id}`}>
-                    <Button variant="primary" className="text-xs px-4 py-2">
+                    <Button variant="primary" className="w-full px-4 py-2 text-xs sm:w-auto">
                       Book Ride -&gt;
                     </Button>
                   </Link>

@@ -43,7 +43,7 @@ export default function LoginPage() {
               </div>
           <span className="text-lg font-bold text-foreground">SafeRide</span>
         </Link>
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Welcome back</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Welcome back</h1>
         <p className="mt-2 text-sm text-(--text-2)">
           Sign in to your account to continue
         </p>
@@ -84,7 +84,7 @@ export default function LoginPage() {
         Don&apos;t have an account?{" "}
         <Link
           href="/register"
-          className="font-semibold text-(--primary) hover:underline"
+          className="font-semibold text-primary hover:underline"
         >
           Sign up
         </Link>

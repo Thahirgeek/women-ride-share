@@ -58,7 +58,7 @@ export default function RegisterPage() {
               </div>
           <span className="text-lg font-bold text-foreground">SafeRide</span>
         </Link>
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Create an account</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Create an account</h1>
         <p className="mt-2 text-sm text-(--text-2)">
           Join SafeRide for safer shared rides
         </p>
@@ -129,7 +129,7 @@ export default function RegisterPage() {
         Already have an account?{" "}
         <Link
           href="/login"
-          className="font-semibold text-(--primary) hover:underline"
+          className="font-semibold text-primary hover:underline"
         >
           Sign in
         </Link>

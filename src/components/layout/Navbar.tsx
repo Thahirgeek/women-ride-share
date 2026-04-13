@@ -20,10 +20,34 @@ export default function Navbar({ entryDelay = 1.15 }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <nav
-      className={`fixed left-0 right-0 mx-auto z-50 transition-[top,width] duration-300 ease-out ${
-        scrolled ? "top-3 w-[88%] md:w-[56%]" : "top-5 w-[92%] md:w-[64%]"
+      className={`fixed left-2 right-2 z-50 mx-auto transition-[top,width] duration-300 ease-out sm:left-0 sm:right-0 ${
+        scrolled
+          ? "top-3 w-auto sm:w-[90%] md:w-[72%] lg:w-[56%]"
+          : "top-4 w-auto sm:top-5 sm:w-[94%] md:w-[78%] lg:w-[64%]"
       }`}
     >
       <motion.div
@@ -37,7 +61,7 @@ export default function Navbar({ entryDelay = 1.15 }: NavbarProps) {
         initial={{ opacity: 0, y: -10, filter: "blur(8px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 0.45, delay: entryDelay + 0.48, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 px-6 py-1"
+        className="relative z-10 px-3 py-1 sm:px-6"
       >
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 py-2 md:gap-4">
           <Link href="/" className="flex shrink-0 items-center gap-2">
@@ -103,7 +127,8 @@ export default function Navbar({ entryDelay = 1.15 }: NavbarProps) {
           </div>
 
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-(--border) bg-white text-foreground hover:border-(--primary)/25 md:hidden"
+            type="button"
+            className="ml-auto flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-white text-foreground hover:border-(--primary)/25 md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -133,7 +158,7 @@ export default function Navbar({ entryDelay = 1.15 }: NavbarProps) {
         </div>
 
         {mobileOpen && (
-          <div className="border-t border-(--border) bg-white md:hidden">
+          <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-border bg-white md:hidden">
             <div className="flex flex-col gap-1 px-6 py-4">
               <a
                 href="#why"
@@ -157,12 +182,12 @@ export default function Navbar({ entryDelay = 1.15 }: NavbarProps) {
                 Safety
               </a>
               <div className="mt-3 flex flex-col gap-2">
-                <Link href="/login">
+                <Link href="/login" onClick={() => setMobileOpen(false)}>
                   <Button variant="secondary" fullWidth>
                     Log in
                   </Button>
                 </Link>
-                <Link href="/register">
+                <Link href="/register" onClick={() => setMobileOpen(false)}>
                   <Button variant="primary" fullWidth>
                     Join Now
                   </Button>

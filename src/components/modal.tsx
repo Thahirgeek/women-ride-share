@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { X } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useOnClickOutside } from "usehooks-ts"
@@ -18,7 +18,7 @@ const modalSizes = {
   md: "max-w-md",
   lg: "max-w-lg",
   xl: "max-w-xl",
-  full: "max-w-4xl",
+  full: "max-w-[96vw] lg:max-w-4xl",
 }
 
 export default function BasicModal({
@@ -66,7 +66,7 @@ export default function BasicModal({
 
           {/* Modal container */}
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto px-4 py-6 sm:p-0"
+            className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto px-3 py-4 sm:px-4 sm:py-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -85,7 +85,7 @@ export default function BasicModal({
               {/* Header */}
               <div className="mb-4 flex items-center justify-between gap-2">
                 {title && (
-                  <h3 id="basic-modal-title" className="text-3xl font-[instrumentserif-regular] leading-6">
+                  <h3 id="basic-modal-title" className="text-2xl font-[instrumentserif-regular] leading-6 sm:text-3xl">
                     {title}
                   </h3>
                 )}

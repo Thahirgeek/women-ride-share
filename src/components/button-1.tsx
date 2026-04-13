@@ -53,10 +53,10 @@ const createStopsArray = (
   svgOrder: readonly SvgKey[],
   maxStops: number
 ): Stop[][] => {
-  let stopsArray: Stop[][] = [];
+  const stopsArray: Stop[][] = [];
   for (let i = 0; i < maxStops; i++) {
-    let stopConfigurations = svgOrder.map((svgKey) => {
-      let svg = svgStates[svgKey];
+    const stopConfigurations = svgOrder.map((svgKey) => {
+      const svg = svgStates[svgKey];
       return svg.stops[i] || svg.stops[svg.stops.length - 1];
     });
     stopsArray.push(stopConfigurations);
@@ -238,7 +238,9 @@ export const Liquid: React.FC<LiquidProps> = ({ isHovered, colors }) => {
         <div
           key={index}
           className={`absolute ${
-            index < 3 ? 'w-[443px] h-[121px]' : 'w-[756px] h-[207px]'
+            index < 3
+              ? 'h-[clamp(70px,20vw,121px)] w-[clamp(220px,70vw,443px)]'
+              : 'h-[clamp(100px,30vw,207px)] w-[clamp(340px,95vw,756px)]'
           } ${
             index === 0
               ? 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mix-blend-difference'
@@ -306,7 +308,7 @@ export default function AnimatedButton({
     <button
       type={type}
       className={cn(
-        'relative inline-flex h-12 min-w-40 items-center justify-center overflow-hidden rounded-sm hover:cursor-pointer border border-white/50 px-8 text-sm font-[inter-semibold] text-white shadow-[0_14px_40px_rgba(8,17,48,0.34)] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)/45 disabled:cursor-not-allowed disabled:opacity-65',
+        'relative inline-flex h-12 min-w-32 items-center justify-center overflow-hidden rounded-sm border border-white/50 px-6 text-sm font-[inter-semibold] text-white shadow-[0_14px_40px_rgba(8,17,48,0.34)] transition-all duration-200 hover:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)/45 disabled:cursor-not-allowed disabled:opacity-65 sm:min-w-40 sm:px-8',
         className
       )}
       onMouseEnter={(event) => {

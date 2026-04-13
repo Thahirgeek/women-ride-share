@@ -72,7 +72,7 @@ export default function DriverBookingsPage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Booking Requests</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Booking Requests</h1>
         <p className="mt-1 text-(--text-2)">
           Manage passenger booking requests on your rides.
         </p>
@@ -88,7 +88,7 @@ export default function DriverBookingsPage() {
         <div className="flex flex-col gap-4">
           {bookings.map((booking) => (
             <Card key={booking.id}>
-              <div className="flex items-start justify-between mb-3">
+              <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <div className="flex items-center gap-2 text-sm mb-1">
                     <span className="font-[inter-semibold] text-foreground">
@@ -118,17 +118,17 @@ export default function DriverBookingsPage() {
                 </Badge>
               </div>
               {booking.status === "PENDING" && (
-                <div className="flex justify-end gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
                   <Button
                     variant="primary"
-                    className="text-xs px-3 py-1.5"
+                    className="w-full px-3 py-1.5 text-xs sm:w-auto"
                     onClick={() => handleAction(booking.id, "CONFIRMED")}
                   >
                     Accept
                   </Button>
                   <Button
                     variant="danger"
-                    className="text-xs px-3 py-1.5"
+                    className="w-full px-3 py-1.5 text-xs sm:w-auto"
                     onClick={() => handleAction(booking.id, "CANCELLED")}
                   >
                     Reject
@@ -136,10 +136,10 @@ export default function DriverBookingsPage() {
                 </div>
               )}
               {booking.status === "CONFIRMED" && (
-                <div className="mt-2 flex justify-end">
+                <div className="mt-2 flex">
                   <Button
                     variant="secondary"
-                    className="text-xs px-3 py-1.5"
+                    className="w-full px-3 py-1.5 text-xs sm:ml-auto sm:w-auto"
                     onClick={() => setActiveChatBookingId(booking.id)}
                   >
                     Chat with Passenger

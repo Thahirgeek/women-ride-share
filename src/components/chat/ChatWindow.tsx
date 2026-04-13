@@ -162,7 +162,7 @@ export default function ChatWindow({
 
   return (
     <BasicModal isOpen={isOpen} onClose={onClose} title={title} size="full">
-      <div className="flex h-[70vh] flex-col">
+      <div className="flex h-[75vh] min-h-80 max-h-[85vh] flex-col sm:h-[70vh]">
         {error && (
           <div className="mb-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">
             {error}
@@ -207,7 +207,7 @@ export default function ChatWindow({
           )}
         </div>
 
-        <div className="mt-4 flex items-end gap-2">
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end">
           <div className="flex-1">
             <Input
               id="chat-message"
@@ -218,7 +218,7 @@ export default function ChatWindow({
               maxLength={1000}
             />
           </div>
-          <Button onClick={sendMessage} isLoading={sending} className="mt-0 h-fit px-4 py-2.5">
+          <Button onClick={sendMessage} isLoading={sending} className="mt-0 h-fit w-full px-4 py-2.5 sm:w-auto">
             Send
           </Button>
         </div>

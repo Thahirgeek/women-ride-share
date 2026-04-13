@@ -82,20 +82,20 @@ export default function OnboardingPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
-      <div className="pointer-events-none absolute -left-16 top-10 h-44 w-44 rounded-full bg-(--primary)/10 blur-2xl" />
-      <div className="pointer-events-none absolute -right-16 bottom-0 h-52 w-52 rounded-full bg-sky-100 blur-3xl" />
+      <div className="pointer-events-none absolute -left-10 top-8 h-36 w-36 rounded-full bg-(--primary)/10 blur-2xl sm:-left-16 sm:top-10 sm:h-44 sm:w-44" />
+      <div className="pointer-events-none absolute -right-10 bottom-0 h-40 w-40 rounded-full bg-sky-100 blur-3xl sm:-right-16 sm:h-52 sm:w-52" />
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">
+          <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">
             Complete your profile
           </h1>
           <p className="mt-2 text-sm text-(--text-2)">
             Step {step} of {totalSteps}
           </p>
           {/* Progress bar */}
-          <div className="mt-4 h-1.5 w-full rounded-full bg-(--border)">
+          <div className="mt-4 h-1.5 w-full rounded-full bg-border">
             <div
-              className="h-1.5 rounded-full bg-(--primary) transition-all duration-300"
+              className="h-1.5 rounded-full bg-primary transition-all duration-300"
               style={{ width: `${(step / totalSteps) * 100}%` }}
             />
           </div>

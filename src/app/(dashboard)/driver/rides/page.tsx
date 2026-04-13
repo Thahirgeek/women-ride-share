@@ -74,9 +74,9 @@ export default function DriverRidesPage() {
 
   return (
     <>
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">My Rides</h1>
+          <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">My Rides</h1>
           <p className="mt-1 text-(--text-2)">Manage your published rides.</p>
         </div>
         <Link href="/driver/rides/create">
@@ -94,7 +94,7 @@ export default function DriverRidesPage() {
         <div className="flex flex-col gap-4">
           {rides.map((ride) => (
             <Card key={ride.id}>
-              <div className="flex items-start justify-between mb-3">
+              <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <div className="flex items-center gap-2 text-sm mb-1">
                     <span className="font-[inter-semibold] text-foreground">
@@ -110,22 +110,22 @@ export default function DriverRidesPage() {
                     /seat
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <CompositionBadge composition={ride.currentPassengerComposition} />
                   <Badge variant={statusVariant(ride.status)}>
                     {ride.status}
                   </Badge>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <span className="text-xs text-(--text-2)">
                   {ride.totalSeats - ride.availableSeats} / {ride.totalSeats}{" "}
                   seats filled
                 </span>
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row">
                   {(ride.status === "BOOKED" || ride.status === "ONGOING") && (
                     <Link href={`/driver/track/${ride.id}`}>
-                      <Button variant="secondary" className="text-xs px-3 py-1.5">
+                      <Button variant="secondary" className="w-full px-3 py-1.5 text-xs sm:w-auto">
                         Track Live
                       </Button>
                     </Link>
@@ -133,7 +133,7 @@ export default function DriverRidesPage() {
                   {ride.status === "CREATED" && (
                     <Button
                       variant="primary"
-                      className="text-xs px-3 py-1.5"
+                      className="w-full px-3 py-1.5 text-xs sm:w-auto"
                       onClick={() => updateStatus(ride.id, "OPEN")}
                     >
                       Publish
@@ -142,7 +142,7 @@ export default function DriverRidesPage() {
                   {ride.status === "BOOKED" && (
                     <Button
                       variant="primary"
-                      className="text-xs px-3 py-1.5"
+                      className="w-full px-3 py-1.5 text-xs sm:w-auto"
                       onClick={() => updateStatus(ride.id, "ONGOING")}
                     >
                       Start Ride
@@ -151,7 +151,7 @@ export default function DriverRidesPage() {
                   {ride.status === "ONGOING" && (
                     <Button
                       variant="primary"
-                      className="text-xs px-3 py-1.5"
+                      className="w-full px-3 py-1.5 text-xs sm:w-auto"
                       onClick={() => updateStatus(ride.id, "COMPLETED")}
                     >
                       Complete
@@ -160,7 +160,7 @@ export default function DriverRidesPage() {
                   {(ride.status === "OPEN" || ride.status === "BOOKED") && (
                     <Button
                       variant="danger"
-                      className="text-xs px-3 py-1.5"
+                      className="w-full px-3 py-1.5 text-xs sm:w-auto"
                       onClick={() => updateStatus(ride.id, "CANCELLED")}
                     >
                       Cancel

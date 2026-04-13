@@ -79,7 +79,7 @@ export default function CreateRidePage() {
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Create a Ride</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Create a Ride</h1>
         <p className="mt-1 text-(--text-2)">
           Publish a new ride for passengers to book.
         </p>

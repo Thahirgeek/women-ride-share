@@ -160,12 +160,12 @@ export default function RateDriverPage({
     );
   }
 
-  const readOnly = Boolean(data.rating) && !data.rating.canEdit;
+  const readOnly = data.rating ? !data.rating.canEdit : false;
 
   return (
     <>
       <div className="mb-6">
-        <h1 className="text-6xl font-[instrumentserif-regular] text-foreground">Rate Driver</h1>
+        <h1 className="text-3xl font-[instrumentserif-regular] text-foreground sm:text-5xl lg:text-6xl">Rate Driver</h1>
         <p className="mt-1 text-(--text-2)">
           {data.ride.source} -&gt; {data.ride.destination}
         </p>
@@ -232,16 +232,17 @@ export default function RateDriverPage({
             />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <Button
               onClick={handleSubmit}
               isLoading={submitting}
               disabled={!data.canSubmit || readOnly}
+              className="w-full sm:w-auto"
             >
               {data.rating ? "Update Feedback" : "Submit Feedback"}
             </Button>
-            <Link href="/passenger/bookings">
-              <Button variant="secondary">Back to Bookings</Button>
+            <Link href="/passenger/bookings" className="w-full sm:w-auto">
+              <Button variant="secondary" className="w-full sm:w-auto">Back to Bookings</Button>
             </Link>
           </div>
         </div>
