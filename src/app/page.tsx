@@ -31,7 +31,16 @@ export default function Home() {
       <div
         aria-hidden="true"
         className={`landing-fallback-bg fixed inset-0 z-[-5] pointer-events-none ${isBackgroundReady ? "landing-fallback-hidden" : ""}`}
-      />
+      >
+        <div className="landing-fallback-inner">
+          <img
+            src="/8442672.svg"
+            alt=""
+            className="landing-fallback-logo"
+            draggable={false}
+          />
+        </div>
+      </div>
       <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
         <ColorBends
           rotation={45}
