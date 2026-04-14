@@ -22,8 +22,11 @@ export async function PATCH(
 
   const existing = await prisma.rating.findUnique({
     where: { id },
-    include: {
-      ride: { select: { status: true } },
+    select: {
+      id: true,
+      raterId: true,
+      rideId: true,
+      createdAt: true,
     },
   });
 
@@ -35,7 +38,16 @@ export async function PATCH(
     return Response.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  if (existing.ride.status !== "COMPLETED") {
+  const ride = await prisma.ride.findUnique({
+    where: { id: existing.rideId },
+    select: { status: true },
+  });
+
+  if (!ride) {
+    return Response.json({ error: "Ride not found" }, { status: 404 });
+  }
+
+  if (ride.status !== "COMPLETED") {
     return Response.json(
       { error: "Feedback can be edited only for completed rides" },
       { status: 400 }

@@ -103,7 +103,7 @@ export async function GET(
       kind: "source",
       label: ride.source,
       lat: ride.sourceLat,
-      lng: ride.sourceLng,
+      lng: ride.sourceLng!,
     });
   }
 
@@ -113,7 +113,7 @@ export async function GET(
       kind: "pickup",
       label: bookingForRoute.pickupPoint || "Pickup",
       lat: bookingForRoute.pickupLat,
-      lng: bookingForRoute.pickupLng,
+      lng: bookingForRoute.pickupLng!,
     });
   }
 
@@ -123,7 +123,7 @@ export async function GET(
       kind: "drop",
       label: bookingForRoute.dropPoint || "Drop",
       lat: bookingForRoute.dropLat,
-      lng: bookingForRoute.dropLng,
+      lng: bookingForRoute.dropLng!,
     });
   }
 
@@ -133,7 +133,7 @@ export async function GET(
       kind: "destination",
       label: ride.destination,
       lat: ride.destinationLat,
-      lng: ride.destinationLng,
+      lng: ride.destinationLng!,
     });
   }
 

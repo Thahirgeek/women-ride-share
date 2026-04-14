@@ -46,7 +46,7 @@ function getChatEventPool() {
   return pool;
 }
 
-function parseChatEvent(rawPayload: string | null): ChatEventPayload | null {
+function parseChatEvent(rawPayload: string | null | undefined): ChatEventPayload | null {
   if (!rawPayload) return null;
 
   try {
