@@ -8,6 +8,12 @@ import { WaveLoader } from "@/components/wave-loader";
 import BasicModal from "@/components/modal";
 
 type Tab = "users" | "rides" | "drivers";
+type VerificationStatus =
+  | "UNVERIFIED"
+  | "PENDING_REVIEW"
+  | "VERIFIED"
+  | "REVOKED";
+type VerificationAction = "REQUEST_REVIEW" | "APPROVE" | "REVOKE";
 
 interface User {
   id: string;
@@ -32,9 +38,55 @@ interface Driver {
   licenseNumber: string;
   isAvailable: boolean;
   isVerified: boolean;
+  verificationStatus: VerificationStatus;
+  verificationReason?: string | null;
+  pendingDocumentCount?: number;
+  documents?: {
+    id: string;
+    documentType: "LICENSE" | "VEHICLE_REGISTRATION" | "INSURANCE" | "OTHER";
+    storageUrl: string;
+    reviewStatus: "PENDING" | "APPROVED" | "REJECTED";
+    submittedAt: string;
+    reviewedAt?: string | null;
+    rejectionReason?: string | null;
+  }[];
   user: { name: string; email: string };
   vehicle?: { vehicleType: string; model: string };
 }
+
+const VERIFICATION_META: Record<
+  VerificationStatus,
+  { label: string; variant: "default" | "warning" | "success" | "danger" }
+> = {
+  UNVERIFIED: { label: "Unverified", variant: "default" },
+  PENDING_REVIEW: { label: "Pending Review", variant: "warning" },
+  VERIFIED: { label: "Verified", variant: "success" },
+  REVOKED: { label: "Revoked", variant: "danger" },
+};
+
+const ACTION_COPY: Record<
+  VerificationAction,
+  { title: string; confirm: string; message: (name: string) => string }
+> = {
+  REQUEST_REVIEW: {
+    title: "Move Driver To Review",
+    confirm: "Confirm Move To Review",
+    message: (name) =>
+      `Move ${name} to the review queue so they can be approved again?`,
+  },
+  APPROVE: {
+    title: "Approve Driver",
+    confirm: "Confirm Approval",
+    message: (name) =>
+      `Approve ${name}? They will be able to publish rides immediately.`,
+  },
+  REVOKE: {
+    title: "Revoke Driver",
+    confirm: "Confirm Revoke",
+    message: (name) =>
+      `Revoke ${name}? OPEN rides and future BOOKED rides will be cancelled.`,
+  },
+};
 
 export default function AdminDashboard() {
   const [tab, setTab] = useState<Tab>("users");
@@ -43,11 +95,15 @@ export default function AdminDashboard() {
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [loading, setLoading] = useState(true);
   const [verifyLoadingId, setVerifyLoadingId] = useState<string | null>(null);
+  const [docReviewLoadingId, setDocReviewLoadingId] = useState<string | null>(
+    null
+  );
   const [pendingVerification, setPendingVerification] = useState<{
     driverId: string;
     driverName: string;
-    action: "VERIFY" | "REVOKE";
+    action: VerificationAction;
   } | null>(null);
+  const [actionReason, setActionReason] = useState("");
   const [actionMessage, setActionMessage] = useState<{
     type: "success" | "error";
     text: string;
@@ -77,9 +133,10 @@ export default function AdminDashboard() {
 
   const updateVerification = async (
     driverId: string,
-    action: "VERIFY" | "REVOKE"
+    action: VerificationAction,
+    reason?: string
   ) => {
-    const isVerify = action === "VERIFY";
+    const isApprove = action === "APPROVE";
 
     setActionMessage(null);
     setVerifyLoadingId(driverId);
@@ -87,7 +144,7 @@ export default function AdminDashboard() {
       const res = await fetch(`/api/admin/drivers/${driverId}/verify`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action }),
+        body: JSON.stringify({ action, reason }),
       });
       const data = await res.json();
 
@@ -97,14 +154,21 @@ export default function AdminDashboard() {
 
       await fetchDrivers();
 
-      if (isVerify) {
-        setActionMessage({ type: "success", text: "Driver verified successfully." });
-      } else {
-        const cancelledCount = data.cancelledOpenRides ?? 0;
-        const plural = cancelledCount === 1 ? "ride" : "rides";
+      if (isApprove) {
+        setActionMessage({ type: "success", text: "Driver approved successfully." });
+      } else if (action === "REQUEST_REVIEW") {
         setActionMessage({
           type: "success",
-          text: `Driver revoked. ${cancelledCount} open ${plural} cancelled.`,
+          text: "Driver moved to review queue.",
+        });
+      } else {
+        const cancelledCount = data.cancelledOpenRides ?? 0;
+        const cancelledFutureBooked = data.cancelledFutureBookedRides ?? 0;
+        const totalCancelled = cancelledCount + cancelledFutureBooked;
+        const plural = totalCancelled === 1 ? "ride" : "rides";
+        setActionMessage({
+          type: "success",
+          text: `Driver revoked. ${totalCancelled} ${plural} cancelled (${cancelledCount} open, ${cancelledFutureBooked} future booked).`,
         });
       }
     } catch (error) {
@@ -120,17 +184,74 @@ export default function AdminDashboard() {
     }
   };
 
+  const reviewDocument = async (
+    driverId: string,
+    documentId: string,
+    reviewStatus: "APPROVED" | "REJECTED"
+  ) => {
+    const rejectionReason =
+      reviewStatus === "REJECTED"
+        ? window
+            .prompt("Provide a rejection reason for the driver:", "")
+            ?.trim() ?? ""
+        : "";
+
+    if (reviewStatus === "REJECTED" && !rejectionReason) {
+      setActionMessage({
+        type: "error",
+        text: "Rejection reason is required to reject a document.",
+      });
+      return;
+    }
+
+    setDocReviewLoadingId(documentId);
+    setActionMessage(null);
+    try {
+      const res = await fetch(
+        `/api/admin/drivers/${driverId}/documents/${documentId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ reviewStatus, rejectionReason }),
+        }
+      );
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to review document.");
+      }
+
+      await fetchDrivers();
+      setActionMessage({
+        type: "success",
+        text:
+          reviewStatus === "APPROVED"
+            ? "Document approved."
+            : "Document rejected with feedback.",
+      });
+    } catch (error) {
+      setActionMessage({
+        type: "error",
+        text: error instanceof Error ? error.message : "Failed to review document.",
+      });
+    } finally {
+      setDocReviewLoadingId(null);
+    }
+  };
+
   const requestVerificationAction = (
     driverId: string,
     driverName: string,
-    action: "VERIFY" | "REVOKE"
+    action: VerificationAction
   ) => {
+    setActionReason("");
     setPendingVerification({ driverId, driverName, action });
   };
 
   const closeVerificationModal = () => {
     if (verifyLoadingId) return;
     setPendingVerification(null);
+    setActionReason("");
   };
 
   const confirmVerificationAction = async () => {
@@ -138,9 +259,11 @@ export default function AdminDashboard() {
 
     await updateVerification(
       pendingVerification.driverId,
-      pendingVerification.action
+      pendingVerification.action,
+      pendingVerification.action === "REVOKE" ? actionReason.trim() : undefined
     );
     setPendingVerification(null);
+    setActionReason("");
   };
 
   const tabs: { key: Tab; label: string }[] = [
@@ -154,19 +277,36 @@ export default function AdminDashboard() {
       <BasicModal
         isOpen={!!pendingVerification}
         onClose={closeVerificationModal}
-        title={
-          pendingVerification?.action === "VERIFY"
-            ? "Verify Driver"
-            : "Revoke Driver"
-        }
+        title={pendingVerification ? ACTION_COPY[pendingVerification.action].title : ""}
         size="md"
       >
         <div className="space-y-5">
           <p className="text-sm text-(--text-2)">
-            {pendingVerification?.action === "VERIFY"
-              ? `Verify ${pendingVerification.driverName}? They will be able to publish rides immediately.`
-              : `Revoke ${pendingVerification?.driverName}? Their OPEN rides will be cancelled.`}
+            {pendingVerification
+              ? ACTION_COPY[pendingVerification.action].message(
+                  pendingVerification.driverName
+                )
+              : ""}
           </p>
+
+          {pendingVerification?.action === "REVOKE" && (
+            <div className="space-y-2">
+              <label
+                htmlFor="revokeReason"
+                className="text-sm font-medium text-foreground"
+              >
+                Revoke reason
+              </label>
+              <textarea
+                id="revokeReason"
+                value={actionReason}
+                onChange={(e) => setActionReason(e.target.value)}
+                rows={3}
+                placeholder="Explain why this driver is being revoked"
+                className="w-full rounded-lg border border-border bg-(--surface) px-3 py-2 text-sm text-foreground"
+              />
+            </div>
+          )}
 
           <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
             <Button
@@ -178,18 +318,21 @@ export default function AdminDashboard() {
             </Button>
             <Button
               variant={
-                pendingVerification?.action === "VERIFY" ? "primary" : "danger"
+                pendingVerification?.action === "REVOKE" ? "danger" : "primary"
               }
               onClick={confirmVerificationAction}
+              disabled={
+                pendingVerification?.action === "REVOKE" && !actionReason.trim()
+              }
               isLoading={
                 pendingVerification
                   ? verifyLoadingId === pendingVerification.driverId
                   : false
               }
             >
-              {pendingVerification?.action === "VERIFY"
-                ? "Confirm Verify"
-                : "Confirm Revoke"}
+              {pendingVerification
+                ? ACTION_COPY[pendingVerification.action].confirm
+                : "Confirm"}
             </Button>
           </div>
         </div>
@@ -364,24 +507,91 @@ export default function AdminDashboard() {
                 ) : (
                   drivers.map((d) => (
                     <div key={d.id} className="rounded-lg border border-border bg-white p-3">
+                      {(() => {
+                        const statusMeta = VERIFICATION_META[d.verificationStatus];
+                        return (
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <p className="text-sm font-semibold text-foreground">{d.user.name}</p>
                           <p className="text-xs text-(--text-2)">{d.licenseNumber || "-"}</p>
                         </div>
-                        <Badge variant={d.isVerified ? "success" : "warning"}>
-                          {d.isVerified ? "Verified" : "Pending"}
+                        <Badge variant={statusMeta.variant}>
+                          {statusMeta.label}
                         </Badge>
                       </div>
+                        );
+                      })()}
                       <div className="mt-2 space-y-1 text-xs text-(--text-2)">
                         <p>Vehicle: {d.vehicle ? `${d.vehicle.vehicleType} - ${d.vehicle.model}` : "-"}</p>
                         <p>Status: {d.isAvailable ? "Online" : "Offline"}</p>
+                        <p>Pending Documents: {d.pendingDocumentCount ?? 0}</p>
                       </div>
-                      <div className="mt-3 flex">
-                        {d.isVerified ? (
+                      {!!d.documents?.length && (
+                        <div className="mt-3 space-y-2 rounded-lg border border-border bg-(--bg-muted) p-2">
+                          {d.documents.map((document) => (
+                            <div key={document.id} className="rounded-md border border-border bg-white p-2">
+                              <div className="flex items-center justify-between gap-2">
+                                <p className="text-xs font-[inter-semibold] text-foreground">
+                                  {document.documentType.replaceAll("_", " ")}
+                                </p>
+                                <Badge
+                                  variant={
+                                    document.reviewStatus === "APPROVED"
+                                      ? "success"
+                                      : document.reviewStatus === "REJECTED"
+                                        ? "danger"
+                                        : "warning"
+                                  }
+                                >
+                                  {document.reviewStatus}
+                                </Badge>
+                              </div>
+                              <a
+                                href={document.storageUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="mt-1 inline-block text-xs font-medium text-primary underline"
+                              >
+                                View document
+                              </a>
+                              {document.reviewStatus === "PENDING" && (
+                                <div className="mt-2 flex gap-2">
+                                  <Button
+                                    className="w-full px-2 py-1 text-xs"
+                                    isLoading={docReviewLoadingId === document.id}
+                                    onClick={() =>
+                                      reviewDocument(d.id, document.id, "APPROVED")
+                                    }
+                                  >
+                                    Approve Doc
+                                  </Button>
+                                  <Button
+                                    variant="danger"
+                                    className="w-full px-2 py-1 text-xs"
+                                    isLoading={docReviewLoadingId === document.id}
+                                    onClick={() =>
+                                      reviewDocument(d.id, document.id, "REJECTED")
+                                    }
+                                  >
+                                    Reject Doc
+                                  </Button>
+                                </div>
+                              )}
+                              {document.reviewStatus === "REJECTED" &&
+                                document.rejectionReason && (
+                                  <p className="mt-1 text-xs text-(--danger)">
+                                    Reason: {document.rejectionReason}
+                                  </p>
+                                )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-3 flex gap-2">
+                        {d.verificationStatus === "VERIFIED" ? (
                           <Button
                             variant="danger"
-                            className="w-full px-3 py-1 text-xs"
+                            className="w-full px-3 py-1 text-xs sm:w-auto"
                             isLoading={verifyLoadingId === d.id}
                             onClick={() =>
                               requestVerificationAction(
@@ -393,19 +603,50 @@ export default function AdminDashboard() {
                           >
                             Revoke
                           </Button>
+                        ) : d.verificationStatus === "PENDING_REVIEW" ? (
+                          <>
+                            <Button
+                              className="w-full px-3 py-1 text-xs sm:w-auto"
+                              isLoading={verifyLoadingId === d.id}
+                              onClick={() =>
+                                requestVerificationAction(
+                                  d.id,
+                                  d.user.name,
+                                  "APPROVE"
+                                )
+                              }
+                            >
+                              Approve
+                            </Button>
+                            <Button
+                              variant="danger"
+                              className="w-full px-3 py-1 text-xs sm:w-auto"
+                              isLoading={verifyLoadingId === d.id}
+                              onClick={() =>
+                                requestVerificationAction(
+                                  d.id,
+                                  d.user.name,
+                                  "REVOKE"
+                                )
+                              }
+                            >
+                              Revoke
+                            </Button>
+                          </>
                         ) : (
                           <Button
-                            className="w-full px-3 py-1 text-xs"
+                            variant="secondary"
+                            className="w-full px-3 py-1 text-xs sm:w-auto"
                             isLoading={verifyLoadingId === d.id}
                             onClick={() =>
                               requestVerificationAction(
                                 d.id,
                                 d.user.name,
-                                "VERIFY"
+                                "REQUEST_REVIEW"
                               )
                             }
                           >
-                            Verify
+                            Move To Review
                           </Button>
                         )}
                       </div>
@@ -422,13 +663,14 @@ export default function AdminDashboard() {
                       <th className="pb-3 text-left font-semibold text-(--text-2)">License</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Vehicle</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Available</th>
+                      <th className="pb-3 text-left font-semibold text-(--text-2)">Pending Docs</th>
                       <th className="pb-3 text-left font-semibold text-(--text-2)">Verification</th>
                     </tr>
                   </thead>
                   <tbody>
                     {drivers.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="py-6 text-center text-(--text-2)">
+                        <td colSpan={6} className="py-6 text-center text-(--text-2)">
                           No drivers found.
                         </td>
                       </tr>
@@ -445,12 +687,13 @@ export default function AdminDashboard() {
                             {d.isAvailable ? "Online" : "Offline"}
                           </Badge>
                         </td>
+                        <td className="py-3 text-(--text-2)">{d.pendingDocumentCount ?? 0}</td>
                         <td className="py-3">
                           <div className="flex items-center gap-2">
-                            <Badge variant={d.isVerified ? "success" : "warning"}>
-                              {d.isVerified ? "Verified" : "Pending"}
+                            <Badge variant={VERIFICATION_META[d.verificationStatus].variant}>
+                              {VERIFICATION_META[d.verificationStatus].label}
                             </Badge>
-                            {d.isVerified ? (
+                            {d.verificationStatus === "VERIFIED" ? (
                               <Button
                                 variant="danger"
                                 className="px-3 py-1 text-xs"
@@ -465,22 +708,125 @@ export default function AdminDashboard() {
                               >
                                 Revoke
                               </Button>
+                            ) : d.verificationStatus === "PENDING_REVIEW" ? (
+                              <>
+                                <Button
+                                  className="px-3 py-1 text-xs"
+                                  isLoading={verifyLoadingId === d.id}
+                                  onClick={() =>
+                                    requestVerificationAction(
+                                      d.id,
+                                      d.user.name,
+                                      "APPROVE"
+                                    )
+                                  }
+                                >
+                                  Approve
+                                </Button>
+                                <Button
+                                  variant="danger"
+                                  className="px-3 py-1 text-xs"
+                                  isLoading={verifyLoadingId === d.id}
+                                  onClick={() =>
+                                    requestVerificationAction(
+                                      d.id,
+                                      d.user.name,
+                                      "REVOKE"
+                                    )
+                                  }
+                                >
+                                  Revoke
+                                </Button>
+                              </>
                             ) : (
                               <Button
+                                variant="secondary"
                                 className="px-3 py-1 text-xs"
                                 isLoading={verifyLoadingId === d.id}
                                 onClick={() =>
                                   requestVerificationAction(
                                     d.id,
                                     d.user.name,
-                                    "VERIFY"
+                                    "REQUEST_REVIEW"
                                   )
                                 }
                               >
-                                Verify
+                                Move To Review
                               </Button>
                             )}
                           </div>
+                          {!!d.documents?.length && (
+                            <div className="mt-2 space-y-2">
+                              {d.documents.map((document) => (
+                                <div
+                                  key={document.id}
+                                  className="rounded-md border border-border bg-(--bg-muted) p-2"
+                                >
+                                  <div className="flex items-center justify-between gap-2">
+                                    <p className="text-xs font-[inter-semibold] text-foreground">
+                                      {document.documentType.replaceAll("_", " ")}
+                                    </p>
+                                    <Badge
+                                      variant={
+                                        document.reviewStatus === "APPROVED"
+                                          ? "success"
+                                          : document.reviewStatus === "REJECTED"
+                                            ? "danger"
+                                            : "warning"
+                                      }
+                                    >
+                                      {document.reviewStatus}
+                                    </Badge>
+                                  </div>
+                                  <a
+                                    href={document.storageUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="mt-1 inline-block text-xs font-medium text-primary underline"
+                                  >
+                                    View document
+                                  </a>
+                                  {document.reviewStatus === "PENDING" && (
+                                    <div className="mt-2 flex gap-2">
+                                      <Button
+                                        className="px-2 py-1 text-xs"
+                                        isLoading={docReviewLoadingId === document.id}
+                                        onClick={() =>
+                                          reviewDocument(
+                                            d.id,
+                                            document.id,
+                                            "APPROVED"
+                                          )
+                                        }
+                                      >
+                                        Approve Doc
+                                      </Button>
+                                      <Button
+                                        variant="danger"
+                                        className="px-2 py-1 text-xs"
+                                        isLoading={docReviewLoadingId === document.id}
+                                        onClick={() =>
+                                          reviewDocument(
+                                            d.id,
+                                            document.id,
+                                            "REJECTED"
+                                          )
+                                        }
+                                      >
+                                        Reject Doc
+                                      </Button>
+                                    </div>
+                                  )}
+                                  {document.reviewStatus === "REJECTED" &&
+                                    document.rejectionReason && (
+                                      <p className="mt-1 text-xs text-(--danger)">
+                                        Reason: {document.rejectionReason}
+                                      </p>
+                                    )}
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </td>
                       </tr>
                     )))}

@@ -9,6 +9,8 @@ import { WaveLoader } from "@/components/wave-loader";
 interface DriverProfile {
   isAvailable: boolean;
   isVerified: boolean;
+  verificationStatus: "UNVERIFIED" | "PENDING_REVIEW" | "VERIFIED" | "REVOKED";
+  verificationReason?: string | null;
   currentPassengerComposition: string;
   rides: { id: string; source: string; destination: string; status: string; scheduledAt: string }[];
   _count: { rides: number };
@@ -77,6 +79,28 @@ export default function DriverDashboard() {
   const completedRides = profile.rides?.filter(
     (r) => r.status === "COMPLETED"
   ).length ?? 0;
+  const isVerified =
+    profile.isVerified && profile.verificationStatus === "VERIFIED";
+
+  const verificationHeadline =
+    profile.verificationStatus === "UNVERIFIED"
+      ? "Verification Not Started"
+      : profile.verificationStatus === "PENDING_REVIEW"
+        ? "Verification Pending Review"
+        : profile.verificationStatus === "REVOKED"
+          ? "Driver Access Revoked"
+          : "Verification Pending";
+
+  const verificationDescription =
+    profile.verificationStatus === "UNVERIFIED"
+      ? "Please complete onboarding and submit your documents to move into review."
+      : profile.verificationStatus === "PENDING_REVIEW"
+        ? "Your profile is under review. You can manage settings, but you cannot publish rides until approval."
+        : profile.verificationStatus === "REVOKED"
+          ? profile.verificationReason
+            ? `Revocation reason: ${profile.verificationReason}`
+            : "Your access to publish rides has been revoked. Contact admin to move back into review."
+          : "Your profile is under review. You cannot publish rides until verification is complete.";
 
   return (
     <>
@@ -145,16 +169,16 @@ export default function DriverDashboard() {
       </div>
 
       {/* Verification status */}
-      {!profile.isVerified && (
+      {!isVerified && (
         <Card className="mb-8">
           <div className="flex items-center gap-3">
             <span className="text-2xl">...</span>
             <div>
               <p className="text-sm font-[inter-medium] text-red-700">
-                Verification Pending
+                {verificationHeadline}
               </p>
               <p className="text-xs text-(--text-2)">
-                Your profile is under review. You can manage settings, but you cannot publish rides until an admin verifies your account.
+                {verificationDescription}
               </p>
             </div>
           </div>

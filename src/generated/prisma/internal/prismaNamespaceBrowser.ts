@@ -56,6 +56,8 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Driver: 'Driver',
+  DriverVerificationEvent: 'DriverVerificationEvent',
+  DriverDocumentSubmission: 'DriverDocumentSubmission',
   Passenger: 'Passenger',
   Vehicle: 'Vehicle',
   Ride: 'Ride',
@@ -149,12 +151,47 @@ export const DriverScalarFieldEnum = {
   licenseNumber: 'licenseNumber',
   isAvailable: 'isAvailable',
   isVerified: 'isVerified',
+  verificationStatus: 'verificationStatus',
+  verificationReason: 'verificationReason',
+  verificationUpdatedAt: 'verificationUpdatedAt',
+  verificationUpdatedBy: 'verificationUpdatedBy',
   currentPassengerComposition: 'currentPassengerComposition',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type DriverScalarFieldEnum = (typeof DriverScalarFieldEnum)[keyof typeof DriverScalarFieldEnum]
+
+
+export const DriverVerificationEventScalarFieldEnum = {
+  id: 'id',
+  driverId: 'driverId',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  action: 'action',
+  reason: 'reason',
+  actorUserId: 'actorUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type DriverVerificationEventScalarFieldEnum = (typeof DriverVerificationEventScalarFieldEnum)[keyof typeof DriverVerificationEventScalarFieldEnum]
+
+
+export const DriverDocumentSubmissionScalarFieldEnum = {
+  id: 'id',
+  driverId: 'driverId',
+  documentType: 'documentType',
+  storageUrl: 'storageUrl',
+  reviewStatus: 'reviewStatus',
+  expiresAt: 'expiresAt',
+  reviewedAt: 'reviewedAt',
+  reviewedBy: 'reviewedBy',
+  rejectionReason: 'rejectionReason',
+  submittedAt: 'submittedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverDocumentSubmissionScalarFieldEnum = (typeof DriverDocumentSubmissionScalarFieldEnum)[keyof typeof DriverDocumentSubmissionScalarFieldEnum]
 
 
 export const PassengerScalarFieldEnum = {

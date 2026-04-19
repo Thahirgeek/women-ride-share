@@ -22,6 +22,15 @@ interface DriverFeedbackComment {
   };
 }
 
+interface DriverDocument {
+  id: string;
+  documentType: "LICENSE" | "VEHICLE_REGISTRATION" | "INSURANCE" | "OTHER";
+  storageUrl: string;
+  reviewStatus: "PENDING" | "APPROVED" | "REJECTED";
+  submittedAt: string;
+  rejectionReason?: string | null;
+}
+
 export default function ProfilePage() {
   const { data: session, isPending } = useSession();
   const [loading, setLoading] = useState(false);
@@ -44,9 +53,31 @@ export default function ProfilePage() {
     totalRatings: 0,
   });
   const [recentFeedback, setRecentFeedback] = useState<DriverFeedbackComment[]>([]);
+  const [documents, setDocuments] = useState<DriverDocument[]>([]);
+  const [documentsLoading, setDocumentsLoading] = useState(false);
+  const [documentSubmitLoading, setDocumentSubmitLoading] = useState(false);
+  const [documentError, setDocumentError] = useState("");
+  const [documentForm, setDocumentForm] = useState({
+    documentType: "LICENSE",
+    storageUrl: "",
+    expiresAt: "",
+  });
 
   const user = session?.user as any;
   const isDriver = user?.role === "DRIVER";
+
+  const loadDriverDocuments = async () => {
+    setDocumentsLoading(true);
+    try {
+      const response = await fetch("/api/driver/verification/documents");
+      const data = await response.json();
+      setDocuments(data.documents || []);
+    } catch {
+      setDocumentError("Unable to load verification documents.");
+    } finally {
+      setDocumentsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -82,9 +113,51 @@ export default function ProfilePage() {
               setRecentFeedback(d.driver.recentFeedback);
             }
           });
+
+        loadDriverDocuments();
       }
     }
   }, [user, isDriver]);
+
+  const handleDocumentSubmit = async () => {
+    setDocumentError("");
+
+    if (!documentForm.storageUrl.trim()) {
+      setDocumentError("Document URL is required.");
+      return;
+    }
+
+    setDocumentSubmitLoading(true);
+    try {
+      const response = await fetch("/api/driver/verification/documents", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          documentType: documentForm.documentType,
+          storageUrl: documentForm.storageUrl,
+          expiresAt: documentForm.expiresAt || undefined,
+        }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit document.");
+      }
+
+      setDocumentForm({
+        documentType: "LICENSE",
+        storageUrl: "",
+        expiresAt: "",
+      });
+      await loadDriverDocuments();
+    } catch (err) {
+      setDocumentError(
+        err instanceof Error ? err.message : "Failed to submit document."
+      );
+    } finally {
+      setDocumentSubmitLoading(false);
+    }
+  };
 
   const handleSave = async () => {
     setLoading(true);
@@ -211,6 +284,127 @@ export default function ProfilePage() {
                   setVehicle((v) => ({ ...v, seatsAvailable: e.target.value }))
                 }
               />
+            </div>
+          </Card>
+
+          <Card className="mb-6">
+            <h2 className="mb-3 text-lg font-bold text-foreground">Verification Documents</h2>
+            <p className="mb-4 text-sm text-(--text-2)">
+              Upload links to your verification documents so admin can review and approve your profile.
+            </p>
+
+            {documentError && (
+              <div className="mb-4 rounded-lg border border-(--danger)/20 bg-(--danger-soft) px-4 py-3 text-sm text-(--danger)">
+                {documentError}
+              </div>
+            )}
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <Select
+                id="documentType"
+                label="Document Type"
+                value={documentForm.documentType}
+                onChange={(e) =>
+                  setDocumentForm((prev) => ({
+                    ...prev,
+                    documentType: e.target.value,
+                  }))
+                }
+                options={[
+                  { value: "LICENSE", label: "License" },
+                  {
+                    value: "VEHICLE_REGISTRATION",
+                    label: "Vehicle Registration",
+                  },
+                  { value: "INSURANCE", label: "Insurance" },
+                  { value: "OTHER", label: "Other" },
+                ]}
+              />
+              <Input
+                id="documentUrl"
+                label="Document URL"
+                placeholder="https://..."
+                value={documentForm.storageUrl}
+                onChange={(e) =>
+                  setDocumentForm((prev) => ({
+                    ...prev,
+                    storageUrl: e.target.value,
+                  }))
+                }
+              />
+              <Input
+                id="documentExpiry"
+                label="Expiry Date (optional)"
+                type="date"
+                value={documentForm.expiresAt}
+                onChange={(e) =>
+                  setDocumentForm((prev) => ({
+                    ...prev,
+                    expiresAt: e.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <div className="mt-4">
+              <Button onClick={handleDocumentSubmit} isLoading={documentSubmitLoading}>
+                Submit Document
+              </Button>
+            </div>
+
+            <div className="mt-6">
+              <h3 className="mb-2 text-sm font-[inter-semibold] text-foreground">
+                Submitted Documents
+              </h3>
+
+              {documentsLoading ? (
+                <p className="text-sm text-(--text-2)">Loading documents...</p>
+              ) : documents.length === 0 ? (
+                <p className="text-sm text-(--text-2)">No documents submitted yet.</p>
+              ) : (
+                <div className="space-y-2">
+                  {documents.map((document) => (
+                    <div
+                      key={document.id}
+                      className="rounded-lg border border-border bg-(--surface) px-3 py-3"
+                    >
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <p className="text-sm font-[inter-semibold] text-foreground">
+                          {document.documentType.replaceAll("_", " ")}
+                        </p>
+                        <Badge
+                          variant={
+                            document.reviewStatus === "APPROVED"
+                              ? "success"
+                              : document.reviewStatus === "REJECTED"
+                                ? "danger"
+                                : "warning"
+                          }
+                        >
+                          {document.reviewStatus}
+                        </Badge>
+                      </div>
+                      <a
+                        href={document.storageUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-1 inline-block text-xs font-medium text-primary underline"
+                      >
+                        View document
+                      </a>
+                      <p className="mt-1 text-xs text-(--text-2)">
+                        Submitted {new Date(document.submittedAt).toLocaleString()}
+                      </p>
+                      {document.reviewStatus === "REJECTED" &&
+                        document.rejectionReason && (
+                          <p className="mt-1 text-xs text-(--danger)">
+                            Reason: {document.rejectionReason}
+                          </p>
+                        )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </Card>
 

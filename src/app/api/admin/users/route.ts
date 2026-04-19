@@ -3,6 +3,13 @@ import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
+const VALID_STATUSES = new Set([
+  "UNVERIFIED",
+  "PENDING_REVIEW",
+  "VERIFIED",
+  "REVOKED",
+]);
+
 export async function GET(request: NextRequest) {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
@@ -14,15 +21,62 @@ export async function GET(request: NextRequest) {
 
   const url = request.nextUrl;
   const driversOnly = url.searchParams.get("drivers");
+  const verificationStatusFilter =
+    url.searchParams.get("verificationStatus")?.trim().toUpperCase() ?? "";
 
   if (driversOnly) {
+    const where =
+      verificationStatusFilter && VALID_STATUSES.has(verificationStatusFilter)
+        ? { verificationStatus: verificationStatusFilter }
+        : undefined;
+
     const drivers = await prisma.driver.findMany({
+      where,
       include: {
         user: { select: { name: true, email: true } },
         vehicle: { select: { vehicleType: true, model: true } },
+        documents: {
+          orderBy: { submittedAt: "desc" },
+          take: 3,
+          select: {
+            id: true,
+            documentType: true,
+            storageUrl: true,
+            reviewStatus: true,
+            submittedAt: true,
+            reviewedAt: true,
+            rejectionReason: true,
+          },
+        },
+        _count: {
+          select: {
+            documents: true,
+            rides: true,
+          },
+        },
       },
+      orderBy: { updatedAt: "desc" },
     });
-    return Response.json({ drivers });
+
+    const pendingDocumentCounts = await prisma.driverDocumentSubmission.groupBy({
+      by: ["driverId"],
+      where: {
+        driverId: { in: drivers.map((driver) => driver.id) },
+        reviewStatus: "PENDING",
+      },
+      _count: { _all: true },
+    });
+
+    const pendingCountMap = new Map(
+      pendingDocumentCounts.map((item) => [item.driverId, item._count._all])
+    );
+
+    return Response.json({
+      drivers: drivers.map((driver) => ({
+        ...driver,
+        pendingDocumentCount: pendingCountMap.get(driver.id) ?? 0,
+      })),
+    });
   }
 
   const users = await prisma.user.findMany({

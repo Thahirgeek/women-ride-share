@@ -10,11 +10,22 @@ export async function GET() {
     where: { userId: session.user.id },
     include: {
       vehicle: true,
+      documents: {
+        orderBy: { submittedAt: "desc" },
+        take: 5,
+        select: {
+          id: true,
+          documentType: true,
+          reviewStatus: true,
+          submittedAt: true,
+          rejectionReason: true,
+        },
+      },
       rides: {
         orderBy: { createdAt: "desc" },
         take: 10,
       },
-      _count: { select: { rides: true } },
+      _count: { select: { rides: true, documents: true } },
     },
   });
 

@@ -54,6 +54,26 @@ enum BookingStatus {
   CANCELLED
 }
 
+enum DriverVerificationStatus {
+  UNVERIFIED
+  PENDING_REVIEW
+  VERIFIED
+  REVOKED
+}
+
+enum DriverDocumentType {
+  LICENSE
+  VEHICLE_REGISTRATION
+  INSURANCE
+  OTHER
+}
+
+enum DriverDocumentReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model User {
   id             String    @id @default(cuid())
   name           String
@@ -121,12 +141,50 @@ model Driver {
   licenseNumber               String?
   isAvailable                 Boolean              @default(false)
   isVerified                  Boolean              @default(false)
+  verificationStatus          DriverVerificationStatus @default(UNVERIFIED)
+  verificationReason          String?
+  verificationUpdatedAt       DateTime?
+  verificationUpdatedBy       String?
   currentPassengerComposition PassengerComposition @default(SOLO)
   vehicle                     Vehicle?
   rides                       Ride[]
   ratings                     Rating[]
+  documents                   DriverDocumentSubmission[]
+  verificationEvents          DriverVerificationEvent[]
   createdAt                   DateTime             @default(now())
   updatedAt                   DateTime             @updatedAt
+}
+
+model DriverVerificationEvent {
+  id           String                   @id @default(cuid())
+  driverId     String
+  driver       Driver                   @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  fromStatus   DriverVerificationStatus?
+  toStatus     DriverVerificationStatus
+  action       String
+  reason       String?
+  actorUserId  String?
+  createdAt    DateTime                 @default(now())
+
+  @@index([driverId, createdAt])
+}
+
+model DriverDocumentSubmission {
+  id              String                   @id @default(cuid())
+  driverId        String
+  driver          Driver                   @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  documentType    DriverDocumentType
+  storageUrl      String
+  reviewStatus    DriverDocumentReviewStatus @default(PENDING)
+  expiresAt       DateTime?
+  reviewedAt      DateTime?
+  reviewedBy      String?
+  rejectionReason String?
+  submittedAt     DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+
+  @@index([driverId, reviewStatus])
+  @@index([driverId, submittedAt])
 }
 
 model Passenger {

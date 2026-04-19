@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { isDriverVerifiedStatus } from "@/lib/driver-verification";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
@@ -22,15 +23,47 @@ export async function POST(request: NextRequest) {
     const user = await prisma.user.findUnique({ where: { id: session.user.id } });
 
     if (user?.role === "DRIVER") {
-      // Create driver profile
+      // Create or update driver profile, moving first-time drivers into review queue.
+      const existingDriver = await prisma.driver.findUnique({
+        where: { userId: session.user.id },
+        select: { id: true, verificationStatus: true },
+      });
+
+      const nextVerificationStatus =
+        !existingDriver || existingDriver.verificationStatus === "UNVERIFIED"
+          ? "PENDING_REVIEW"
+          : existingDriver.verificationStatus;
+
       const driver = await prisma.driver.upsert({
         where: { userId: session.user.id },
-        update: { licenseNumber },
+        update: {
+          licenseNumber,
+          verificationStatus: nextVerificationStatus,
+          verificationUpdatedAt: new Date(),
+          verificationReason: null,
+          isVerified: isDriverVerifiedStatus(nextVerificationStatus),
+        },
         create: {
           userId: session.user.id,
           licenseNumber,
+          verificationStatus: "PENDING_REVIEW",
+          verificationUpdatedAt: new Date(),
+          isVerified: false,
         },
       });
+
+      if (!existingDriver || existingDriver.verificationStatus === "UNVERIFIED") {
+        await prisma.driverVerificationEvent.create({
+          data: {
+            driverId: driver.id,
+            fromStatus: existingDriver?.verificationStatus,
+            toStatus: "PENDING_REVIEW",
+            action: "REQUEST_REVIEW",
+            reason: "Driver completed onboarding details",
+            actorUserId: session.user.id,
+          },
+        });
+      }
 
       // Create vehicle
       if (vehicleType) {

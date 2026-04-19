@@ -23,6 +23,10 @@ export default function OnboardingPage() {
   const [vehicleModel, setVehicleModel] = useState("");
   const [color, setColor] = useState("");
   const [seats, setSeats] = useState("4");
+  const [licenseDocumentUrl, setLicenseDocumentUrl] = useState("");
+  const [registrationDocumentUrl, setRegistrationDocumentUrl] = useState("");
+  const [insuranceDocumentUrl, setInsuranceDocumentUrl] = useState("");
+  const [licenseExpiresAt, setLicenseExpiresAt] = useState("");
 
   const user = session?.user as any;
   const isDriver = user?.role === "DRIVER";
@@ -59,6 +63,40 @@ export default function OnboardingPage() {
         const data = await res.json();
         setError(data.error || "Failed to save profile");
         return;
+      }
+
+      if (isDriver) {
+        const documents = [
+          {
+            documentType: "LICENSE",
+            storageUrl: licenseDocumentUrl,
+            expiresAt: licenseExpiresAt || undefined,
+          },
+          {
+            documentType: "VEHICLE_REGISTRATION",
+            storageUrl: registrationDocumentUrl,
+          },
+          {
+            documentType: "INSURANCE",
+            storageUrl: insuranceDocumentUrl,
+          },
+        ].filter((document) => document.storageUrl.trim().length > 0);
+
+        for (const document of documents) {
+          const documentRes = await fetch("/api/driver/verification/documents", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(document),
+          });
+
+          if (!documentRes.ok) {
+            const documentError = await documentRes
+              .json()
+              .catch(() => ({ error: "Failed to submit document" }));
+            setError(documentError.error || "Failed to submit document");
+            return;
+          }
+        }
       }
 
       const role = user?.role;
@@ -145,6 +183,21 @@ export default function OnboardingPage() {
                 onChange={(e) => setLicenseNumber(e.target.value)}
                 required
               />
+              <Input
+                id="licenseDoc"
+                label="License Document URL"
+                placeholder="https://..."
+                value={licenseDocumentUrl}
+                onChange={(e) => setLicenseDocumentUrl(e.target.value)}
+                required
+              />
+              <Input
+                id="licenseExpiry"
+                label="License Expiry Date (optional)"
+                type="date"
+                value={licenseExpiresAt}
+                onChange={(e) => setLicenseExpiresAt(e.target.value)}
+              />
               <Select
                 id="vehicleType"
                 label="Vehicle Type"
@@ -166,6 +219,13 @@ export default function OnboardingPage() {
                 required
               />
               <Input
+                id="registrationDoc"
+                label="Registration Document URL"
+                placeholder="https://..."
+                value={registrationDocumentUrl}
+                onChange={(e) => setRegistrationDocumentUrl(e.target.value)}
+              />
+              <Input
                 id="model"
                 label="Vehicle Model"
                 placeholder="Toyota Camry"
@@ -180,6 +240,13 @@ export default function OnboardingPage() {
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
                 required
+              />
+              <Input
+                id="insuranceDoc"
+                label="Insurance Document URL"
+                placeholder="https://..."
+                value={insuranceDocumentUrl}
+                onChange={(e) => setInsuranceDocumentUrl(e.target.value)}
               />
               <Input
                 id="seats"

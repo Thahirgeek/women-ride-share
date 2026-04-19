@@ -30,6 +30,10 @@ export type DriverMinAggregateOutputType = {
   licenseNumber: string | null
   isAvailable: boolean | null
   isVerified: boolean | null
+  verificationStatus: $Enums.DriverVerificationStatus | null
+  verificationReason: string | null
+  verificationUpdatedAt: Date | null
+  verificationUpdatedBy: string | null
   currentPassengerComposition: $Enums.PassengerComposition | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -41,6 +45,10 @@ export type DriverMaxAggregateOutputType = {
   licenseNumber: string | null
   isAvailable: boolean | null
   isVerified: boolean | null
+  verificationStatus: $Enums.DriverVerificationStatus | null
+  verificationReason: string | null
+  verificationUpdatedAt: Date | null
+  verificationUpdatedBy: string | null
   currentPassengerComposition: $Enums.PassengerComposition | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,6 +60,10 @@ export type DriverCountAggregateOutputType = {
   licenseNumber: number
   isAvailable: number
   isVerified: number
+  verificationStatus: number
+  verificationReason: number
+  verificationUpdatedAt: number
+  verificationUpdatedBy: number
   currentPassengerComposition: number
   createdAt: number
   updatedAt: number
@@ -65,6 +77,10 @@ export type DriverMinAggregateInputType = {
   licenseNumber?: true
   isAvailable?: true
   isVerified?: true
+  verificationStatus?: true
+  verificationReason?: true
+  verificationUpdatedAt?: true
+  verificationUpdatedBy?: true
   currentPassengerComposition?: true
   createdAt?: true
   updatedAt?: true
@@ -76,6 +92,10 @@ export type DriverMaxAggregateInputType = {
   licenseNumber?: true
   isAvailable?: true
   isVerified?: true
+  verificationStatus?: true
+  verificationReason?: true
+  verificationUpdatedAt?: true
+  verificationUpdatedBy?: true
   currentPassengerComposition?: true
   createdAt?: true
   updatedAt?: true
@@ -87,6 +107,10 @@ export type DriverCountAggregateInputType = {
   licenseNumber?: true
   isAvailable?: true
   isVerified?: true
+  verificationStatus?: true
+  verificationReason?: true
+  verificationUpdatedAt?: true
+  verificationUpdatedBy?: true
   currentPassengerComposition?: true
   createdAt?: true
   updatedAt?: true
@@ -171,6 +195,10 @@ export type DriverGroupByOutputType = {
   licenseNumber: string | null
   isAvailable: boolean
   isVerified: boolean
+  verificationStatus: $Enums.DriverVerificationStatus
+  verificationReason: string | null
+  verificationUpdatedAt: Date | null
+  verificationUpdatedBy: string | null
   currentPassengerComposition: $Enums.PassengerComposition
   createdAt: Date
   updatedAt: Date
@@ -203,6 +231,10 @@ export type DriverWhereInput = {
   licenseNumber?: Prisma.StringNullableFilter<"Driver"> | string | null
   isAvailable?: Prisma.BoolFilter<"Driver"> | boolean
   isVerified?: Prisma.BoolFilter<"Driver"> | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFilter<"Driver"> | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.StringNullableFilter<"Driver"> | string | null
+  verificationUpdatedAt?: Prisma.DateTimeNullableFilter<"Driver"> | Date | string | null
+  verificationUpdatedBy?: Prisma.StringNullableFilter<"Driver"> | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFilter<"Driver"> | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
@@ -210,6 +242,8 @@ export type DriverWhereInput = {
   vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
   rides?: Prisma.RideListRelationFilter
   ratings?: Prisma.RatingListRelationFilter
+  documents?: Prisma.DriverDocumentSubmissionListRelationFilter
+  verificationEvents?: Prisma.DriverVerificationEventListRelationFilter
 }
 
 export type DriverOrderByWithRelationInput = {
@@ -218,6 +252,10 @@ export type DriverOrderByWithRelationInput = {
   licenseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationUpdatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   currentPassengerComposition?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -225,6 +263,8 @@ export type DriverOrderByWithRelationInput = {
   vehicle?: Prisma.VehicleOrderByWithRelationInput
   rides?: Prisma.RideOrderByRelationAggregateInput
   ratings?: Prisma.RatingOrderByRelationAggregateInput
+  documents?: Prisma.DriverDocumentSubmissionOrderByRelationAggregateInput
+  verificationEvents?: Prisma.DriverVerificationEventOrderByRelationAggregateInput
 }
 
 export type DriverWhereUniqueInput = Prisma.AtLeast<{
@@ -236,6 +276,10 @@ export type DriverWhereUniqueInput = Prisma.AtLeast<{
   licenseNumber?: Prisma.StringNullableFilter<"Driver"> | string | null
   isAvailable?: Prisma.BoolFilter<"Driver"> | boolean
   isVerified?: Prisma.BoolFilter<"Driver"> | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFilter<"Driver"> | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.StringNullableFilter<"Driver"> | string | null
+  verificationUpdatedAt?: Prisma.DateTimeNullableFilter<"Driver"> | Date | string | null
+  verificationUpdatedBy?: Prisma.StringNullableFilter<"Driver"> | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFilter<"Driver"> | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
@@ -243,6 +287,8 @@ export type DriverWhereUniqueInput = Prisma.AtLeast<{
   vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
   rides?: Prisma.RideListRelationFilter
   ratings?: Prisma.RatingListRelationFilter
+  documents?: Prisma.DriverDocumentSubmissionListRelationFilter
+  verificationEvents?: Prisma.DriverVerificationEventListRelationFilter
 }, "id" | "userId">
 
 export type DriverOrderByWithAggregationInput = {
@@ -251,6 +297,10 @@ export type DriverOrderByWithAggregationInput = {
   licenseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationUpdatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   currentPassengerComposition?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -268,6 +318,10 @@ export type DriverScalarWhereWithAggregatesInput = {
   licenseNumber?: Prisma.StringNullableWithAggregatesFilter<"Driver"> | string | null
   isAvailable?: Prisma.BoolWithAggregatesFilter<"Driver"> | boolean
   isVerified?: Prisma.BoolWithAggregatesFilter<"Driver"> | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusWithAggregatesFilter<"Driver"> | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.StringNullableWithAggregatesFilter<"Driver"> | string | null
+  verificationUpdatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Driver"> | Date | string | null
+  verificationUpdatedBy?: Prisma.StringNullableWithAggregatesFilter<"Driver"> | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionWithAggregatesFilter<"Driver"> | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Driver"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Driver"> | Date | string
@@ -278,6 +332,10 @@ export type DriverCreateInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -285,6 +343,8 @@ export type DriverCreateInput = {
   vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
   rides?: Prisma.RideCreateNestedManyWithoutDriverInput
   ratings?: Prisma.RatingCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventCreateNestedManyWithoutDriverInput
 }
 
 export type DriverUncheckedCreateInput = {
@@ -293,12 +353,18 @@ export type DriverUncheckedCreateInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
   rides?: Prisma.RideUncheckedCreateNestedManyWithoutDriverInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedCreateNestedManyWithoutDriverInput
 }
 
 export type DriverUpdateInput = {
@@ -306,6 +372,10 @@ export type DriverUpdateInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -313,6 +383,8 @@ export type DriverUpdateInput = {
   vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
   rides?: Prisma.RideUpdateManyWithoutDriverNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverUncheckedUpdateInput = {
@@ -321,12 +393,18 @@ export type DriverUncheckedUpdateInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
   rides?: Prisma.RideUncheckedUpdateManyWithoutDriverNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverCreateManyInput = {
@@ -335,6 +413,10 @@ export type DriverCreateManyInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -345,6 +427,10 @@ export type DriverUpdateManyMutationInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -356,6 +442,10 @@ export type DriverUncheckedUpdateManyInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -372,6 +462,10 @@ export type DriverCountOrderByAggregateInput = {
   licenseNumber?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationReason?: Prisma.SortOrder
+  verificationUpdatedAt?: Prisma.SortOrder
+  verificationUpdatedBy?: Prisma.SortOrder
   currentPassengerComposition?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -383,6 +477,10 @@ export type DriverMaxOrderByAggregateInput = {
   licenseNumber?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationReason?: Prisma.SortOrder
+  verificationUpdatedAt?: Prisma.SortOrder
+  verificationUpdatedBy?: Prisma.SortOrder
   currentPassengerComposition?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -394,6 +492,10 @@ export type DriverMinOrderByAggregateInput = {
   licenseNumber?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  verificationReason?: Prisma.SortOrder
+  verificationUpdatedAt?: Prisma.SortOrder
+  verificationUpdatedBy?: Prisma.SortOrder
   currentPassengerComposition?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -436,8 +538,40 @@ export type DriverUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DriverUpdateToOneWithWhereWithoutUserInput, Prisma.DriverUpdateWithoutUserInput>, Prisma.DriverUncheckedUpdateWithoutUserInput>
 }
 
+export type EnumDriverVerificationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.DriverVerificationStatus
+}
+
 export type EnumPassengerCompositionFieldUpdateOperationsInput = {
   set?: $Enums.PassengerComposition
+}
+
+export type DriverCreateNestedOneWithoutVerificationEventsInput = {
+  create?: Prisma.XOR<Prisma.DriverCreateWithoutVerificationEventsInput, Prisma.DriverUncheckedCreateWithoutVerificationEventsInput>
+  connectOrCreate?: Prisma.DriverCreateOrConnectWithoutVerificationEventsInput
+  connect?: Prisma.DriverWhereUniqueInput
+}
+
+export type DriverUpdateOneRequiredWithoutVerificationEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.DriverCreateWithoutVerificationEventsInput, Prisma.DriverUncheckedCreateWithoutVerificationEventsInput>
+  connectOrCreate?: Prisma.DriverCreateOrConnectWithoutVerificationEventsInput
+  upsert?: Prisma.DriverUpsertWithoutVerificationEventsInput
+  connect?: Prisma.DriverWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DriverUpdateToOneWithWhereWithoutVerificationEventsInput, Prisma.DriverUpdateWithoutVerificationEventsInput>, Prisma.DriverUncheckedUpdateWithoutVerificationEventsInput>
+}
+
+export type DriverCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.DriverCreateWithoutDocumentsInput, Prisma.DriverUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.DriverCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.DriverWhereUniqueInput
+}
+
+export type DriverUpdateOneRequiredWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.DriverCreateWithoutDocumentsInput, Prisma.DriverUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.DriverCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.DriverUpsertWithoutDocumentsInput
+  connect?: Prisma.DriverWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DriverUpdateToOneWithWhereWithoutDocumentsInput, Prisma.DriverUpdateWithoutDocumentsInput>, Prisma.DriverUncheckedUpdateWithoutDocumentsInput>
 }
 
 export type DriverCreateNestedOneWithoutVehicleInput = {
@@ -489,12 +623,18 @@ export type DriverCreateWithoutUserInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
   rides?: Prisma.RideCreateNestedManyWithoutDriverInput
   ratings?: Prisma.RatingCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventCreateNestedManyWithoutDriverInput
 }
 
 export type DriverUncheckedCreateWithoutUserInput = {
@@ -502,12 +642,18 @@ export type DriverUncheckedCreateWithoutUserInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
   rides?: Prisma.RideUncheckedCreateNestedManyWithoutDriverInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedCreateNestedManyWithoutDriverInput
 }
 
 export type DriverCreateOrConnectWithoutUserInput = {
@@ -531,12 +677,18 @@ export type DriverUpdateWithoutUserInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
   rides?: Prisma.RideUpdateManyWithoutDriverNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverUncheckedUpdateWithoutUserInput = {
@@ -544,12 +696,202 @@ export type DriverUncheckedUpdateWithoutUserInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
   rides?: Prisma.RideUncheckedUpdateManyWithoutDriverNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedUpdateManyWithoutDriverNestedInput
+}
+
+export type DriverCreateWithoutVerificationEventsInput = {
+  id?: string
+  licenseNumber?: string | null
+  isAvailable?: boolean
+  isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
+  currentPassengerComposition?: $Enums.PassengerComposition
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutDriverProfileInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
+  rides?: Prisma.RideCreateNestedManyWithoutDriverInput
+  ratings?: Prisma.RatingCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionCreateNestedManyWithoutDriverInput
+}
+
+export type DriverUncheckedCreateWithoutVerificationEventsInput = {
+  id?: string
+  userId: string
+  licenseNumber?: string | null
+  isAvailable?: boolean
+  isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
+  currentPassengerComposition?: $Enums.PassengerComposition
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
+  rides?: Prisma.RideUncheckedCreateNestedManyWithoutDriverInput
+  ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedCreateNestedManyWithoutDriverInput
+}
+
+export type DriverCreateOrConnectWithoutVerificationEventsInput = {
+  where: Prisma.DriverWhereUniqueInput
+  create: Prisma.XOR<Prisma.DriverCreateWithoutVerificationEventsInput, Prisma.DriverUncheckedCreateWithoutVerificationEventsInput>
+}
+
+export type DriverUpsertWithoutVerificationEventsInput = {
+  update: Prisma.XOR<Prisma.DriverUpdateWithoutVerificationEventsInput, Prisma.DriverUncheckedUpdateWithoutVerificationEventsInput>
+  create: Prisma.XOR<Prisma.DriverCreateWithoutVerificationEventsInput, Prisma.DriverUncheckedCreateWithoutVerificationEventsInput>
+  where?: Prisma.DriverWhereInput
+}
+
+export type DriverUpdateToOneWithWhereWithoutVerificationEventsInput = {
+  where?: Prisma.DriverWhereInput
+  data: Prisma.XOR<Prisma.DriverUpdateWithoutVerificationEventsInput, Prisma.DriverUncheckedUpdateWithoutVerificationEventsInput>
+}
+
+export type DriverUpdateWithoutVerificationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutDriverProfileNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
+  rides?: Prisma.RideUpdateManyWithoutDriverNestedInput
+  ratings?: Prisma.RatingUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUpdateManyWithoutDriverNestedInput
+}
+
+export type DriverUncheckedUpdateWithoutVerificationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
+  rides?: Prisma.RideUncheckedUpdateManyWithoutDriverNestedInput
+  ratings?: Prisma.RatingUncheckedUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedUpdateManyWithoutDriverNestedInput
+}
+
+export type DriverCreateWithoutDocumentsInput = {
+  id?: string
+  licenseNumber?: string | null
+  isAvailable?: boolean
+  isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
+  currentPassengerComposition?: $Enums.PassengerComposition
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutDriverProfileInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
+  rides?: Prisma.RideCreateNestedManyWithoutDriverInput
+  ratings?: Prisma.RatingCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventCreateNestedManyWithoutDriverInput
+}
+
+export type DriverUncheckedCreateWithoutDocumentsInput = {
+  id?: string
+  userId: string
+  licenseNumber?: string | null
+  isAvailable?: boolean
+  isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
+  currentPassengerComposition?: $Enums.PassengerComposition
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
+  rides?: Prisma.RideUncheckedCreateNestedManyWithoutDriverInput
+  ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedCreateNestedManyWithoutDriverInput
+}
+
+export type DriverCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.DriverWhereUniqueInput
+  create: Prisma.XOR<Prisma.DriverCreateWithoutDocumentsInput, Prisma.DriverUncheckedCreateWithoutDocumentsInput>
+}
+
+export type DriverUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.DriverUpdateWithoutDocumentsInput, Prisma.DriverUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.DriverCreateWithoutDocumentsInput, Prisma.DriverUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.DriverWhereInput
+}
+
+export type DriverUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.DriverWhereInput
+  data: Prisma.XOR<Prisma.DriverUpdateWithoutDocumentsInput, Prisma.DriverUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type DriverUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutDriverProfileNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
+  rides?: Prisma.RideUpdateManyWithoutDriverNestedInput
+  ratings?: Prisma.RatingUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUpdateManyWithoutDriverNestedInput
+}
+
+export type DriverUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
+  rides?: Prisma.RideUncheckedUpdateManyWithoutDriverNestedInput
+  ratings?: Prisma.RatingUncheckedUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverCreateWithoutVehicleInput = {
@@ -557,12 +899,18 @@ export type DriverCreateWithoutVehicleInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDriverProfileInput
   rides?: Prisma.RideCreateNestedManyWithoutDriverInput
   ratings?: Prisma.RatingCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventCreateNestedManyWithoutDriverInput
 }
 
 export type DriverUncheckedCreateWithoutVehicleInput = {
@@ -571,11 +919,17 @@ export type DriverUncheckedCreateWithoutVehicleInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   rides?: Prisma.RideUncheckedCreateNestedManyWithoutDriverInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedCreateNestedManyWithoutDriverInput
 }
 
 export type DriverCreateOrConnectWithoutVehicleInput = {
@@ -599,12 +953,18 @@ export type DriverUpdateWithoutVehicleInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDriverProfileNestedInput
   rides?: Prisma.RideUpdateManyWithoutDriverNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverUncheckedUpdateWithoutVehicleInput = {
@@ -613,11 +973,17 @@ export type DriverUncheckedUpdateWithoutVehicleInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rides?: Prisma.RideUncheckedUpdateManyWithoutDriverNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverCreateWithoutRidesInput = {
@@ -625,12 +991,18 @@ export type DriverCreateWithoutRidesInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDriverProfileInput
   vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
   ratings?: Prisma.RatingCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventCreateNestedManyWithoutDriverInput
 }
 
 export type DriverUncheckedCreateWithoutRidesInput = {
@@ -639,11 +1011,17 @@ export type DriverUncheckedCreateWithoutRidesInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedCreateNestedManyWithoutDriverInput
 }
 
 export type DriverCreateOrConnectWithoutRidesInput = {
@@ -667,12 +1045,18 @@ export type DriverUpdateWithoutRidesInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDriverProfileNestedInput
   vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverUncheckedUpdateWithoutRidesInput = {
@@ -681,11 +1065,17 @@ export type DriverUncheckedUpdateWithoutRidesInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverCreateWithoutRatingsInput = {
@@ -693,12 +1083,18 @@ export type DriverCreateWithoutRatingsInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDriverProfileInput
   vehicle?: Prisma.VehicleCreateNestedOneWithoutDriverInput
   rides?: Prisma.RideCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventCreateNestedManyWithoutDriverInput
 }
 
 export type DriverUncheckedCreateWithoutRatingsInput = {
@@ -707,11 +1103,17 @@ export type DriverUncheckedCreateWithoutRatingsInput = {
   licenseNumber?: string | null
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: $Enums.DriverVerificationStatus
+  verificationReason?: string | null
+  verificationUpdatedAt?: Date | string | null
+  verificationUpdatedBy?: string | null
   currentPassengerComposition?: $Enums.PassengerComposition
   createdAt?: Date | string
   updatedAt?: Date | string
   vehicle?: Prisma.VehicleUncheckedCreateNestedOneWithoutDriverInput
   rides?: Prisma.RideUncheckedCreateNestedManyWithoutDriverInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedCreateNestedManyWithoutDriverInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedCreateNestedManyWithoutDriverInput
 }
 
 export type DriverCreateOrConnectWithoutRatingsInput = {
@@ -735,12 +1137,18 @@ export type DriverUpdateWithoutRatingsInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDriverProfileNestedInput
   vehicle?: Prisma.VehicleUpdateOneWithoutDriverNestedInput
   rides?: Prisma.RideUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUpdateManyWithoutDriverNestedInput
 }
 
 export type DriverUncheckedUpdateWithoutRatingsInput = {
@@ -749,11 +1157,17 @@ export type DriverUncheckedUpdateWithoutRatingsInput = {
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verificationStatus?: Prisma.EnumDriverVerificationStatusFieldUpdateOperationsInput | $Enums.DriverVerificationStatus
+  verificationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationUpdatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPassengerComposition?: Prisma.EnumPassengerCompositionFieldUpdateOperationsInput | $Enums.PassengerComposition
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicle?: Prisma.VehicleUncheckedUpdateOneWithoutDriverNestedInput
   rides?: Prisma.RideUncheckedUpdateManyWithoutDriverNestedInput
+  documents?: Prisma.DriverDocumentSubmissionUncheckedUpdateManyWithoutDriverNestedInput
+  verificationEvents?: Prisma.DriverVerificationEventUncheckedUpdateManyWithoutDriverNestedInput
 }
 
 
@@ -764,11 +1178,15 @@ export type DriverUncheckedUpdateWithoutRatingsInput = {
 export type DriverCountOutputType = {
   rides: number
   ratings: number
+  documents: number
+  verificationEvents: number
 }
 
 export type DriverCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rides?: boolean | DriverCountOutputTypeCountRidesArgs
   ratings?: boolean | DriverCountOutputTypeCountRatingsArgs
+  documents?: boolean | DriverCountOutputTypeCountDocumentsArgs
+  verificationEvents?: boolean | DriverCountOutputTypeCountVerificationEventsArgs
 }
 
 /**
@@ -795,6 +1213,20 @@ export type DriverCountOutputTypeCountRatingsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.RatingWhereInput
 }
 
+/**
+ * DriverCountOutputType without action
+ */
+export type DriverCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DriverDocumentSubmissionWhereInput
+}
+
+/**
+ * DriverCountOutputType without action
+ */
+export type DriverCountOutputTypeCountVerificationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DriverVerificationEventWhereInput
+}
+
 
 export type DriverSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -802,6 +1234,10 @@ export type DriverSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   licenseNumber?: boolean
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: boolean
+  verificationReason?: boolean
+  verificationUpdatedAt?: boolean
+  verificationUpdatedBy?: boolean
   currentPassengerComposition?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -809,6 +1245,8 @@ export type DriverSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   vehicle?: boolean | Prisma.Driver$vehicleArgs<ExtArgs>
   rides?: boolean | Prisma.Driver$ridesArgs<ExtArgs>
   ratings?: boolean | Prisma.Driver$ratingsArgs<ExtArgs>
+  documents?: boolean | Prisma.Driver$documentsArgs<ExtArgs>
+  verificationEvents?: boolean | Prisma.Driver$verificationEventsArgs<ExtArgs>
   _count?: boolean | Prisma.DriverCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["driver"]>
 
@@ -818,6 +1256,10 @@ export type DriverSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   licenseNumber?: boolean
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: boolean
+  verificationReason?: boolean
+  verificationUpdatedAt?: boolean
+  verificationUpdatedBy?: boolean
   currentPassengerComposition?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -830,6 +1272,10 @@ export type DriverSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   licenseNumber?: boolean
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: boolean
+  verificationReason?: boolean
+  verificationUpdatedAt?: boolean
+  verificationUpdatedBy?: boolean
   currentPassengerComposition?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -842,17 +1288,23 @@ export type DriverSelectScalar = {
   licenseNumber?: boolean
   isAvailable?: boolean
   isVerified?: boolean
+  verificationStatus?: boolean
+  verificationReason?: boolean
+  verificationUpdatedAt?: boolean
+  verificationUpdatedBy?: boolean
   currentPassengerComposition?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DriverOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "licenseNumber" | "isAvailable" | "isVerified" | "currentPassengerComposition" | "createdAt" | "updatedAt", ExtArgs["result"]["driver"]>
+export type DriverOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "licenseNumber" | "isAvailable" | "isVerified" | "verificationStatus" | "verificationReason" | "verificationUpdatedAt" | "verificationUpdatedBy" | "currentPassengerComposition" | "createdAt" | "updatedAt", ExtArgs["result"]["driver"]>
 export type DriverInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   vehicle?: boolean | Prisma.Driver$vehicleArgs<ExtArgs>
   rides?: boolean | Prisma.Driver$ridesArgs<ExtArgs>
   ratings?: boolean | Prisma.Driver$ratingsArgs<ExtArgs>
+  documents?: boolean | Prisma.Driver$documentsArgs<ExtArgs>
+  verificationEvents?: boolean | Prisma.Driver$verificationEventsArgs<ExtArgs>
   _count?: boolean | Prisma.DriverCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DriverIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -869,6 +1321,8 @@ export type $DriverPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     vehicle: Prisma.$VehiclePayload<ExtArgs> | null
     rides: Prisma.$RidePayload<ExtArgs>[]
     ratings: Prisma.$RatingPayload<ExtArgs>[]
+    documents: Prisma.$DriverDocumentSubmissionPayload<ExtArgs>[]
+    verificationEvents: Prisma.$DriverVerificationEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -876,6 +1330,10 @@ export type $DriverPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     licenseNumber: string | null
     isAvailable: boolean
     isVerified: boolean
+    verificationStatus: $Enums.DriverVerificationStatus
+    verificationReason: string | null
+    verificationUpdatedAt: Date | null
+    verificationUpdatedBy: string | null
     currentPassengerComposition: $Enums.PassengerComposition
     createdAt: Date
     updatedAt: Date
@@ -1277,6 +1735,8 @@ export interface Prisma__DriverClient<T, Null = never, ExtArgs extends runtime.T
   vehicle<T extends Prisma.Driver$vehicleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Driver$vehicleArgs<ExtArgs>>): Prisma.Prisma__VehicleClient<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   rides<T extends Prisma.Driver$ridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Driver$ridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RidePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ratings<T extends Prisma.Driver$ratingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Driver$ratingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  documents<T extends Prisma.Driver$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Driver$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DriverDocumentSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  verificationEvents<T extends Prisma.Driver$verificationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Driver$verificationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DriverVerificationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1311,6 +1771,10 @@ export interface DriverFieldRefs {
   readonly licenseNumber: Prisma.FieldRef<"Driver", 'String'>
   readonly isAvailable: Prisma.FieldRef<"Driver", 'Boolean'>
   readonly isVerified: Prisma.FieldRef<"Driver", 'Boolean'>
+  readonly verificationStatus: Prisma.FieldRef<"Driver", 'DriverVerificationStatus'>
+  readonly verificationReason: Prisma.FieldRef<"Driver", 'String'>
+  readonly verificationUpdatedAt: Prisma.FieldRef<"Driver", 'DateTime'>
+  readonly verificationUpdatedBy: Prisma.FieldRef<"Driver", 'String'>
   readonly currentPassengerComposition: Prisma.FieldRef<"Driver", 'PassengerComposition'>
   readonly createdAt: Prisma.FieldRef<"Driver", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Driver", 'DateTime'>
@@ -1779,6 +2243,54 @@ export type Driver$ratingsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.RatingScalarFieldEnum | Prisma.RatingScalarFieldEnum[]
+}
+
+/**
+ * Driver.documents
+ */
+export type Driver$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DriverDocumentSubmission
+   */
+  select?: Prisma.DriverDocumentSubmissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DriverDocumentSubmission
+   */
+  omit?: Prisma.DriverDocumentSubmissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DriverDocumentSubmissionInclude<ExtArgs> | null
+  where?: Prisma.DriverDocumentSubmissionWhereInput
+  orderBy?: Prisma.DriverDocumentSubmissionOrderByWithRelationInput | Prisma.DriverDocumentSubmissionOrderByWithRelationInput[]
+  cursor?: Prisma.DriverDocumentSubmissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DriverDocumentSubmissionScalarFieldEnum | Prisma.DriverDocumentSubmissionScalarFieldEnum[]
+}
+
+/**
+ * Driver.verificationEvents
+ */
+export type Driver$verificationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DriverVerificationEvent
+   */
+  select?: Prisma.DriverVerificationEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DriverVerificationEvent
+   */
+  omit?: Prisma.DriverVerificationEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DriverVerificationEventInclude<ExtArgs> | null
+  where?: Prisma.DriverVerificationEventWhereInput
+  orderBy?: Prisma.DriverVerificationEventOrderByWithRelationInput | Prisma.DriverVerificationEventOrderByWithRelationInput[]
+  cursor?: Prisma.DriverVerificationEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DriverVerificationEventScalarFieldEnum | Prisma.DriverVerificationEventScalarFieldEnum[]
 }
 
 /**

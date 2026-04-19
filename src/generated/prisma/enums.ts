@@ -75,3 +75,32 @@ export const BookingStatus = {
 } as const
 
 export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus]
+
+
+export const DriverVerificationStatus = {
+  UNVERIFIED: 'UNVERIFIED',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  VERIFIED: 'VERIFIED',
+  REVOKED: 'REVOKED'
+} as const
+
+export type DriverVerificationStatus = (typeof DriverVerificationStatus)[keyof typeof DriverVerificationStatus]
+
+
+export const DriverDocumentType = {
+  LICENSE: 'LICENSE',
+  VEHICLE_REGISTRATION: 'VEHICLE_REGISTRATION',
+  INSURANCE: 'INSURANCE',
+  OTHER: 'OTHER'
+} as const
+
+export type DriverDocumentType = (typeof DriverDocumentType)[keyof typeof DriverDocumentType]
+
+
+export const DriverDocumentReviewStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type DriverDocumentReviewStatus = (typeof DriverDocumentReviewStatus)[keyof typeof DriverDocumentReviewStatus]

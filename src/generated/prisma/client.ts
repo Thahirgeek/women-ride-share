@@ -67,6 +67,16 @@ export type Verification = Prisma.VerificationModel
  */
 export type Driver = Prisma.DriverModel
 /**
+ * Model DriverVerificationEvent
+ * 
+ */
+export type DriverVerificationEvent = Prisma.DriverVerificationEventModel
+/**
+ * Model DriverDocumentSubmission
+ * 
+ */
+export type DriverDocumentSubmission = Prisma.DriverDocumentSubmissionModel
+/**
  * Model Passenger
  * 
  */

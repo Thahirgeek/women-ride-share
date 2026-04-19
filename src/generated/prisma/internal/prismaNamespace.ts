@@ -389,6 +389,8 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Driver: 'Driver',
+  DriverVerificationEvent: 'DriverVerificationEvent',
+  DriverDocumentSubmission: 'DriverDocumentSubmission',
   Passenger: 'Passenger',
   Vehicle: 'Vehicle',
   Ride: 'Ride',
@@ -411,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "driver" | "passenger" | "vehicle" | "ride" | "booking" | "message" | "rating" | "location"
+    modelProps: "user" | "session" | "account" | "verification" | "driver" | "driverVerificationEvent" | "driverDocumentSubmission" | "passenger" | "vehicle" | "ride" | "booking" | "message" | "rating" | "location"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -782,6 +784,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.DriverCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DriverCountAggregateOutputType> | number
+        }
+      }
+    }
+    DriverVerificationEvent: {
+      payload: Prisma.$DriverVerificationEventPayload<ExtArgs>
+      fields: Prisma.DriverVerificationEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DriverVerificationEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DriverVerificationEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>
+        }
+        findFirst: {
+          args: Prisma.DriverVerificationEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DriverVerificationEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>
+        }
+        findMany: {
+          args: Prisma.DriverVerificationEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>[]
+        }
+        create: {
+          args: Prisma.DriverVerificationEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>
+        }
+        createMany: {
+          args: Prisma.DriverVerificationEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DriverVerificationEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>[]
+        }
+        delete: {
+          args: Prisma.DriverVerificationEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>
+        }
+        update: {
+          args: Prisma.DriverVerificationEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.DriverVerificationEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DriverVerificationEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DriverVerificationEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.DriverVerificationEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverVerificationEventPayload>
+        }
+        aggregate: {
+          args: Prisma.DriverVerificationEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDriverVerificationEvent>
+        }
+        groupBy: {
+          args: Prisma.DriverVerificationEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverVerificationEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DriverVerificationEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverVerificationEventCountAggregateOutputType> | number
+        }
+      }
+    }
+    DriverDocumentSubmission: {
+      payload: Prisma.$DriverDocumentSubmissionPayload<ExtArgs>
+      fields: Prisma.DriverDocumentSubmissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DriverDocumentSubmissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DriverDocumentSubmissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>
+        }
+        findFirst: {
+          args: Prisma.DriverDocumentSubmissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DriverDocumentSubmissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>
+        }
+        findMany: {
+          args: Prisma.DriverDocumentSubmissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>[]
+        }
+        create: {
+          args: Prisma.DriverDocumentSubmissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>
+        }
+        createMany: {
+          args: Prisma.DriverDocumentSubmissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DriverDocumentSubmissionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>[]
+        }
+        delete: {
+          args: Prisma.DriverDocumentSubmissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>
+        }
+        update: {
+          args: Prisma.DriverDocumentSubmissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DriverDocumentSubmissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DriverDocumentSubmissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DriverDocumentSubmissionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DriverDocumentSubmissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriverDocumentSubmissionPayload>
+        }
+        aggregate: {
+          args: Prisma.DriverDocumentSubmissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDriverDocumentSubmission>
+        }
+        groupBy: {
+          args: Prisma.DriverDocumentSubmissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverDocumentSubmissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DriverDocumentSubmissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriverDocumentSubmissionCountAggregateOutputType> | number
         }
       }
     }
@@ -1410,12 +1560,47 @@ export const DriverScalarFieldEnum = {
   licenseNumber: 'licenseNumber',
   isAvailable: 'isAvailable',
   isVerified: 'isVerified',
+  verificationStatus: 'verificationStatus',
+  verificationReason: 'verificationReason',
+  verificationUpdatedAt: 'verificationUpdatedAt',
+  verificationUpdatedBy: 'verificationUpdatedBy',
   currentPassengerComposition: 'currentPassengerComposition',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type DriverScalarFieldEnum = (typeof DriverScalarFieldEnum)[keyof typeof DriverScalarFieldEnum]
+
+
+export const DriverVerificationEventScalarFieldEnum = {
+  id: 'id',
+  driverId: 'driverId',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  action: 'action',
+  reason: 'reason',
+  actorUserId: 'actorUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type DriverVerificationEventScalarFieldEnum = (typeof DriverVerificationEventScalarFieldEnum)[keyof typeof DriverVerificationEventScalarFieldEnum]
+
+
+export const DriverDocumentSubmissionScalarFieldEnum = {
+  id: 'id',
+  driverId: 'driverId',
+  documentType: 'documentType',
+  storageUrl: 'storageUrl',
+  reviewStatus: 'reviewStatus',
+  expiresAt: 'expiresAt',
+  reviewedAt: 'reviewedAt',
+  reviewedBy: 'reviewedBy',
+  rejectionReason: 'rejectionReason',
+  submittedAt: 'submittedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverDocumentSubmissionScalarFieldEnum = (typeof DriverDocumentSubmissionScalarFieldEnum)[keyof typeof DriverDocumentSubmissionScalarFieldEnum]
 
 
 export const PassengerScalarFieldEnum = {
@@ -1624,6 +1809,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'DriverVerificationStatus'
+ */
+export type EnumDriverVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriverVerificationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DriverVerificationStatus[]'
+ */
+export type ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriverVerificationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'PassengerComposition'
  */
 export type EnumPassengerCompositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PassengerComposition'>
@@ -1634,6 +1833,34 @@ export type EnumPassengerCompositionFieldRefInput<$PrismaModel> = FieldRefInputT
  * Reference to a field of type 'PassengerComposition[]'
  */
 export type ListEnumPassengerCompositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PassengerComposition[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DriverDocumentType'
+ */
+export type EnumDriverDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriverDocumentType'>
+    
+
+
+/**
+ * Reference to a field of type 'DriverDocumentType[]'
+ */
+export type ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriverDocumentType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DriverDocumentReviewStatus'
+ */
+export type EnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriverDocumentReviewStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DriverDocumentReviewStatus[]'
+ */
+export type ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriverDocumentReviewStatus[]'>
     
 
 
@@ -1820,6 +2047,8 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
   driver?: Prisma.DriverOmit
+  driverVerificationEvent?: Prisma.DriverVerificationEventOmit
+  driverDocumentSubmission?: Prisma.DriverDocumentSubmissionOmit
   passenger?: Prisma.PassengerOmit
   vehicle?: Prisma.VehicleOmit
   ride?: Prisma.RideOmit

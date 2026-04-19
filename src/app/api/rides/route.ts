@@ -1,4 +1,8 @@
 import { auth } from "@/lib/auth";
+import {
+  getDriverNotVerifiedMessage,
+  isDriverVerifiedStatus,
+} from "@/lib/driver-verification";
 import { isLocationSuggestion, normalizeLocationLabel } from "@/lib/location-utils";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
@@ -79,7 +83,7 @@ export async function GET(request: NextRequest) {
   const where: Record<string, unknown> = {
     status: "OPEN",
     availableSeats: { gt: 0 },
-    driver: { isVerified: true },
+    driver: { isVerified: true, verificationStatus: "VERIFIED" },
   };
 
   const andFilters: Record<string, unknown>[] = [];
@@ -204,11 +208,12 @@ export async function POST(request: NextRequest) {
   if (!driver) {
     return Response.json({ error: "Driver profile not found" }, { status: 400 });
   }
-  if (!driver.isVerified) {
+  if (!driver.isVerified || !isDriverVerifiedStatus(driver.verificationStatus)) {
     return Response.json(
       {
         code: "DRIVER_NOT_VERIFIED",
-        error: "Driver verification required before publishing rides.",
+        verificationStatus: driver.verificationStatus,
+        error: getDriverNotVerifiedMessage(driver.verificationStatus),
       },
       { status: 403 }
     );

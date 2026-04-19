@@ -182,11 +182,28 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumDriverVerificationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverVerificationStatus | Prisma.EnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverVerificationStatusFilter<$PrismaModel> | $Enums.DriverVerificationStatus
+}
+
 export type EnumPassengerCompositionFilter<$PrismaModel = never> = {
   equals?: $Enums.PassengerComposition | Prisma.EnumPassengerCompositionFieldRefInput<$PrismaModel>
   in?: $Enums.PassengerComposition[] | Prisma.ListEnumPassengerCompositionFieldRefInput<$PrismaModel>
   notIn?: $Enums.PassengerComposition[] | Prisma.ListEnumPassengerCompositionFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumPassengerCompositionFilter<$PrismaModel> | $Enums.PassengerComposition
+}
+
+export type EnumDriverVerificationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverVerificationStatus | Prisma.EnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverVerificationStatusWithAggregatesFilter<$PrismaModel> | $Enums.DriverVerificationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriverVerificationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriverVerificationStatusFilter<$PrismaModel>
 }
 
 export type EnumPassengerCompositionWithAggregatesFilter<$PrismaModel = never> = {
@@ -197,6 +214,57 @@ export type EnumPassengerCompositionWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPassengerCompositionFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPassengerCompositionFilter<$PrismaModel>
+}
+
+export type EnumDriverVerificationStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverVerificationStatus | Prisma.EnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDriverVerificationStatusNullableFilter<$PrismaModel> | $Enums.DriverVerificationStatus | null
+}
+
+export type EnumDriverVerificationStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverVerificationStatus | Prisma.EnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDriverVerificationStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.DriverVerificationStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriverVerificationStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriverVerificationStatusNullableFilter<$PrismaModel>
+}
+
+export type EnumDriverDocumentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverDocumentType | Prisma.EnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverDocumentType[] | Prisma.ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverDocumentType[] | Prisma.ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverDocumentTypeFilter<$PrismaModel> | $Enums.DriverDocumentType
+}
+
+export type EnumDriverDocumentReviewStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverDocumentReviewStatus | Prisma.EnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverDocumentReviewStatus[] | Prisma.ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverDocumentReviewStatus[] | Prisma.ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverDocumentReviewStatusFilter<$PrismaModel> | $Enums.DriverDocumentReviewStatus
+}
+
+export type EnumDriverDocumentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverDocumentType | Prisma.EnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverDocumentType[] | Prisma.ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverDocumentType[] | Prisma.ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverDocumentTypeWithAggregatesFilter<$PrismaModel> | $Enums.DriverDocumentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriverDocumentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriverDocumentTypeFilter<$PrismaModel>
+}
+
+export type EnumDriverDocumentReviewStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverDocumentReviewStatus | Prisma.EnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverDocumentReviewStatus[] | Prisma.ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverDocumentReviewStatus[] | Prisma.ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverDocumentReviewStatusWithAggregatesFilter<$PrismaModel> | $Enums.DriverDocumentReviewStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriverDocumentReviewStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriverDocumentReviewStatusFilter<$PrismaModel>
 }
 
 export type EnumSafetyPreferenceFilter<$PrismaModel = never> = {
@@ -529,11 +597,28 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type NestedEnumDriverVerificationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverVerificationStatus | Prisma.EnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverVerificationStatusFilter<$PrismaModel> | $Enums.DriverVerificationStatus
+}
+
 export type NestedEnumPassengerCompositionFilter<$PrismaModel = never> = {
   equals?: $Enums.PassengerComposition | Prisma.EnumPassengerCompositionFieldRefInput<$PrismaModel>
   in?: $Enums.PassengerComposition[] | Prisma.ListEnumPassengerCompositionFieldRefInput<$PrismaModel>
   notIn?: $Enums.PassengerComposition[] | Prisma.ListEnumPassengerCompositionFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumPassengerCompositionFilter<$PrismaModel> | $Enums.PassengerComposition
+}
+
+export type NestedEnumDriverVerificationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverVerificationStatus | Prisma.EnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverVerificationStatusWithAggregatesFilter<$PrismaModel> | $Enums.DriverVerificationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriverVerificationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriverVerificationStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumPassengerCompositionWithAggregatesFilter<$PrismaModel = never> = {
@@ -544,6 +629,57 @@ export type NestedEnumPassengerCompositionWithAggregatesFilter<$PrismaModel = ne
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPassengerCompositionFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPassengerCompositionFilter<$PrismaModel>
+}
+
+export type NestedEnumDriverVerificationStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverVerificationStatus | Prisma.EnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDriverVerificationStatusNullableFilter<$PrismaModel> | $Enums.DriverVerificationStatus | null
+}
+
+export type NestedEnumDriverVerificationStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverVerificationStatus | Prisma.EnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DriverVerificationStatus[] | Prisma.ListEnumDriverVerificationStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDriverVerificationStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.DriverVerificationStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriverVerificationStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriverVerificationStatusNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumDriverDocumentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverDocumentType | Prisma.EnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverDocumentType[] | Prisma.ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverDocumentType[] | Prisma.ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverDocumentTypeFilter<$PrismaModel> | $Enums.DriverDocumentType
+}
+
+export type NestedEnumDriverDocumentReviewStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverDocumentReviewStatus | Prisma.EnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverDocumentReviewStatus[] | Prisma.ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverDocumentReviewStatus[] | Prisma.ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverDocumentReviewStatusFilter<$PrismaModel> | $Enums.DriverDocumentReviewStatus
+}
+
+export type NestedEnumDriverDocumentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverDocumentType | Prisma.EnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverDocumentType[] | Prisma.ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverDocumentType[] | Prisma.ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverDocumentTypeWithAggregatesFilter<$PrismaModel> | $Enums.DriverDocumentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriverDocumentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriverDocumentTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumDriverDocumentReviewStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriverDocumentReviewStatus | Prisma.EnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriverDocumentReviewStatus[] | Prisma.ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriverDocumentReviewStatus[] | Prisma.ListEnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriverDocumentReviewStatusWithAggregatesFilter<$PrismaModel> | $Enums.DriverDocumentReviewStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriverDocumentReviewStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriverDocumentReviewStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumSafetyPreferenceFilter<$PrismaModel = never> = {
