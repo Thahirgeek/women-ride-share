@@ -4,12 +4,18 @@ import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
-const VALID_DOCUMENT_TYPES = new Set([
+const VALID_DOCUMENT_TYPES = [
   "LICENSE",
   "VEHICLE_REGISTRATION",
   "INSURANCE",
   "OTHER",
-]);
+] as const;
+
+type DriverDocumentTypeInput = (typeof VALID_DOCUMENT_TYPES)[number];
+
+function isDriverDocumentType(value: string): value is DriverDocumentTypeInput {
+  return VALID_DOCUMENT_TYPES.includes(value as DriverDocumentTypeInput);
+}
 
 const MAX_DOCUMENT_BYTES = 10 * 1024 * 1024;
 
@@ -65,7 +71,7 @@ export async function POST(request: NextRequest) {
       : null;
   const file = formData.get("file");
 
-  if (!VALID_DOCUMENT_TYPES.has(documentType)) {
+  if (!isDriverDocumentType(documentType)) {
     return Response.json(
       { error: "Invalid documentType." },
       { status: 400 }

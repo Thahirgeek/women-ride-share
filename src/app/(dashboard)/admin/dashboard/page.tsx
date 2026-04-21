@@ -108,8 +108,11 @@ const REQUIRED_DOCUMENT_LABELS: Record<
 
 type ApprovalWarningStatus = "MISSING" | "PENDING" | "REJECTED";
 
+type DriverDocumentReviewStatus =
+  NonNullable<Driver["documents"]>[number]["reviewStatus"];
+
 function getApprovalWarnings(driver: Driver) {
-  const latestStatusByType = new Map<string, Driver["documents"][number]["reviewStatus"]>();
+  const latestStatusByType = new Map<string, DriverDocumentReviewStatus>();
   for (const document of driver.documents || []) {
     if (!latestStatusByType.has(document.documentType)) {
       latestStatusByType.set(document.documentType, document.reviewStatus);

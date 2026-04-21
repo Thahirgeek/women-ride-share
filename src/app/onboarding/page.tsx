@@ -136,9 +136,11 @@ export default function OnboardingPage() {
           documentType: "INSURANCE",
           file: insuranceDocumentFile,
         },
-      ].filter((document) => document.file instanceof File);
+      ];
 
       for (const document of documents) {
+        if (!(document.file instanceof File)) continue;
+
         const payload = new FormData();
         payload.append("documentType", document.documentType);
         payload.append("file", document.file);

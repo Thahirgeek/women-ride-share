@@ -3,12 +3,20 @@ import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
-const VALID_STATUSES = new Set([
+const VALID_STATUSES = [
   "UNVERIFIED",
   "PENDING_REVIEW",
   "VERIFIED",
   "REVOKED",
-]);
+] as const;
+
+type DriverVerificationStatusFilter = (typeof VALID_STATUSES)[number];
+
+function isDriverVerificationStatusFilter(
+  value: string
+): value is DriverVerificationStatusFilter {
+  return VALID_STATUSES.includes(value as DriverVerificationStatusFilter);
+}
 
 export async function GET(request: NextRequest) {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -26,7 +34,8 @@ export async function GET(request: NextRequest) {
 
   if (driversOnly) {
     const where =
-      verificationStatusFilter && VALID_STATUSES.has(verificationStatusFilter)
+      verificationStatusFilter &&
+      isDriverVerificationStatusFilter(verificationStatusFilter)
         ? { verificationStatus: verificationStatusFilter }
         : undefined;
 
