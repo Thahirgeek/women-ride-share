@@ -58,7 +58,7 @@ export default function SearchRidesPage() {
 
     setError("");
     setLoading(true);
-    setSearched(true);
+    setSearched(false);
 
     try {
       const params = new URLSearchParams();
@@ -76,6 +76,7 @@ export default function SearchRidesPage() {
       setResults([]);
     } finally {
       setLoading(false);
+      setSearched(true);
     }
   };
 
@@ -129,10 +130,12 @@ export default function SearchRidesPage() {
         </form>
       </Card>
 
-      {searched && (
+      {(loading || searched) && (
         <div>
           <h2 className="mb-4 text-xl font-[inter-bold] text-foreground">
-            {results.length > 0
+            {loading
+              ? "Searching rides..."
+              : results.length > 0
               ? `${results.length} ride${results.length > 1 ? "s" : ""} found`
               : "No rides found"}
           </h2>
