@@ -175,6 +175,10 @@ model DriverDocumentSubmission {
   driver          Driver                   @relation(fields: [driverId], references: [id], onDelete: Cascade)
   documentType    DriverDocumentType
   storageUrl      String
+  storagePublicId String?
+  originalFileName String?
+  mimeType        String?
+  fileSizeBytes   Int?
   reviewStatus    DriverDocumentReviewStatus @default(PENDING)
   expiresAt       DateTime?
   reviewedAt      DateTime?

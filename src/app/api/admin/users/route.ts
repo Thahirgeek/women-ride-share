@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const user = session.user as any;
+  const user = session.user as { role?: string };
   if (user.role !== "ADMIN") {
     return Response.json({ error: "Forbidden" }, { status: 403 });
   }
@@ -37,11 +37,13 @@ export async function GET(request: NextRequest) {
         vehicle: { select: { vehicleType: true, model: true } },
         documents: {
           orderBy: { submittedAt: "desc" },
-          take: 3,
           select: {
             id: true,
             documentType: true,
             storageUrl: true,
+            originalFileName: true,
+            mimeType: true,
+            fileSizeBytes: true,
             reviewStatus: true,
             submittedAt: true,
             reviewedAt: true,

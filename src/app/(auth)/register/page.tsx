@@ -9,11 +9,18 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 
+type RegisterSessionUser = {
+  error?: {
+    message?: string;
+  };
+};
+
 export default function RegisterPage() {
   const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
     gender: "FEMALE",
     role: "PASSENGER",
@@ -30,17 +37,46 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const res = await (signUp.email as any)({
+      const emailSignUp = signUp.email as unknown as (payload: {
+        email: string;
+        password: string;
+        name: string;
+        phone: string;
+        role: string;
+        gender: string;
+      }) => Promise<RegisterSessionUser>;
+
+      const res = await emailSignUp({
         email: form.email,
         password: form.password,
         name: form.name,
+        phone: form.phone,
         role: form.role,
         gender: form.gender,
       });
       if (res.error) {
         setError(res.error.message || "Registration failed");
       } else {
-        router.push("/onboarding");
+        if (form.role === "DRIVER") {
+          router.push("/onboarding");
+          return;
+        }
+
+        const passengerBootstrap = await fetch("/api/onboarding", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone: form.phone }),
+        });
+
+        if (!passengerBootstrap.ok) {
+          const passengerError = await passengerBootstrap
+            .json()
+            .catch(() => ({ error: "Failed to complete passenger setup." }));
+          setError(passengerError.error || "Failed to complete passenger setup.");
+          return;
+        }
+
+        router.push("/passenger/dashboard");
       }
     } catch {
       setError("Something went wrong. Please try again.");
@@ -54,7 +90,7 @@ export default function RegisterPage() {
       <div className="mb-8 text-center">
         <Link href="/" className="inline-flex items-center gap-2 mb-8">
           <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white">
-                <img src="/8442672.svg" className="bg-transparent"></img>
+                <img src="/8442672.svg" className="bg-transparent" alt="SafeRide"></img>
               </div>
           <span className="text-lg font-bold text-foreground">SafeRide</span>
         </Link>
@@ -89,6 +125,15 @@ export default function RegisterPage() {
             required
           />
           <Input
+            id="phone"
+            label="Mobile Number"
+            type="tel"
+            placeholder="+91 98765 43210"
+            value={form.phone}
+            onChange={(e) => update("phone", e.target.value)}
+            required
+          />
+          <Input
             id="password"
             label="Password"
             type="password"
@@ -119,6 +164,12 @@ export default function RegisterPage() {
               { value: "DRIVER", label: "Offer rides (Driver)" },
             ]}
           />
+          {form.role === "DRIVER" && (
+            <p className="text-xs text-(--text-2)">
+              Driver verification details and document upload happen in onboarding after signup.
+            </p>
+          )}
+
           <Button type="submit" fullWidth isLoading={loading}>
             Create account
           </Button>

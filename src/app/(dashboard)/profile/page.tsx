@@ -26,10 +26,23 @@ interface DriverDocument {
   id: string;
   documentType: "LICENSE" | "VEHICLE_REGISTRATION" | "INSURANCE" | "OTHER";
   storageUrl: string;
+  originalFileName?: string | null;
+  mimeType?: string | null;
+  fileSizeBytes?: number | null;
   reviewStatus: "PENDING" | "APPROVED" | "REJECTED";
   submittedAt: string;
   rejectionReason?: string | null;
 }
+
+type SessionUser = {
+  role?: "PASSENGER" | "DRIVER" | "ADMIN";
+  name?: string;
+  email?: string;
+  phone?: string;
+  profileImage?: string;
+  image?: string;
+  gender?: string;
+};
 
 export default function ProfilePage() {
   const { data: session, isPending } = useSession();
@@ -38,6 +51,13 @@ export default function ProfilePage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const [licenseNumber, setLicenseNumber] = useState("");
+  const [verificationStatus, setVerificationStatus] = useState<
+    "UNVERIFIED" | "PENDING_REVIEW" | "VERIFIED" | "REVOKED" | null
+  >(null);
+  const [verificationReason, setVerificationReason] = useState<string | null>(
+    null
+  );
   const [vehicle, setVehicle] = useState({
     vehicleType: "CAR",
     registrationNumber: "",
@@ -59,11 +79,11 @@ export default function ProfilePage() {
   const [documentError, setDocumentError] = useState("");
   const [documentForm, setDocumentForm] = useState({
     documentType: "LICENSE",
-    storageUrl: "",
+    file: null as File | null,
     expiresAt: "",
   });
 
-  const user = session?.user as any;
+  const user = session?.user as SessionUser | undefined;
   const isDriver = user?.role === "DRIVER";
 
   const loadDriverDocuments = async () => {
@@ -89,6 +109,15 @@ export default function ProfilePage() {
         fetch("/api/driver/profile")
           .then((r) => r.json())
           .then((d) => {
+            if (d.driver?.licenseNumber) {
+              setLicenseNumber(d.driver.licenseNumber);
+            }
+
+            if (d.driver?.verificationStatus) {
+              setVerificationStatus(d.driver.verificationStatus);
+              setVerificationReason(d.driver.verificationReason || null);
+            }
+
             if (d.driver?.vehicle) {
               setVehicle({
                 vehicleType: d.driver.vehicle.vehicleType,
@@ -122,21 +151,23 @@ export default function ProfilePage() {
   const handleDocumentSubmit = async () => {
     setDocumentError("");
 
-    if (!documentForm.storageUrl.trim()) {
-      setDocumentError("Document URL is required.");
+    if (!documentForm.file) {
+      setDocumentError("Choose a file from your device.");
       return;
     }
 
     setDocumentSubmitLoading(true);
     try {
+      const payload = new FormData();
+      payload.append("documentType", documentForm.documentType);
+      payload.append("file", documentForm.file);
+      if (documentForm.expiresAt) {
+        payload.append("expiresAt", documentForm.expiresAt);
+      }
+
       const response = await fetch("/api/driver/verification/documents", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          documentType: documentForm.documentType,
-          storageUrl: documentForm.storageUrl,
-          expiresAt: documentForm.expiresAt || undefined,
-        }),
+        body: payload,
       });
       const data = await response.json();
 
@@ -146,7 +177,7 @@ export default function ProfilePage() {
 
       setDocumentForm({
         documentType: "LICENSE",
-        storageUrl: "",
+        file: null,
         expiresAt: "",
       });
       await loadDriverDocuments();
@@ -169,7 +200,7 @@ export default function ProfilePage() {
         name,
         phone,
         profileImage,
-        ...(isDriver && { vehicle }),
+        ...(isDriver && { vehicle, licenseNumber }),
       }),
     });
     setLoading(false);
@@ -230,10 +261,42 @@ export default function ProfilePage() {
       {isDriver && (
         <>
           <Card className="mb-6">
+            <h2 className="mb-2 text-lg font-bold text-foreground">Verification Status</h2>
+            <div className="flex items-center gap-2">
+              <Badge
+                variant={
+                  verificationStatus === "VERIFIED"
+                    ? "success"
+                    : verificationStatus === "REVOKED"
+                      ? "danger"
+                      : verificationStatus === "PENDING_REVIEW"
+                        ? "warning"
+                        : "default"
+                }
+              >
+                {verificationStatus || "UNVERIFIED"}
+              </Badge>
+            </div>
+            <p className="mt-2 text-sm text-(--text-2)">
+              Initial driver verification documents are submitted during onboarding.
+              Use this page for updates or resubmissions.
+            </p>
+            {verificationReason && (
+              <p className="mt-2 text-sm text-(--danger)">Reason: {verificationReason}</p>
+            )}
+          </Card>
+
+          <Card className="mb-6">
             <h2 className="text-lg font-bold text-foreground mb-4">
               Vehicle Details
             </h2>
             <div className="flex flex-col gap-4">
+              <Input
+                id="licenseNumber"
+                label="License Number"
+                value={licenseNumber}
+                onChange={(e) => setLicenseNumber(e.target.value)}
+              />
               <Select
                 id="vehicleType"
                 label="Vehicle Type"
@@ -290,7 +353,7 @@ export default function ProfilePage() {
           <Card className="mb-6">
             <h2 className="mb-3 text-lg font-bold text-foreground">Verification Documents</h2>
             <p className="mb-4 text-sm text-(--text-2)">
-              Upload links to your verification documents so admin can review and approve your profile.
+              Upload document files from your device so admin can review and approve your profile.
             </p>
 
             {documentError && (
@@ -321,14 +384,14 @@ export default function ProfilePage() {
                 ]}
               />
               <Input
-                id="documentUrl"
-                label="Document URL"
-                placeholder="https://..."
-                value={documentForm.storageUrl}
+                id="documentFile"
+                label="Document File"
+                type="file"
+                accept="image/*,.pdf"
                 onChange={(e) =>
                   setDocumentForm((prev) => ({
                     ...prev,
-                    storageUrl: e.target.value,
+                    file: e.target.files?.[0] || null,
                   }))
                 }
               />
@@ -390,8 +453,15 @@ export default function ProfilePage() {
                         rel="noreferrer"
                         className="mt-1 inline-block text-xs font-medium text-primary underline"
                       >
-                        View document
+                        {document.originalFileName?.trim().length
+                          ? `View ${document.originalFileName}`
+                          : "View document"}
                       </a>
+                      {typeof document.fileSizeBytes === "number" && (
+                        <p className="mt-1 text-xs text-(--text-2)">
+                          Size: {(document.fileSizeBytes / (1024 * 1024)).toFixed(2)} MB
+                        </p>
+                      )}
                       <p className="mt-1 text-xs text-(--text-2)">
                         Submitted {new Date(document.submittedAt).toLocaleString()}
                       </p>

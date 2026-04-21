@@ -9,6 +9,12 @@ import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
+const REQUIRED_DOCUMENT_TYPES = [
+  "LICENSE",
+  "VEHICLE_REGISTRATION",
+  "INSURANCE",
+] as const;
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -54,6 +60,44 @@ export async function PATCH(
     }
 
     const nextStatus = getNextVerificationStatus(action);
+
+    let incompleteRequiredDocuments: {
+      documentType: (typeof REQUIRED_DOCUMENT_TYPES)[number];
+      status: "MISSING" | "PENDING" | "REJECTED";
+    }[] = [];
+
+    if (action === "APPROVE") {
+      const latestDocuments = await tx.driverDocumentSubmission.findMany({
+        where: {
+          driverId: id,
+          documentType: { in: [...REQUIRED_DOCUMENT_TYPES] },
+        },
+        orderBy: [{ submittedAt: "desc" }],
+        select: {
+          documentType: true,
+          reviewStatus: true,
+        },
+      });
+
+      const latestStatusByType = new Map<string, string>();
+      for (const document of latestDocuments) {
+        if (!latestStatusByType.has(document.documentType)) {
+          latestStatusByType.set(document.documentType, document.reviewStatus);
+        }
+      }
+
+      incompleteRequiredDocuments = REQUIRED_DOCUMENT_TYPES.filter(
+        (documentType) => latestStatusByType.get(documentType) !== "APPROVED"
+      ).map((documentType) => {
+        const latestStatus = latestStatusByType.get(documentType);
+
+        if (latestStatus === "PENDING" || latestStatus === "REJECTED") {
+          return { documentType, status: latestStatus };
+        }
+
+        return { documentType, status: "MISSING" as const };
+      });
+    }
 
     const updated = await tx.driver.update({
       where: { id },
@@ -123,6 +167,7 @@ export async function PATCH(
     return {
       action,
       driver: updated,
+      incompleteRequiredDocuments,
       cancelledOpenRides,
       cancelledFutureBookedRides,
       cancelledFutureBookings,

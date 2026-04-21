@@ -1591,6 +1591,10 @@ export const DriverDocumentSubmissionScalarFieldEnum = {
   driverId: 'driverId',
   documentType: 'documentType',
   storageUrl: 'storageUrl',
+  storagePublicId: 'storagePublicId',
+  originalFileName: 'originalFileName',
+  mimeType: 'mimeType',
+  fileSizeBytes: 'fileSizeBytes',
   reviewStatus: 'reviewStatus',
   expiresAt: 'expiresAt',
   reviewedAt: 'reviewedAt',
@@ -1851,6 +1855,20 @@ export type ListEnumDriverDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'DriverDocumentReviewStatus'
  */
 export type EnumDriverDocumentReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriverDocumentReviewStatus'>
@@ -1889,20 +1907,6 @@ export type EnumVehicleTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'VehicleType[]'
  */
 export type ListEnumVehicleTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VehicleType[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 

@@ -8,7 +8,7 @@ export async function PATCH(request: NextRequest) {
   if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await request.json();
-  const { name, phone, profileImage, vehicle } = body;
+  const { name, phone, profileImage, vehicle, licenseNumber } = body;
 
   const data: Record<string, unknown> = {};
   if (name) data.name = name;
@@ -26,6 +26,13 @@ export async function PATCH(request: NextRequest) {
       where: { userId: session.user.id },
     });
     if (driver) {
+      if (typeof licenseNumber === "string") {
+        await prisma.driver.update({
+          where: { id: driver.id },
+          data: { licenseNumber: licenseNumber.trim() },
+        });
+      }
+
       await prisma.vehicle.upsert({
         where: { driverId: driver.id },
         update: {

@@ -1,5 +1,4 @@
 import { auth } from "@/lib/auth";
-import { isDriverVerifiedStatus } from "@/lib/driver-verification";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
@@ -12,80 +11,104 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
   const { phone, licenseNumber, vehicleType, registrationNumber, model, color, seatsAvailable } = body;
+  const sessionPhone =
+    typeof (session.user as { phone?: string | null }).phone === "string"
+      ? (session.user as { phone?: string | null }).phone?.trim() ?? ""
+      : "";
+  const normalizedPhone =
+    typeof phone === "string" && phone.trim().length > 0
+      ? phone.trim()
+      : sessionPhone;
 
   try {
+    if (!normalizedPhone) {
+      return Response.json({ error: "Phone is required." }, { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: session.user.id } });
+    if (!user) {
+      return Response.json({ error: "User not found." }, { status: 404 });
+    }
+
+    if (user.role === "DRIVER") {
+      const normalizedLicenseNumber =
+        typeof licenseNumber === "string" ? licenseNumber.trim() : "";
+      const normalizedRegistrationNumber =
+        typeof registrationNumber === "string" ? registrationNumber.trim() : "";
+      const normalizedModel = typeof model === "string" ? model.trim() : "";
+      const normalizedColor = typeof color === "string" ? color.trim() : "";
+      const normalizedSeatsAvailable = Number.parseInt(String(seatsAvailable), 10);
+
+      if (!normalizedLicenseNumber) {
+        return Response.json({ error: "License number is required." }, { status: 400 });
+      }
+
+      if (!vehicleType || typeof vehicleType !== "string") {
+        return Response.json({ error: "Vehicle type is required." }, { status: 400 });
+      }
+
+      if (!normalizedRegistrationNumber || !normalizedModel || !normalizedColor) {
+        return Response.json(
+          { error: "Registration number, model, and color are required." },
+          { status: 400 }
+        );
+      }
+
+      if (!Number.isFinite(normalizedSeatsAvailable) || normalizedSeatsAvailable < 1) {
+        return Response.json(
+          { error: "Seats available must be at least 1." },
+          { status: 400 }
+        );
+      }
+    }
+
     // Update user phone
     await prisma.user.update({
       where: { id: session.user.id },
-      data: { phone },
+      data: { phone: normalizedPhone },
     });
 
-    const user = await prisma.user.findUnique({ where: { id: session.user.id } });
-
     if (user?.role === "DRIVER") {
-      // Create or update driver profile, moving first-time drivers into review queue.
-      const existingDriver = await prisma.driver.findUnique({
-        where: { userId: session.user.id },
-        select: { id: true, verificationStatus: true },
-      });
-
-      const nextVerificationStatus =
-        !existingDriver || existingDriver.verificationStatus === "UNVERIFIED"
-          ? "PENDING_REVIEW"
-          : existingDriver.verificationStatus;
+      const normalizedLicenseNumber =
+        typeof licenseNumber === "string" ? licenseNumber.trim() : "";
+      const normalizedRegistrationNumber =
+        typeof registrationNumber === "string" ? registrationNumber.trim() : "";
+      const normalizedModel = typeof model === "string" ? model.trim() : "";
+      const normalizedColor = typeof color === "string" ? color.trim() : "";
+      const normalizedSeatsAvailable = Number.parseInt(String(seatsAvailable), 10);
 
       const driver = await prisma.driver.upsert({
         where: { userId: session.user.id },
         update: {
-          licenseNumber,
-          verificationStatus: nextVerificationStatus,
-          verificationUpdatedAt: new Date(),
-          verificationReason: null,
-          isVerified: isDriverVerifiedStatus(nextVerificationStatus),
+          licenseNumber: normalizedLicenseNumber,
         },
         create: {
           userId: session.user.id,
-          licenseNumber,
-          verificationStatus: "PENDING_REVIEW",
-          verificationUpdatedAt: new Date(),
+          licenseNumber: normalizedLicenseNumber,
+          verificationStatus: "UNVERIFIED",
           isVerified: false,
         },
       });
 
-      if (!existingDriver || existingDriver.verificationStatus === "UNVERIFIED") {
-        await prisma.driverVerificationEvent.create({
-          data: {
-            driverId: driver.id,
-            fromStatus: existingDriver?.verificationStatus,
-            toStatus: "PENDING_REVIEW",
-            action: "REQUEST_REVIEW",
-            reason: "Driver completed onboarding details",
-            actorUserId: session.user.id,
-          },
-        });
-      }
-
       // Create vehicle
-      if (vehicleType) {
-        await prisma.vehicle.upsert({
-          where: { driverId: driver.id },
-          update: {
-            vehicleType,
-            registrationNumber,
-            model,
-            color,
-            seatsAvailable: seatsAvailable || 4,
-          },
-          create: {
-            driverId: driver.id,
-            vehicleType,
-            registrationNumber,
-            model,
-            color,
-            seatsAvailable: seatsAvailable || 4,
-          },
-        });
-      }
+      await prisma.vehicle.upsert({
+        where: { driverId: driver.id },
+        update: {
+          vehicleType,
+          registrationNumber: normalizedRegistrationNumber,
+          model: normalizedModel,
+          color: normalizedColor,
+          seatsAvailable: normalizedSeatsAvailable,
+        },
+        create: {
+          driverId: driver.id,
+          vehicleType,
+          registrationNumber: normalizedRegistrationNumber,
+          model: normalizedModel,
+          color: normalizedColor,
+          seatsAvailable: normalizedSeatsAvailable,
+        },
+      });
     } else if (user?.role === "PASSENGER") {
       // Create passenger profile
       await prisma.passenger.upsert({

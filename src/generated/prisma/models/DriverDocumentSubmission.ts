@@ -20,8 +20,18 @@ export type DriverDocumentSubmissionModel = runtime.Types.Result.DefaultSelectio
 
 export type AggregateDriverDocumentSubmission = {
   _count: DriverDocumentSubmissionCountAggregateOutputType | null
+  _avg: DriverDocumentSubmissionAvgAggregateOutputType | null
+  _sum: DriverDocumentSubmissionSumAggregateOutputType | null
   _min: DriverDocumentSubmissionMinAggregateOutputType | null
   _max: DriverDocumentSubmissionMaxAggregateOutputType | null
+}
+
+export type DriverDocumentSubmissionAvgAggregateOutputType = {
+  fileSizeBytes: number | null
+}
+
+export type DriverDocumentSubmissionSumAggregateOutputType = {
+  fileSizeBytes: number | null
 }
 
 export type DriverDocumentSubmissionMinAggregateOutputType = {
@@ -29,6 +39,10 @@ export type DriverDocumentSubmissionMinAggregateOutputType = {
   driverId: string | null
   documentType: $Enums.DriverDocumentType | null
   storageUrl: string | null
+  storagePublicId: string | null
+  originalFileName: string | null
+  mimeType: string | null
+  fileSizeBytes: number | null
   reviewStatus: $Enums.DriverDocumentReviewStatus | null
   expiresAt: Date | null
   reviewedAt: Date | null
@@ -43,6 +57,10 @@ export type DriverDocumentSubmissionMaxAggregateOutputType = {
   driverId: string | null
   documentType: $Enums.DriverDocumentType | null
   storageUrl: string | null
+  storagePublicId: string | null
+  originalFileName: string | null
+  mimeType: string | null
+  fileSizeBytes: number | null
   reviewStatus: $Enums.DriverDocumentReviewStatus | null
   expiresAt: Date | null
   reviewedAt: Date | null
@@ -57,6 +75,10 @@ export type DriverDocumentSubmissionCountAggregateOutputType = {
   driverId: number
   documentType: number
   storageUrl: number
+  storagePublicId: number
+  originalFileName: number
+  mimeType: number
+  fileSizeBytes: number
   reviewStatus: number
   expiresAt: number
   reviewedAt: number
@@ -68,11 +90,23 @@ export type DriverDocumentSubmissionCountAggregateOutputType = {
 }
 
 
+export type DriverDocumentSubmissionAvgAggregateInputType = {
+  fileSizeBytes?: true
+}
+
+export type DriverDocumentSubmissionSumAggregateInputType = {
+  fileSizeBytes?: true
+}
+
 export type DriverDocumentSubmissionMinAggregateInputType = {
   id?: true
   driverId?: true
   documentType?: true
   storageUrl?: true
+  storagePublicId?: true
+  originalFileName?: true
+  mimeType?: true
+  fileSizeBytes?: true
   reviewStatus?: true
   expiresAt?: true
   reviewedAt?: true
@@ -87,6 +121,10 @@ export type DriverDocumentSubmissionMaxAggregateInputType = {
   driverId?: true
   documentType?: true
   storageUrl?: true
+  storagePublicId?: true
+  originalFileName?: true
+  mimeType?: true
+  fileSizeBytes?: true
   reviewStatus?: true
   expiresAt?: true
   reviewedAt?: true
@@ -101,6 +139,10 @@ export type DriverDocumentSubmissionCountAggregateInputType = {
   driverId?: true
   documentType?: true
   storageUrl?: true
+  storagePublicId?: true
+  originalFileName?: true
+  mimeType?: true
+  fileSizeBytes?: true
   reviewStatus?: true
   expiresAt?: true
   reviewedAt?: true
@@ -149,6 +191,18 @@ export type DriverDocumentSubmissionAggregateArgs<ExtArgs extends runtime.Types.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: DriverDocumentSubmissionAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: DriverDocumentSubmissionSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: DriverDocumentSubmissionMinAggregateInputType
@@ -179,6 +233,8 @@ export type DriverDocumentSubmissionGroupByArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   _count?: DriverDocumentSubmissionCountAggregateInputType | true
+  _avg?: DriverDocumentSubmissionAvgAggregateInputType
+  _sum?: DriverDocumentSubmissionSumAggregateInputType
   _min?: DriverDocumentSubmissionMinAggregateInputType
   _max?: DriverDocumentSubmissionMaxAggregateInputType
 }
@@ -188,6 +244,10 @@ export type DriverDocumentSubmissionGroupByOutputType = {
   driverId: string
   documentType: $Enums.DriverDocumentType
   storageUrl: string
+  storagePublicId: string | null
+  originalFileName: string | null
+  mimeType: string | null
+  fileSizeBytes: number | null
   reviewStatus: $Enums.DriverDocumentReviewStatus
   expiresAt: Date | null
   reviewedAt: Date | null
@@ -196,6 +256,8 @@ export type DriverDocumentSubmissionGroupByOutputType = {
   submittedAt: Date
   updatedAt: Date
   _count: DriverDocumentSubmissionCountAggregateOutputType | null
+  _avg: DriverDocumentSubmissionAvgAggregateOutputType | null
+  _sum: DriverDocumentSubmissionSumAggregateOutputType | null
   _min: DriverDocumentSubmissionMinAggregateOutputType | null
   _max: DriverDocumentSubmissionMaxAggregateOutputType | null
 }
@@ -223,6 +285,10 @@ export type DriverDocumentSubmissionWhereInput = {
   driverId?: Prisma.StringFilter<"DriverDocumentSubmission"> | string
   documentType?: Prisma.EnumDriverDocumentTypeFilter<"DriverDocumentSubmission"> | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFilter<"DriverDocumentSubmission"> | string
+  storagePublicId?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  originalFileName?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  mimeType?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  fileSizeBytes?: Prisma.IntNullableFilter<"DriverDocumentSubmission"> | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFilter<"DriverDocumentSubmission"> | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.DateTimeNullableFilter<"DriverDocumentSubmission"> | Date | string | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"DriverDocumentSubmission"> | Date | string | null
@@ -238,6 +304,10 @@ export type DriverDocumentSubmissionOrderByWithRelationInput = {
   driverId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   storageUrl?: Prisma.SortOrder
+  storagePublicId?: Prisma.SortOrderInput | Prisma.SortOrder
+  originalFileName?: Prisma.SortOrderInput | Prisma.SortOrder
+  mimeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileSizeBytes?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewStatus?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -256,6 +326,10 @@ export type DriverDocumentSubmissionWhereUniqueInput = Prisma.AtLeast<{
   driverId?: Prisma.StringFilter<"DriverDocumentSubmission"> | string
   documentType?: Prisma.EnumDriverDocumentTypeFilter<"DriverDocumentSubmission"> | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFilter<"DriverDocumentSubmission"> | string
+  storagePublicId?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  originalFileName?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  mimeType?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  fileSizeBytes?: Prisma.IntNullableFilter<"DriverDocumentSubmission"> | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFilter<"DriverDocumentSubmission"> | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.DateTimeNullableFilter<"DriverDocumentSubmission"> | Date | string | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"DriverDocumentSubmission"> | Date | string | null
@@ -271,6 +345,10 @@ export type DriverDocumentSubmissionOrderByWithAggregationInput = {
   driverId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   storageUrl?: Prisma.SortOrder
+  storagePublicId?: Prisma.SortOrderInput | Prisma.SortOrder
+  originalFileName?: Prisma.SortOrderInput | Prisma.SortOrder
+  mimeType?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileSizeBytes?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewStatus?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -279,8 +357,10 @@ export type DriverDocumentSubmissionOrderByWithAggregationInput = {
   submittedAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DriverDocumentSubmissionCountOrderByAggregateInput
+  _avg?: Prisma.DriverDocumentSubmissionAvgOrderByAggregateInput
   _max?: Prisma.DriverDocumentSubmissionMaxOrderByAggregateInput
   _min?: Prisma.DriverDocumentSubmissionMinOrderByAggregateInput
+  _sum?: Prisma.DriverDocumentSubmissionSumOrderByAggregateInput
 }
 
 export type DriverDocumentSubmissionScalarWhereWithAggregatesInput = {
@@ -291,6 +371,10 @@ export type DriverDocumentSubmissionScalarWhereWithAggregatesInput = {
   driverId?: Prisma.StringWithAggregatesFilter<"DriverDocumentSubmission"> | string
   documentType?: Prisma.EnumDriverDocumentTypeWithAggregatesFilter<"DriverDocumentSubmission"> | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringWithAggregatesFilter<"DriverDocumentSubmission"> | string
+  storagePublicId?: Prisma.StringNullableWithAggregatesFilter<"DriverDocumentSubmission"> | string | null
+  originalFileName?: Prisma.StringNullableWithAggregatesFilter<"DriverDocumentSubmission"> | string | null
+  mimeType?: Prisma.StringNullableWithAggregatesFilter<"DriverDocumentSubmission"> | string | null
+  fileSizeBytes?: Prisma.IntNullableWithAggregatesFilter<"DriverDocumentSubmission"> | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusWithAggregatesFilter<"DriverDocumentSubmission"> | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"DriverDocumentSubmission"> | Date | string | null
   reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"DriverDocumentSubmission"> | Date | string | null
@@ -304,6 +388,10 @@ export type DriverDocumentSubmissionCreateInput = {
   id?: string
   documentType: $Enums.DriverDocumentType
   storageUrl: string
+  storagePublicId?: string | null
+  originalFileName?: string | null
+  mimeType?: string | null
+  fileSizeBytes?: number | null
   reviewStatus?: $Enums.DriverDocumentReviewStatus
   expiresAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -319,6 +407,10 @@ export type DriverDocumentSubmissionUncheckedCreateInput = {
   driverId: string
   documentType: $Enums.DriverDocumentType
   storageUrl: string
+  storagePublicId?: string | null
+  originalFileName?: string | null
+  mimeType?: string | null
+  fileSizeBytes?: number | null
   reviewStatus?: $Enums.DriverDocumentReviewStatus
   expiresAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -332,6 +424,10 @@ export type DriverDocumentSubmissionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentType?: Prisma.EnumDriverDocumentTypeFieldUpdateOperationsInput | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFieldUpdateOperationsInput | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -347,6 +443,10 @@ export type DriverDocumentSubmissionUncheckedUpdateInput = {
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   documentType?: Prisma.EnumDriverDocumentTypeFieldUpdateOperationsInput | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFieldUpdateOperationsInput | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -361,6 +461,10 @@ export type DriverDocumentSubmissionCreateManyInput = {
   driverId: string
   documentType: $Enums.DriverDocumentType
   storageUrl: string
+  storagePublicId?: string | null
+  originalFileName?: string | null
+  mimeType?: string | null
+  fileSizeBytes?: number | null
   reviewStatus?: $Enums.DriverDocumentReviewStatus
   expiresAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -374,6 +478,10 @@ export type DriverDocumentSubmissionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentType?: Prisma.EnumDriverDocumentTypeFieldUpdateOperationsInput | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFieldUpdateOperationsInput | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -388,6 +496,10 @@ export type DriverDocumentSubmissionUncheckedUpdateManyInput = {
   driverId?: Prisma.StringFieldUpdateOperationsInput | string
   documentType?: Prisma.EnumDriverDocumentTypeFieldUpdateOperationsInput | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFieldUpdateOperationsInput | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -412,6 +524,10 @@ export type DriverDocumentSubmissionCountOrderByAggregateInput = {
   driverId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   storageUrl?: Prisma.SortOrder
+  storagePublicId?: Prisma.SortOrder
+  originalFileName?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  fileSizeBytes?: Prisma.SortOrder
   reviewStatus?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
@@ -421,11 +537,19 @@ export type DriverDocumentSubmissionCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type DriverDocumentSubmissionAvgOrderByAggregateInput = {
+  fileSizeBytes?: Prisma.SortOrder
+}
+
 export type DriverDocumentSubmissionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   storageUrl?: Prisma.SortOrder
+  storagePublicId?: Prisma.SortOrder
+  originalFileName?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  fileSizeBytes?: Prisma.SortOrder
   reviewStatus?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
@@ -440,6 +564,10 @@ export type DriverDocumentSubmissionMinOrderByAggregateInput = {
   driverId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   storageUrl?: Prisma.SortOrder
+  storagePublicId?: Prisma.SortOrder
+  originalFileName?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  fileSizeBytes?: Prisma.SortOrder
   reviewStatus?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
@@ -447,6 +575,10 @@ export type DriverDocumentSubmissionMinOrderByAggregateInput = {
   rejectionReason?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type DriverDocumentSubmissionSumOrderByAggregateInput = {
+  fileSizeBytes?: Prisma.SortOrder
 }
 
 export type DriverDocumentSubmissionCreateNestedManyWithoutDriverInput = {
@@ -495,6 +627,14 @@ export type EnumDriverDocumentTypeFieldUpdateOperationsInput = {
   set?: $Enums.DriverDocumentType
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type EnumDriverDocumentReviewStatusFieldUpdateOperationsInput = {
   set?: $Enums.DriverDocumentReviewStatus
 }
@@ -503,6 +643,10 @@ export type DriverDocumentSubmissionCreateWithoutDriverInput = {
   id?: string
   documentType: $Enums.DriverDocumentType
   storageUrl: string
+  storagePublicId?: string | null
+  originalFileName?: string | null
+  mimeType?: string | null
+  fileSizeBytes?: number | null
   reviewStatus?: $Enums.DriverDocumentReviewStatus
   expiresAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -516,6 +660,10 @@ export type DriverDocumentSubmissionUncheckedCreateWithoutDriverInput = {
   id?: string
   documentType: $Enums.DriverDocumentType
   storageUrl: string
+  storagePublicId?: string | null
+  originalFileName?: string | null
+  mimeType?: string | null
+  fileSizeBytes?: number | null
   reviewStatus?: $Enums.DriverDocumentReviewStatus
   expiresAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -559,6 +707,10 @@ export type DriverDocumentSubmissionScalarWhereInput = {
   driverId?: Prisma.StringFilter<"DriverDocumentSubmission"> | string
   documentType?: Prisma.EnumDriverDocumentTypeFilter<"DriverDocumentSubmission"> | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFilter<"DriverDocumentSubmission"> | string
+  storagePublicId?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  originalFileName?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  mimeType?: Prisma.StringNullableFilter<"DriverDocumentSubmission"> | string | null
+  fileSizeBytes?: Prisma.IntNullableFilter<"DriverDocumentSubmission"> | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFilter<"DriverDocumentSubmission"> | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.DateTimeNullableFilter<"DriverDocumentSubmission"> | Date | string | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"DriverDocumentSubmission"> | Date | string | null
@@ -572,6 +724,10 @@ export type DriverDocumentSubmissionCreateManyDriverInput = {
   id?: string
   documentType: $Enums.DriverDocumentType
   storageUrl: string
+  storagePublicId?: string | null
+  originalFileName?: string | null
+  mimeType?: string | null
+  fileSizeBytes?: number | null
   reviewStatus?: $Enums.DriverDocumentReviewStatus
   expiresAt?: Date | string | null
   reviewedAt?: Date | string | null
@@ -585,6 +741,10 @@ export type DriverDocumentSubmissionUpdateWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentType?: Prisma.EnumDriverDocumentTypeFieldUpdateOperationsInput | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFieldUpdateOperationsInput | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -598,6 +758,10 @@ export type DriverDocumentSubmissionUncheckedUpdateWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentType?: Prisma.EnumDriverDocumentTypeFieldUpdateOperationsInput | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFieldUpdateOperationsInput | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -611,6 +775,10 @@ export type DriverDocumentSubmissionUncheckedUpdateManyWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   documentType?: Prisma.EnumDriverDocumentTypeFieldUpdateOperationsInput | $Enums.DriverDocumentType
   storageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileSizeBytes?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   reviewStatus?: Prisma.EnumDriverDocumentReviewStatusFieldUpdateOperationsInput | $Enums.DriverDocumentReviewStatus
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -627,6 +795,10 @@ export type DriverDocumentSubmissionSelect<ExtArgs extends runtime.Types.Extensi
   driverId?: boolean
   documentType?: boolean
   storageUrl?: boolean
+  storagePublicId?: boolean
+  originalFileName?: boolean
+  mimeType?: boolean
+  fileSizeBytes?: boolean
   reviewStatus?: boolean
   expiresAt?: boolean
   reviewedAt?: boolean
@@ -642,6 +814,10 @@ export type DriverDocumentSubmissionSelectCreateManyAndReturn<ExtArgs extends ru
   driverId?: boolean
   documentType?: boolean
   storageUrl?: boolean
+  storagePublicId?: boolean
+  originalFileName?: boolean
+  mimeType?: boolean
+  fileSizeBytes?: boolean
   reviewStatus?: boolean
   expiresAt?: boolean
   reviewedAt?: boolean
@@ -657,6 +833,10 @@ export type DriverDocumentSubmissionSelectUpdateManyAndReturn<ExtArgs extends ru
   driverId?: boolean
   documentType?: boolean
   storageUrl?: boolean
+  storagePublicId?: boolean
+  originalFileName?: boolean
+  mimeType?: boolean
+  fileSizeBytes?: boolean
   reviewStatus?: boolean
   expiresAt?: boolean
   reviewedAt?: boolean
@@ -672,6 +852,10 @@ export type DriverDocumentSubmissionSelectScalar = {
   driverId?: boolean
   documentType?: boolean
   storageUrl?: boolean
+  storagePublicId?: boolean
+  originalFileName?: boolean
+  mimeType?: boolean
+  fileSizeBytes?: boolean
   reviewStatus?: boolean
   expiresAt?: boolean
   reviewedAt?: boolean
@@ -681,7 +865,7 @@ export type DriverDocumentSubmissionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type DriverDocumentSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "driverId" | "documentType" | "storageUrl" | "reviewStatus" | "expiresAt" | "reviewedAt" | "reviewedBy" | "rejectionReason" | "submittedAt" | "updatedAt", ExtArgs["result"]["driverDocumentSubmission"]>
+export type DriverDocumentSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "driverId" | "documentType" | "storageUrl" | "storagePublicId" | "originalFileName" | "mimeType" | "fileSizeBytes" | "reviewStatus" | "expiresAt" | "reviewedAt" | "reviewedBy" | "rejectionReason" | "submittedAt" | "updatedAt", ExtArgs["result"]["driverDocumentSubmission"]>
 export type DriverDocumentSubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   driver?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
 }
@@ -702,6 +886,10 @@ export type $DriverDocumentSubmissionPayload<ExtArgs extends runtime.Types.Exten
     driverId: string
     documentType: $Enums.DriverDocumentType
     storageUrl: string
+    storagePublicId: string | null
+    originalFileName: string | null
+    mimeType: string | null
+    fileSizeBytes: number | null
     reviewStatus: $Enums.DriverDocumentReviewStatus
     expiresAt: Date | null
     reviewedAt: Date | null
@@ -1137,6 +1325,10 @@ export interface DriverDocumentSubmissionFieldRefs {
   readonly driverId: Prisma.FieldRef<"DriverDocumentSubmission", 'String'>
   readonly documentType: Prisma.FieldRef<"DriverDocumentSubmission", 'DriverDocumentType'>
   readonly storageUrl: Prisma.FieldRef<"DriverDocumentSubmission", 'String'>
+  readonly storagePublicId: Prisma.FieldRef<"DriverDocumentSubmission", 'String'>
+  readonly originalFileName: Prisma.FieldRef<"DriverDocumentSubmission", 'String'>
+  readonly mimeType: Prisma.FieldRef<"DriverDocumentSubmission", 'String'>
+  readonly fileSizeBytes: Prisma.FieldRef<"DriverDocumentSubmission", 'Int'>
   readonly reviewStatus: Prisma.FieldRef<"DriverDocumentSubmission", 'DriverDocumentReviewStatus'>
   readonly expiresAt: Prisma.FieldRef<"DriverDocumentSubmission", 'DateTime'>
   readonly reviewedAt: Prisma.FieldRef<"DriverDocumentSubmission", 'DateTime'>

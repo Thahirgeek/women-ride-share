@@ -45,6 +45,9 @@ interface Driver {
     id: string;
     documentType: "LICENSE" | "VEHICLE_REGISTRATION" | "INSURANCE" | "OTHER";
     storageUrl: string;
+    originalFileName?: string | null;
+    mimeType?: string | null;
+    fileSizeBytes?: number | null;
     reviewStatus: "PENDING" | "APPROVED" | "REJECTED";
     submittedAt: string;
     reviewedAt?: string | null;
@@ -88,6 +91,45 @@ const ACTION_COPY: Record<
   },
 };
 
+const REQUIRED_DOCUMENT_TYPES = [
+  "LICENSE",
+  "VEHICLE_REGISTRATION",
+  "INSURANCE",
+] as const;
+
+const REQUIRED_DOCUMENT_LABELS: Record<
+  (typeof REQUIRED_DOCUMENT_TYPES)[number],
+  string
+> = {
+  LICENSE: "License",
+  VEHICLE_REGISTRATION: "Vehicle Registration",
+  INSURANCE: "Insurance",
+};
+
+type ApprovalWarningStatus = "MISSING" | "PENDING" | "REJECTED";
+
+function getApprovalWarnings(driver: Driver) {
+  const latestStatusByType = new Map<string, Driver["documents"][number]["reviewStatus"]>();
+  for (const document of driver.documents || []) {
+    if (!latestStatusByType.has(document.documentType)) {
+      latestStatusByType.set(document.documentType, document.reviewStatus);
+    }
+  }
+
+  return REQUIRED_DOCUMENT_TYPES.filter(
+    (documentType) => latestStatusByType.get(documentType) !== "APPROVED"
+  ).map((documentType) => {
+    const status = latestStatusByType.get(documentType);
+    const warningStatus: ApprovalWarningStatus =
+      status === "PENDING" || status === "REJECTED" ? status : "MISSING";
+
+    return {
+      documentType,
+      status: warningStatus,
+    };
+  });
+}
+
 export default function AdminDashboard() {
   const [tab, setTab] = useState<Tab>("users");
   const [users, setUsers] = useState<User[]>([]);
@@ -102,6 +144,10 @@ export default function AdminDashboard() {
     driverId: string;
     driverName: string;
     action: VerificationAction;
+    approvalWarnings: {
+      documentType: (typeof REQUIRED_DOCUMENT_TYPES)[number];
+      status: ApprovalWarningStatus;
+    }[];
   } | null>(null);
   const [actionReason, setActionReason] = useState("");
   const [actionMessage, setActionMessage] = useState<{
@@ -155,7 +201,17 @@ export default function AdminDashboard() {
       await fetchDrivers();
 
       if (isApprove) {
-        setActionMessage({ type: "success", text: "Driver approved successfully." });
+        const warnings = Array.isArray(data.incompleteRequiredDocuments)
+          ? data.incompleteRequiredDocuments.length
+          : 0;
+
+        setActionMessage({
+          type: "success",
+          text:
+            warnings > 0
+              ? `Driver approved with ${warnings} document warning${warnings === 1 ? "" : "s"}.`
+              : "Driver approved successfully.",
+        });
       } else if (action === "REQUEST_REVIEW") {
         setActionMessage({
           type: "success",
@@ -239,13 +295,14 @@ export default function AdminDashboard() {
     }
   };
 
-  const requestVerificationAction = (
-    driverId: string,
-    driverName: string,
-    action: VerificationAction
-  ) => {
+  const requestVerificationAction = (driver: Driver, action: VerificationAction) => {
     setActionReason("");
-    setPendingVerification({ driverId, driverName, action });
+    setPendingVerification({
+      driverId: driver.id,
+      driverName: driver.user.name,
+      action,
+      approvalWarnings: action === "APPROVE" ? getApprovalWarnings(driver) : [],
+    });
   };
 
   const closeVerificationModal = () => {
@@ -288,6 +345,23 @@ export default function AdminDashboard() {
                 )
               : ""}
           </p>
+
+          {pendingVerification?.action === "APPROVE" &&
+            pendingVerification.approvalWarnings.length > 0 && (
+              <div className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-3 text-sm text-amber-800">
+                <p className="font-medium">Document review warning</p>
+                <p className="mt-1 text-xs">
+                  Required documents are incomplete. You can still approve this driver.
+                </p>
+                <ul className="mt-2 list-disc pl-4 text-xs">
+                  {pendingVerification.approvalWarnings.map((warning) => (
+                    <li key={warning.documentType}>
+                      {REQUIRED_DOCUMENT_LABELS[warning.documentType]}: {warning.status}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
           {pendingVerification?.action === "REVOKE" && (
             <div className="space-y-2">
@@ -552,7 +626,9 @@ export default function AdminDashboard() {
                                 rel="noreferrer"
                                 className="mt-1 inline-block text-xs font-medium text-primary underline"
                               >
-                                View document
+                                {document.originalFileName?.trim().length
+                                  ? `View ${document.originalFileName}`
+                                  : "View document"}
                               </a>
                               {document.reviewStatus === "PENDING" && (
                                 <div className="mt-2 flex gap-2">
@@ -594,11 +670,7 @@ export default function AdminDashboard() {
                             className="w-full px-3 py-1 text-xs sm:w-auto"
                             isLoading={verifyLoadingId === d.id}
                             onClick={() =>
-                              requestVerificationAction(
-                                d.id,
-                                d.user.name,
-                                "REVOKE"
-                              )
+                              requestVerificationAction(d, "REVOKE")
                             }
                           >
                             Revoke
@@ -609,11 +681,7 @@ export default function AdminDashboard() {
                               className="w-full px-3 py-1 text-xs sm:w-auto"
                               isLoading={verifyLoadingId === d.id}
                               onClick={() =>
-                                requestVerificationAction(
-                                  d.id,
-                                  d.user.name,
-                                  "APPROVE"
-                                )
+                                requestVerificationAction(d, "APPROVE")
                               }
                             >
                               Approve
@@ -623,11 +691,7 @@ export default function AdminDashboard() {
                               className="w-full px-3 py-1 text-xs sm:w-auto"
                               isLoading={verifyLoadingId === d.id}
                               onClick={() =>
-                                requestVerificationAction(
-                                  d.id,
-                                  d.user.name,
-                                  "REVOKE"
-                                )
+                                requestVerificationAction(d, "REVOKE")
                               }
                             >
                               Revoke
@@ -639,11 +703,7 @@ export default function AdminDashboard() {
                             className="w-full px-3 py-1 text-xs sm:w-auto"
                             isLoading={verifyLoadingId === d.id}
                             onClick={() =>
-                              requestVerificationAction(
-                                d.id,
-                                d.user.name,
-                                "REQUEST_REVIEW"
-                              )
+                              requestVerificationAction(d, "REQUEST_REVIEW")
                             }
                           >
                             Move To Review
@@ -699,11 +759,7 @@ export default function AdminDashboard() {
                                 className="px-3 py-1 text-xs"
                                 isLoading={verifyLoadingId === d.id}
                                 onClick={() =>
-                                  requestVerificationAction(
-                                    d.id,
-                                    d.user.name,
-                                    "REVOKE"
-                                  )
+                                      requestVerificationAction(d, "REVOKE")
                                 }
                               >
                                 Revoke
@@ -714,11 +770,7 @@ export default function AdminDashboard() {
                                   className="px-3 py-1 text-xs"
                                   isLoading={verifyLoadingId === d.id}
                                   onClick={() =>
-                                    requestVerificationAction(
-                                      d.id,
-                                      d.user.name,
-                                      "APPROVE"
-                                    )
+                                    requestVerificationAction(d, "APPROVE")
                                   }
                                 >
                                   Approve
@@ -728,11 +780,7 @@ export default function AdminDashboard() {
                                   className="px-3 py-1 text-xs"
                                   isLoading={verifyLoadingId === d.id}
                                   onClick={() =>
-                                    requestVerificationAction(
-                                      d.id,
-                                      d.user.name,
-                                      "REVOKE"
-                                    )
+                                    requestVerificationAction(d, "REVOKE")
                                   }
                                 >
                                   Revoke
@@ -744,11 +792,7 @@ export default function AdminDashboard() {
                                 className="px-3 py-1 text-xs"
                                 isLoading={verifyLoadingId === d.id}
                                 onClick={() =>
-                                  requestVerificationAction(
-                                    d.id,
-                                    d.user.name,
-                                    "REQUEST_REVIEW"
-                                  )
+                                  requestVerificationAction(d, "REQUEST_REVIEW")
                                 }
                               >
                                 Move To Review
@@ -784,7 +828,9 @@ export default function AdminDashboard() {
                                     rel="noreferrer"
                                     className="mt-1 inline-block text-xs font-medium text-primary underline"
                                   >
-                                    View document
+                                    {document.originalFileName?.trim().length
+                                      ? `View ${document.originalFileName}`
+                                      : "View document"}
                                   </a>
                                   {document.reviewStatus === "PENDING" && (
                                     <div className="mt-2 flex gap-2">
